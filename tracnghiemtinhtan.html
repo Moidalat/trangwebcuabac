@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trắc nghiệm Tinh Tấn</title>
+    <style>
+        /* CSS để giao diện trông sạch sẽ và dễ đọc */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .quiz-container {
+            max-width: 750px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 25px 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .quiz-header h3 {
+            font-size: 24px;
+            color: #2c3e50;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .quiz-spirit {
+            background-color: #f0f3f4;
+            border-left: 4px solid #1abc9c;
+            padding: 10px 15px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        .question-block {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .question-block:last-of-type {
+            border-bottom: none;
+        }
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 17px;
+        }
+        .answer-option {
+            display: block;
+            margin-bottom: 10px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .answer-option:hover {
+            background-color: #f5f5f5;
+        }
+        .answer-option input[type="radio"] {
+            margin-right: 10px;
+        }
+        .quiz-submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+        .quiz-submit-btn:hover {
+            background-color: #2980b9;
+        }
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+        .feedback.correct-feedback {
+            background-color: #e7f4e7;
+            border: 1px solid #28a745;
+            color: #155724;
+        }
+        .feedback.incorrect-feedback {
+            background-color: #f8d7da;
+            border: 1px solid #dc3545;
+            color: #721c24;
+        }
+        .answer-option.selected-correct {
+            background-color: #d4edda;
+            border-color: #28a745;
+            font-weight: bold;
+        }
+        .answer-option.selected-incorrect {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+            font-weight: bold;
+        }
+        .answer-option.actual-correct {
+            background-color: #cce5ff;
+            border-color: #b8daff;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="quiz-header">
+            <h3>TRẮC NGHIỆM: BẠN HIỂU "TINH TẤN" THẾ NÀO TRONG ĐỜI SỐNG?</h3>
+        </div>
+        <div class="quiz-spirit">
+            <p><strong>Tinh thần cốt lõi:</strong></p>
+            <ul>
+                <li><em>Tôi cố gắng không để lười kéo đi</em></li>
+                <li><em>Tôi làm đều đặn, dù ít cũng không bỏ</em></li>
+                <li><em>Nhằm giữ sự liên tục, không ép, không gồng</em></li>
+            </ul>
+        </div>
+        <form id="tinh-tan-quiz">
+            <div class="question-block" id="q1-block">
+                <p class="question-text"><strong>Câu 1:</strong> Buổi sáng bạn dự định ngồi thiền 15 phút, nhưng khi thức dậy lại cảm thấy rất uể oải và buồn ngủ. Bạn sẽ:</p>
+                <label class="answer-option"><input type="radio" name="q1" value="A"> A. Tự nhủ "Phải cố gắng!" và ngồi cho đủ 15 phút dù tâm trí không yên.</label>
+                <label class="answer-option"><input type="radio" name="q1" value="B"> B. Bỏ qua luôn, tự hứa mai sẽ ngồi bù.</label>
+                <label class="answer-option"><input type="radio" name="q1" value="C"> C. Ngồi lại 5 phút thôi, chỉ cần giữ thói quen không bị đứt quãng.</label>
+                <label class="answer-option"><input type="radio" name="q1" value="D"> D. Đọc một bài kinh thật dài để thay thế cho việc ngồi thiền.</label>
+            </div>
+            <div class="question-block" id="q2-block">
+                <p class="question-text"><strong>Câu 2:</strong> Bạn đặt mục tiêu mỗi ngày đi bộ 30 phút. Nhưng hôm nay công việc quá bận rộn, xong việc đã muộn. Bạn sẽ:</p>
+                <label class="answer-option"><input type="radio" name="q2" value="A"> A. Không đi nữa vì quá mệt và không đủ thời gian.</label>
+                <label class="answer-option"><input type="radio" name="q2" value="B"> B. Cố gắng đi đủ 30 phút dù phải thức khuya hơn, cảm thấy rất áp lực.</label>
+                <label class="answer-option"><input type="radio" name="q2" value="C"> C. Dành ra 5-10 phút đi lại quanh nhà, cốt để không bỏ ngày nào.</label>
+                <label class="answer-option"><input type="radio" name="q2" value="D"> D. Lên mạng xem video về lợi ích của đi bộ để tạo động lực cho ngày mai.</label>
+            </div>
+            <div class="question-block" id="q3-block">
+                <p class="question-text"><strong>Câu 3:</strong> Sau một tuần thực hành rất đều đặn, bạn bỗng cảm thấy chán nản và không muốn làm gì cả. Tinh tấn đúng nghĩa là:</p>
+                <label class="answer-option"><input type="radio" name="q3" value="A"> A. Tự dằn vặt mình vì đã lười biếng và mất động lực.</label>
+                <label class="answer-option"><input type="radio" name="q3" value="B"> B. Nghỉ vài ngày cho "có hứng" trở lại rồi mới làm tiếp.</label>
+                <label class="answer-option"><input type="radio" name="q3" value="C"> C. Ghi nhận sự chán nản đó, rồi vẫn làm một chút, dù là rất nhỏ.</label>
+                <label class="answer-option"><input type="radio" name="q3" value="D"> D. Đặt ra một mục tiêu lớn hơn, thách thức hơn để lấy lại khí thế.</label>
+            </div>
+            <div class="question-block" id="q4-block">
+                <p class="question-text"><strong>Câu 4:</strong> Khi nói về sự tinh tấn trong công việc, người ta thường hiểu là:</p>
+                <label class="answer-option"><input type="radio" name="q4" value="A"> A. Làm việc ngày đêm không nghỉ để đạt được kết quả nhanh nhất.</label>
+                <label class="answer-option"><input type="radio" name="q4" value="B"> B. Luôn giữ năng lượng ở mức cao, không bao giờ thấy mệt mỏi.</label>
+                <label class="answer-option"><input type="radio" name="q4" value="C"> C. Duy trì nhịp độ làm việc ổn định, có nghỉ ngơi hợp lý để đi đường dài.</label>
+                <label class="answer-option"><input type="radio" name="q4" value="D"> D. Chỉ làm việc khi có người giám sát hoặc khi gần đến hạn chót.</label>
+            </div>
+            <div class="question-block" id="q5-block">
+                <p class="question-text"><strong>Câu 5:</strong> Bạn đang tập một thói quen mới (ví dụ: đọc sách mỗi ngày). Tinh tấn nghĩa là:</p>
+                <label class="answer-option"><input type="radio" name="q5" value="A"> A. Đặt mục tiêu ngày đầu phải đọc 100 trang cho "ra trò".</label>
+                <label class="answer-option"><input type="radio" name="q5" value="B"> B. Mỗi ngày đọc 5-10 trang, nhưng ngày nào cũng đọc.</label>
+                <label class="answer-option"><input type="radio" name="q5" value="C"> C. Đọc khi nào thấy vui và có cảm hứng.</label>
+                <label class="answer-option"><input type="radio" name="q5" value="D"> D. Kể cho mọi người về mục tiêu của mình để tạo áp lực phải hoàn thành.</label>
+            </div>
+            <div class="question-block" id="q6-block">
+                <p class="question-text"><strong>Câu 6:</strong> Khi thực hành, bạn nhận ra tâm mình đang lơ đãng, chạy theo suy nghĩ khác. Bạn sẽ:</p>
+                <label class="answer-option"><input type="radio" name="q6" value="A"> A. Bực mình với bản thân vì không thể tập trung.</label>
+                <label class="answer-option"><input type="radio" name="q6" value="B"> B. Nhẹ nhàng nhận biết tâm đang đi lạc và kiên nhẫn quay về với việc đang làm.</label>
+                <label class="answer-option"><input type="radio" name="q6" value="C"> C. Dừng thực hành lại vì cho rằng hôm nay mình không có "tâm trạng".</label>
+                <label class="answer-option"><input type="radio" name="q6" value="D"> D. Cố gắng gồng mình để dẹp tan mọi suy nghĩ trong đầu.</label>
+            </div>
+            <div class="question-block" id="q7-block">
+                <p class="question-text"><strong>Câu 7:</strong> Một người bạn khoe rằng họ có thể ngồi thiền 2 tiếng mỗi ngày. Bạn cảm thấy:</p>
+                <label class="answer-option"><input type="radio" name="q7" value="A"> A. Ngưỡng mộ và tự ép mình cũng phải làm được như vậy.</label>
+                <label class="answer-option"><input type="radio" name="q7" value="B"> B. Thấy mình kém cỏi và việc thực hành của mình chẳng đáng là bao.</label>
+                <label class="answer-option"><input type="radio" name="q7" value="C"> C. Bình thản, biết rằng mỗi người có một sức và một lộ trình riêng, mình chỉ cần làm đều đặn theo sức của mình.</label>
+                <label class="answer-option"><input type="radio" name="q7" value="D"> D. Cho rằng người bạn đó đang khoe khoang và không thật tu.</label>
+            </div>
+            <div class="question-block" id="q8-block">
+                <p class="question-text"><strong>Câu 8:</strong> Theo bạn, tinh thần "không ép, không gồng" có nghĩa là:</p>
+                <label class="answer-option"><input type="radio" name="q8" value="A"> A. Làm việc một cách hời hợt, không cần cố gắng.</label>
+                <label class="answer-option"><input type="radio" name="q8" value="B"> B. Nỗ lực vừa sức, nhận biết giới hạn của thân và tâm để không gây căng thẳng không cần thiết.</label>
+                <label class="answer-option"><input type="radio" name="q8" value="C"> C. Chỉ làm những gì mình thích, né tránh mọi khó khăn.</label>
+                <label class="answer-option"><input type="radio" name="q8" value="D"> D. Đợi khi nào hoàn toàn sẵn sàng mới bắt đầu.</label>
+            </div>
+            <div class="question-block" id="q9-block">
+                <p class="question-text"><strong>Câu 9:</strong> Bạn lỡ bỏ mất một vài ngày không thực hành thói quen của mình. Bạn sẽ:</p>
+                <label class="answer-option"><input type="radio" name="q9" value="A"> A. Cảm thấy thất bại và từ bỏ luôn vì cho rằng mình đã làm hỏng mọi thứ.</label>
+                <label class="answer-option"><input type="radio" name="q9" value="B"> B. Bắt đầu lại từ hôm nay như chưa có gì xảy ra, không dằn vặt.</label>
+                <label class="answer-option"><input type="radio" name="q9" value="C"> C. Đặt ra hình phạt cho bản thân vì đã không giữ kỷ luật.</label>
+                <label class="answer-option"><input type="radio" name="q9" value="D"> D. Chờ đến đầu tuần sau hoặc đầu tháng sau để "khởi động lại" cho đẹp.</label>
+            </div>
+            <div class="question-block" id="q10-block">
+                <p class="question-text"><strong>Câu 10:</strong> Mục đích cuối cùng của việc "làm đều đặn, dù ít cũng không bỏ" là:</p>
+                <label class="answer-option"><input type="radio" name="q10" value="A"> A. Để chứng tỏ cho người khác thấy mình là người có kỷ luật.</label>
+                <label class="answer-option"><input type="radio" name="q10" value="B"> B. Để tích lũy công đức, thành tích.</label>
+                <label class="answer-option"><input type="radio" name="q10" value="C"> C. Để tạo ra một quán tính thiện lành, một dòng chảy thực hành liên tục trong tâm.</label>
+                <label class="answer-option"><input type="radio" name="q10" value="D"> D. Để nhanh chóng đạt được một trạng thái tâm linh đặc biệt nào đó.</label>
+            </div>
+            <button type="button" class="quiz-submit-btn" id="submit-btn">Xem kết quả</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            const answers = {
+                q1: { correct: 'C', explanation: 'Bạn nghĩ đúng rồi. Tinh tấn (Viriya) trong lời Phật dạy không phải là sự gắng gượng căng thẳng, mà là nỗ lực duy trì dòng chảy của việc thực hành. Giống như giữ cho ngọn lửa không tắt, dù chỉ còn là một đốm than hồng thì vẫn tốt hơn là để nó lụi tàn hoàn toàn.' },
+                q2: { correct: 'C', explanation: 'Bạn nghĩ đúng rồi. Đây chính là tinh thần "dù ít cũng không bỏ". Lời Phật dạy về sự nỗ lực chân chính (Chánh Tinh Tấn) là duy trì các trạng thái tâm lành và ngăn ngừa tâm bất thiện. Việc làm một chút để giữ thói quen là một cách nuôi dưỡng tâm lành một cách bền bỉ.' },
+                q3: { correct: 'C', explanation: 'Bạn nghĩ đúng rồi. Tinh tấn không có nghĩa là không bao giờ chán nản. Tinh tấn thật sự là thấy rõ sự chán nản đó mà không bị nó lôi đi, vẫn duy trì nỗ lực một cách nhẹ nhàng. Đây là sự nỗ lực có trí tuệ đi kèm, không phải nỗ lực mù quáng.' },
+                q4: { correct: 'C', explanation: 'Bạn nghĩ đúng rồi. Đức Phật đã dùng hình ảnh dây đàn Tỳ Bà để dạy về tinh tấn: căng quá thì đứt, chùng quá thì không kêu. Nỗ lực quân bình, bền bỉ chính là con đường trung đạo, giúp chúng ta đi được xa trên con đường thực hành.' },
+                q5: { correct: 'B', explanation: 'Bạn nghĩ đúng rồi. Sức mạnh của tinh tấn nằm ở sự liên tục, không phải ở cường độ. Một dòng nước nhỏ chảy đều đặn có thể làm mòn đá cứng. Việc thực hành nhỏ nhưng đều đặn sẽ tạo ra sự chuyển hóa sâu sắc và bền vững.' },
+                q6: { correct: 'B', explanation: 'Bạn nghĩ đúng rồi. Đây là tinh tấn đi cùng với chánh niệm và sự kiên nhẫn. Nỗ lực ở đây không phải là "đàn áp" suy nghĩ, mà là "kiên trì đưa tâm trở về". Đó là một nỗ lực rất nhẹ nhàng nhưng vô cùng hiệu quả.' },
+                q7: { correct: 'C', explanation: 'Bạn nghĩ đúng rồi. Tinh tấn chân chính không có sự so sánh, ganh đua. Bạn hiểu rằng thực hành là việc của riêng mình, và sự nỗ lực cần phải phù hợp với "căn cơ" (khả năng) của chính mình. Đây là một biểu hiện của trí tuệ.' },
+                q8: { correct: 'B', explanation: 'Bạn nghĩ đúng rồi. "Không ép, không gồng" chính là tinh thần của Trung Đạo. Đó là sự nỗ lực thông minh, biết lắng nghe cơ thể và tâm trí, tránh hai cực đoan: buông thả theo sự lười biếng và hành hạ bản thân bằng sự gắng gượng quá sức.' },
+                q9: { correct: 'B', explanation: 'Bạn nghĩ đúng rồi. Tinh tấn không đòi hỏi sự hoàn hảo. Sự dằn vặt, hối tiếc chỉ làm nuôi dưỡng tâm bất thiện. Tinh tấn chân chính là khả năng bắt đầu lại ngay tại giây phút này, với một tâm không phán xét, không nặng nề.' },
+                q10: { correct: 'C', explanation: 'Bạn nghĩ đúng rồi. Mục đích của tinh tấn không phải là thành tích bên ngoài, mà là sự chuyển hóa bên trong. Bằng cách thực hành đều đặn, bạn đang tạo ra một "thói quen" mới cho tâm, một đường mòn thiện lành để tâm dễ dàng đi theo, thay vì đi theo những lối mòn cũ của tham, sân, si.' }
+            };
+            const form = document.getElementById('tinh-tan-quiz');
+            const oldFeedbacks = form.querySelectorAll('.feedback');
+            oldFeedbacks.forEach(fb => fb.remove());
+            for (const q in answers) {
+                const questionBlock = document.getElementById(q + '-block');
+                const selectedOption = form.querySelector(`input[name="${q}"]:checked`);
+                const allOptions = questionBlock.querySelectorAll('.answer-option');
+                allOptions.forEach(opt => {
+                    opt.classList.remove('selected-correct', 'selected-incorrect', 'actual-correct');
+                });
+                if (selectedOption) {
+                    const userAnswer = selectedOption.value;
+                    const correctAnswer = answers[q].correct;
+                    const explanation = answers[q].explanation;
+                    const feedbackDiv = document.createElement('div');
+                    feedbackDiv.classList.add('feedback');
+                    const selectedLabel = selectedOption.parentElement;
+                    if (userAnswer === correctAnswer) {
+                        feedbackDiv.classList.add('correct-feedback');
+                        feedbackDiv.innerHTML = explanation;
+                        selectedLabel.classList.add('selected-correct');
+                    } else {
+                        feedbackDiv.classList.add('incorrect-feedback');
+                        feedbackDiv.textContent = 'Bạn nghĩ chưa đúng theo tinh thần lời Phật dạy.';
+                        selectedLabel.classList.add('selected-incorrect');
+                        const correctLabel = questionBlock.querySelector(`input[value="${correctAnswer}"]`).parentElement;
+                        correctLabel.classList.add('actual-correct');
+                    }
+                    questionBlock.appendChild(feedbackDiv);
+                }
+                const radioButtons = questionBlock.querySelectorAll('input[type="radio"]');
+                radioButtons.forEach(radio => radio.disabled = true);
+            }
+            this.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
