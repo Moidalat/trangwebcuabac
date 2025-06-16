@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trắc nghiệm Tinh Tấn</title>
+    <title>Trắc nghiệm Chánh Niệm</title>
     <style>
         /* CSS để giao diện trông sạch sẽ và dễ đọc */
         body {
@@ -92,11 +92,6 @@
             border: 1px solid #28a745;
             color: #155724;
         }
-        .feedback.incorrect-feedback {
-            background-color: #f8d7da;
-            border: 1px solid #dc3545;
-            color: #721c24;
-        }
         .answer-option.selected-correct {
             background-color: #d4edda;
             border-color: #28a745;
@@ -111,28 +106,22 @@
             background-color: #cce5ff;
             border-color: #b8daff;
         }
-        /* --- CSS MỚI CHO ICON --- */
-        .feedback-icon {
-            display: none; /* Quan trọng: Mặc định sẽ ẩn đi */
-            font-size: 4rem; /* Kích thước của icon */
-            line-height: 1;
-        }
     </style>
 </head>
 <body>
     <div class="quiz-container">
         <div class="quiz-header">
-            <h3>TRẮC NGHIỆM: BẠN HIỂU "TINH TẤN" THẾ NÀO TRONG ĐỜI SỐNG?</h3>
+            <h3>TRẮC NGHIỆM: BẠN CÓ "CHÁNH NIỆM" TRONG ĐỜI SỐNG?</h3>
         </div>
         <div class="quiz-spirit">
             <p><strong>Tinh thần cốt lõi:</strong></p>
             <ul>
-                <li><em>Tôi cố gắng không để lười kéo đi</em></li>
-                <li><em>Tôi làm đều đặn, dù ít cũng không bỏ</em></li>
-                <li><em>Nhằm giữ sự liên tục, không ép, không gồng</em></li>
+                <li><em>Tôi nhớ việc mình đang làm</em></li>
+                <li><em>Tôi thấy rõ mình đang nghĩ, nói, hay làm gì</em></li>
+                <li><em>Nhằm biết đúng việc – ngay trong lúc đang làm</em></li>
             </ul>
         </div>
-        <form id="tinh-tan-quiz">
+        <form id="chanh-niem-quiz">
              </form>
          <button type="button" class="quiz-submit-btn" id="submit-btn">Xem kết quả</button>
     </div>
@@ -140,19 +129,39 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const quizData = [
-                { question: "Buổi sáng bạn dự định ngồi thiền 15 phút, nhưng khi thức dậy lại cảm thấy rất uể oải và buồn ngủ. Bạn sẽ:", options: ["Tự nhủ 'Phải cố gắng!' và ngồi cho đủ 15 phút dù tâm trí không yên.", "Bỏ qua luôn, tự hứa mai sẽ ngồi bù.", "Ngồi lại 5 phút thôi, chỉ cần giữ thói quen không bị đứt quãng.", "Đọc một bài kinh thật dài để thay thế cho việc ngồi thiền."], answer: "C", explanation: "Bạn nghĩ đúng rồi. Tinh tấn (Viriya) trong lời Phật dạy không phải là sự gắng gượng căng thẳng, mà là nỗ lực duy trì dòng chảy của việc thực hành. Giống như giữ cho ngọn lửa không tắt, dù chỉ còn là một đốm than hồng thì vẫn tốt hơn là để nó lụi tàn hoàn toàn." },
-                { question: "Bạn đặt mục tiêu mỗi ngày đi bộ 30 phút. Nhưng hôm nay công việc quá bận rộn, xong việc đã muộn. Bạn sẽ:", options: ["Không đi nữa vì quá mệt và không đủ thời gian.", "Cố gắng đi đủ 30 phút dù phải thức khuya hơn, cảm thấy rất áp lực.", "Dành ra 5-10 phút đi lại quanh nhà, cốt để không bỏ ngày nào.", "Lên mạng xem video về lợi ích của đi bộ để tạo động lực cho ngày mai."], answer: "C", explanation: "Bạn nghĩ đúng rồi. Đây chính là tinh thần 'dù ít cũng không bỏ'. Lời Phật dạy về sự nỗ lực chân chính (Chánh Tinh Tấn) là duy trì các trạng thái tâm lành và ngăn ngừa tâm bất thiện. Việc làm một chút để giữ thói quen là một cách nuôi dưỡng tâm lành một cách bền bỉ." },
-                { question: "Sau một tuần thực hành rất đều đặn, bạn bỗng cảm thấy chán nản và không muốn làm gì cả. Tinh tấn đúng nghĩa là:", options: ["Tự dằn vặt mình vì đã lười biếng và mất động lực.", "Nghỉ vài ngày cho 'có hứng' trở lại rồi mới làm tiếp.", "Ghi nhận sự chán nản đó, rồi vẫn làm một chút, dù là rất nhỏ.", "Đặt ra một mục tiêu lớn hơn, thách thức hơn để lấy lại khí thế."], answer: "C", explanation: "Bạn nghĩ đúng rồi. Tinh tấn không có nghĩa là không bao giờ chán nản. Tinh tấn thật sự là thấy rõ sự chán nản đó mà không bị nó lôi đi, vẫn duy trì nỗ lực một cách nhẹ nhàng. Đây là sự nỗ lực có trí tuệ đi kèm, không phải nỗ lực mù quáng." },
-                { question: "Khi nói về sự tinh tấn trong công việc, người ta thường hiểu là:", options: ["Làm việc ngày đêm không nghỉ để đạt được kết quả nhanh nhất.", "Luôn giữ năng lượng ở mức cao, không bao giờ thấy mệt mỏi.", "Duy trì nhịp độ làm việc ổn định, có nghỉ ngơi hợp lý để đi đường dài.", "Chỉ làm việc khi có người giám sát hoặc khi gần đến hạn chót."], answer: "C", explanation: "Bạn nghĩ đúng rồi. Đức Phật đã dùng hình ảnh dây đàn Tỳ Bà để dạy về tinh tấn: căng quá thì đứt, chùng quá thì không kêu. Nỗ lực quân bình, bền bỉ chính là con đường trung đạo, giúp chúng ta đi được xa trên con đường thực hành." },
-                { question: "Bạn đang tập một thói quen mới (ví dụ: đọc sách mỗi ngày). Tinh tấn nghĩa là:", options: ["Đặt mục tiêu ngày đầu phải đọc 100 trang cho 'ra trò'.", "Mỗi ngày đọc 5-10 trang, nhưng ngày nào cũng đọc.", "Đọc khi nào thấy vui và có cảm hứng.", "Kể cho mọi người về mục tiêu của mình để tạo áp lực phải hoàn thành."], answer: "B", explanation: "Bạn nghĩ đúng rồi. Sức mạnh của tinh tấn nằm ở sự liên tục, không phải ở cường độ. Một dòng nước nhỏ chảy đều đặn có thể làm mòn đá cứng. Việc thực hành nhỏ nhưng đều đặn sẽ tạo ra sự chuyển hóa sâu sắc và bền vững." },
-                { question: "Khi thực hành, bạn nhận ra tâm mình đang lơ đãng, chạy theo suy nghĩ khác. Bạn sẽ:", options: ["Bực mình với bản thân vì không thể tập trung.", "Nhẹ nhàng nhận biết tâm đang đi lạc và kiên nhẫn quay về với việc đang làm.", "Dừng thực hành lại vì cho rằng hôm nay mình không có 'tâm trạng'.", "Cố gắng gồng mình để dẹp tan mọi suy nghĩ trong đầu."], answer: "B", explanation: "Bạn nghĩ đúng rồi. Đây là tinh tấn đi cùng với chánh niệm và sự kiên nhẫn. Nỗ lực ở đây không phải là 'đàn áp' suy nghĩ, mà là 'kiên trì đưa tâm trở về'. Đó là một nỗ lực rất nhẹ nhàng nhưng vô cùng hiệu quả." },
-                { question: "Một người bạn khoe rằng họ có thể ngồi thiền 2 tiếng mỗi ngày. Bạn cảm thấy:", options: ["Ngưỡng mộ và tự ép mình cũng phải làm được như vậy.", "Thấy mình kém cỏi và việc thực hành của mình chẳng đáng là bao.", "Bình thản, biết rằng mỗi người có một sức và một lộ trình riêng, mình chỉ cần làm đều đặn theo sức của mình.", "Cho rằng người bạn đó đang khoe khoang và không thật tu."], answer: "C", explanation: "Bạn nghĩ đúng rồi. Tinh tấn chân chính không có sự so sánh, ganh đua. Bạn hiểu rằng thực hành là việc của riêng mình, và sự nỗ lực cần phải phù hợp với 'căn cơ' (khả năng) của chính mình. Đây là một biểu hiện của trí tuệ." },
-                { question: "Theo bạn, tinh thần 'không ép, không gồng' có nghĩa là:", options: ["Làm việc một cách hời hợt, không cần cố gắng.", "Nỗ lực vừa sức, nhận biết giới hạn của thân và tâm để không gây căng thẳng không cần thiết.", "Chỉ làm những gì mình thích, né tránh mọi khó khăn.", "Đợi khi nào hoàn toàn sẵn sàng mới bắt đầu."], answer: "B", explanation: "Bạn nghĩ đúng rồi. 'Không ép, không gồng' chính là tinh thần của Trung Đạo. Đó là sự nỗ lực thông minh, biết lắng nghe cơ thể và tâm trí, tránh hai cực đoan: buông thả theo sự lười biếng và hành hạ bản thân bằng sự gắng gượng quá sức." },
-                { question: "Bạn lỡ bỏ mất một vài ngày không thực hành thói quen của mình. Bạn sẽ:", options: ["Cảm thấy thất bại và từ bỏ luôn vì cho rằng mình đã làm hỏng mọi thứ.", "Bắt đầu lại từ hôm nay như chưa có gì xảy ra, không dằn vặt.", "Đặt ra hình phạt cho bản thân vì đã không giữ kỷ luật.", "Chờ đến đầu tuần sau hoặc đầu tháng sau để 'khởi động lại' cho đẹp."], answer: "B", explanation: "Bạn nghĩ đúng rồi. Tinh tấn không đòi hỏi sự hoàn hảo. Sự dằn vặt, hối tiếc chỉ làm nuôi dưỡng tâm bất thiện. Tinh tấn chân chính là khả năng bắt đầu lại ngay tại giây phút này, với một tâm không phán xét, không nặng nề." },
-                { question: "Mục đích cuối cùng của việc 'làm đều đặn, dù ít cũng không bỏ' là:", options: ["Để chứng tỏ cho người khác thấy mình là người có kỷ luật.", "Để tích lũy công đức, thành tích.", "Để tạo ra một quán tính thiện lành, một dòng chảy thực hành liên tục trong tâm.", "Để nhanh chóng đạt được một trạng thái tâm linh đặc biệt nào đó."], answer: "C", explanation: "Bạn nghĩ đúng rồi. Mục đích của tinh tấn không phải là thành tích bên ngoài, mà là sự chuyển hóa bên trong. Bằng cách thực hành đều đặn, bạn đang tạo ra một 'thói quen' mới cho tâm, một đường mòn thiện lành để tâm dễ dàng đi theo, thay vì đi theo những lối mòn cũ của tham, sân, si." }
+                // Question 1
+                { question: "Bạn đang rửa chén. 'Chánh niệm' trong lúc này là gì?", options: ["Vừa rửa vừa nghe một bài giảng pháp để tâm không bị lãng phí.", "Cảm nhận rõ nhiệt độ của nước, sức nặng của cái chén, chuyển động của tay.", "Cố gắng rửa thật nhanh để có thời gian làm việc khác.", "Suy nghĩ về những việc cần làm trong ngày mai."], answer: "B", explanation: "Chánh niệm là sự có mặt trọn vẹn với việc đang làm. Nghe giảng pháp hay suy nghĩ việc khác đều là biểu hiện của tâm đang không ở cùng với thân." },
+                // Question 2
+                { question: "Trong lúc đang ngồi làm việc, một cảm giác bực bội đột nhiên khởi lên trong tâm. Thực hành chánh niệm đúng đắn là:", options: ["Cố gắng gạt bỏ cảm giác đó đi và tập trung lại vào công việc.", "Thầm ghi nhận: 'À, có một cảm giác bực bội đang ở đây', và tiếp tục làm việc.", "Phân tích xem tại sao mình lại bực, có phải do người đồng nghiệp không?", "Đứng dậy đi uống nước để quên đi cảm giác khó chịu."], answer: "B", explanation: "Chánh niệm chỉ đơn thuần là 'thấy rõ' và 'ghi nhận' sự có mặt của cảm xúc mà không phán xét, không đàn áp và cũng không bị cuốn theo." },
+                // Question 3
+                { question: "Bạn đang đi bộ từ nhà ra đầu ngõ. Đâu là biểu hiện rõ nhất của việc có chánh niệm?", options: ["Vừa đi vừa nhẩm lại danh sách những thứ cần mua ở chợ.", "Cắm tai nghe để không bị tiếng ồn bên ngoài làm phiền.", "Cảm nhận rõ lòng bàn chân đang tiếp xúc với mặt đất trong từng bước đi.", "Đi thật nhanh để đến nơi sớm nhất có thể."], answer: "C", explanation: "Đây là thực hành thiền đi bộ căn bản, dùng cảm giác ở lòng bàn chân làm đối tượng để neo tâm vào thực tại, 'nhớ việc mình đang làm' là đang đi." },
+                // Question 4
+                { question: "Khi đang lắng nghe một người bạn tâm sự, chánh niệm có nghĩa là:", options: ["Lắng nghe câu chuyện của họ và suy nghĩ xem mình nên cho lời khuyên gì.", "Nghe và thầm so sánh câu chuyện của họ với trải nghiệm của chính mình.", "Chú tâm hoàn toàn vào lời nói và cảm xúc của họ, đồng thời thấy rõ các suy nghĩ của mình đang khởi lên.", "Cố gắng tỏ ra đồng cảm trong khi đầu óc đang nghĩ về việc khác."], answer: "C", explanation: "Chánh niệm trong giao tiếp là lắng nghe sâu sắc, đồng thời có một phần tâm vẫn tỉnh táo để 'thấy rõ' các phản ứng, phán xét của chính mình mà không vội vã xen vào." },
+                // Question 5 (Edited)
+                { question: "Một người đang ngồi đọc kinh rất chăm chú, tâm hoàn toàn đặt vào từng dòng chữ, không còn để ý đến xung quanh. Trạng thái này nên được hiểu là gì?", options: ["Đây chính là Chánh niệm, vì người đó rất chú tâm vào việc đang làm.", "Đây là Chánh Định (sự tập trung chuyên nhất), không hoàn toàn là Chánh niệm.", "Đây là Tâm Si, vì người đó không biết gì đang xảy ra xung quanh.", "Đây là Tâm Tham, vì người đó tham muốn công đức."], answer: "B", explanation: "Đây là một điểm khó. Sự tập trung cao độ vào một đối tượng duy nhất đến mức quên hết mọi thứ là Định (concentration). Chánh niệm (mindfulness) có phạm vi rộng hơn, nó là sự 'biết' mọi thứ đang diễn ra trong và ngoài mình một cách không chọn lựa." },
+                // Question 6
+                { question: "Mục đích chính của việc quan sát hơi thở trong thiền tập là gì?", options: ["Để làm cho tâm trí trống rỗng, không còn suy nghĩ nào.", "Để điều khiển hơi thở sao cho thật đều và 'đúng kỹ thuật'.", "Để có một 'nơi trú ẩn' cho tâm quay về mỗi khi nó chạy lang thang.", "Để đạt được một trạng thái xuất thần, phiêu du."], answer: "C", explanation: "Hơi thở là một đối tượng luôn có mặt ở hiện tại, tự nhiên và không mang tính khái niệm. Nó là 'sợi dây' để ta kéo tâm trí quay về mỗi khi nó đi lạc, giúp ta 'nhớ việc mình đang làm' là đang quan sát." },
+                // Question 7
+                { question: "Bạn đang ăn một quả cam. Chánh niệm KHÁC với việc 'thưởng thức' ở điểm nào?", options: ["Chánh niệm là chỉ biết đang ăn, không cần thấy ngon hay dở.", "Chánh niệm là phải ăn thật chậm.", "Chánh niệm là phải phân tích thành phần dinh dưỡng của quả cam.", "Không có gì khác biệt, chánh niệm chính là thưởng thức."], answer: "A", explanation: "Thưởng thức thường bao hàm sự yêu thích, sự bám víu vào cảm giác ngon (tâm Tham). Chánh niệm chỉ đơn thuần là ghi nhận các cảm giác (chua, ngọt, mềm...) và hành động ăn mà không cần dán nhãn 'ngon' hay 'dở'." },
+                // Question 8
+                { question: "Khi một suy nghĩ về quá khứ buồn bã hiện lên, người có chánh niệm sẽ:", options: ["'Xem' suy nghĩ đó như một đám mây trôi qua trên bầu trời tâm trí.", "Nhanh chóng nghĩ về một chuyện vui khác để thay thế.", "Dằn vặt bản thân tại sao lại cứ nghĩ về chuyện đã qua.", "Phân tích lại câu chuyện đó để rút kinh nghiệm cho tương lai."], answer: "A", explanation: "Đây là cốt lõi của việc hành thiền. Coi suy nghĩ như một hiện tượng vô thường, đến và đi, không phải là mình. Điều này giúp ta 'thấy rõ' suy nghĩ mà không bị nó chi phối." },
+                // Question 9 (Edited)
+                { question: "Đâu là biểu hiện của 'thất niệm' (mất chánh niệm) tinh vi nhất?", options: ["Đang làm vườn và mở một bài giảng pháp trên YouTube để nghe.", "Làm việc theo thói quen một cách máy móc, không có sự hay biết.", "La mắng người khác trong lúc nóng giận.", "Uống rượu say và không biết gì."], answer: "B", explanation: "Các lựa chọn A, C, D đều là thất niệm rõ ràng. Nhưng làm việc theo thói quen một cách tự động, hiệu quả mà không có sự 'biết' đi kèm chính là trạng thái thất niệm phổ biến và tinh vi nhất, vì ta không nhận ra mình đang thất niệm." },
+                // Question 10
+                { question: "Tại sao việc 'thấy rõ mình đang nghĩ gì' lại quan trọng?", options: ["Để có thể ngăn chặn ngay lập tức các suy nghĩ xấu.", "Để thấy rằng suy nghĩ chỉ là một hiện tượng của tâm, không phải là 'tôi' hay 'của tôi'.", "Để có thể phát triển những ý tưởng hay ho, sáng tạo hơn.", "Để có thể kể lại cho người khác nghe về những suy nghĩ của mình."], answer: "B", explanation: "Mục đích của việc quan sát suy nghĩ là để thấy được bản chất thật của chúng: chỉ là các pháp trần đến và đi. Khi thấy rõ điều này (Tuệ), sự đồng hóa mình với suy nghĩ sẽ giảm bớt, dẫn đến giải thoát." },
+                // Question 11 (Edited)
+                { question: "Bạn đang phải nghe một cuộc điện thoại với một người nói chuyện rất dài dòng và nhàm chán. Chánh niệm lúc này là:", options: ["Cố gắng tập trung vào lời người nói dù không muốn nghe.", "Lịch sự lắng nghe nhưng đầu óc đang nghĩ về việc khác.", "Quan sát cảm giác 'buồn chán' đang vận hành trong cơ thể và tâm trí mình.", "Tìm cách ngắt lời để kết thúc cuộc gọi càng sớm càng tốt."], answer: "C", explanation: "Chánh niệm không phải là cố gắng ép mình thích cái mình không thích. Nó là sự can đảm quay vào trong, đối diện và quan sát chính cảm giác khó chịu của mình mà không trốn chạy." },
+                // Question 12
+                { question: "Chánh niệm và sự thư giãn có mối quan hệ như thế nào?", options: ["Chánh niệm chính là sự thư giãn.", "Phải thư giãn thì mới có chánh niệm được.", "Chánh niệm không phải là thư giãn, nhưng nó có thể dẫn đến sự thư giãn sâu sắc.", "Chánh niệm và thư giãn không liên quan gì đến nhau."], answer: "C", explanation: "Chánh niệm là sự tỉnh táo, nhận biết. Sự tỉnh táo này có thể rất căng thẳng lúc ban đầu. Nhưng khi thực hành thuần thục, việc chấp nhận mọi thứ như nó là (không còn sự chống đối của tâm Sân) sẽ tự nhiên dẫn đến một trạng thái bình an và thư giãn sâu sắc." },
+                // Question 13
+                { question: "Khi bị đau răng, thực hành chánh niệm KHÔNG có nghĩa là:", options: ["Cảm nhận rõ ràng vị trí và cường độ của cơn đau.", "Quan sát sự bực bội, khó chịu đang khởi lên cùng với cơn đau.", "Cố gắng dùng ý chí để làm cơn đau biến mất.", "Ghi nhận 'có cảm giác đau' mà không thêm vào đó sự oán ghét."], answer: "C", explanation: "Chánh niệm là 'thấy rõ' và 'chấp nhận' thực tại, bao gồm cả cơn đau. Cố gắng làm nó biến mất là hành động của tâm Sân (sự chống đối), đối nghịch với tinh thần chánh niệm." },
+                // Question 14
+                { question: "'Biết đúng việc - ngay trong lúc đang làm' có ý nghĩa sâu sắc là gì?", options: ["Biết rằng việc mình đang làm là có ích cho xã hội.", "Biết rằng mình đang làm việc này chứ không phải việc khác, và làm với sự tỉnh táo.", "Biết rằng mình làm việc này sẽ được trả lương cao.", "Biết rằng mình làm tốt hơn người khác."], answer: "B", explanation: "'Biết đúng việc' ở mức độ căn bản nhất chính là biết thân và tâm mình đang làm gì ngay tại giây phút này. Sự tỉnh táo này là nền tảng cho những quyết định đúng đắn hơn sau này." },
+                // Question 15
+                { question: "Bạn vừa hoàn thành bài trắc nghiệm này. Ngay tại giây phút này, chánh niệm là gì?", options: ["Hài lòng với số câu trả lời đúng của mình.", "Thấy rõ các suy nghĩ, cảm xúc đang khởi lên (ví dụ: 'À, thấy vui', 'À, thấy khó hiểu').", "Lên kế hoạch sẽ thực hành chánh niệm như thế nào vào ngày mai.", "So sánh kết quả này với bài trắc nghiệm 'Tinh tấn' hôm qua."], answer: "B", explanation: "Chánh niệm luôn quay về với thực tại của giây phút này. Mọi sự phân tích, so sánh, lên kế hoạch đều là những hoạt động của tâm trí đưa ta về quá khứ hoặc tương lai, không phải là sự 'thấy rõ' những gì đang diễn ra ngay bây giờ." }
             ];
 
-            const quizForm = document.getElementById('tinh-tan-quiz');
+            const quizForm = document.getElementById('chanh-niem-quiz');
             
             function setupQuiz() {
                 quizData.forEach((item, index) => {
@@ -165,26 +174,20 @@
                     questionText.innerHTML = `<strong>Câu ${index + 1}:</strong> ${item.question}`;
                     questionBlock.appendChild(questionText);
                     
-                    const feedbackIcons = document.createElement('div');
-                    feedbackIcons.className = 'text-center mb-4';
-                    feedbackIcons.innerHTML = `
-                        <span id="correct-icon-${index + 1}" class="feedback-icon">😊</span>
-                        <span id="incorrect-icon-${index + 1}" class="feedback-icon">😟</span>
-                    `;
-                    questionBlock.appendChild(feedbackIcons);
-
                     const options = ['A', 'B', 'C', 'D'];
                     item.options.forEach((optionText, optionIndex) => {
-                        const label = document.createElement('label');
-                        label.className = 'answer-option';
-                        const radio = document.createElement('input');
-                        radio.type = 'radio';
-                        radio.name = `q${index + 1}`;
-                        radio.value = options[optionIndex];
-                        
-                        label.appendChild(radio);
-                        label.append(` ${options[optionIndex]}. ${optionText}`);
-                        questionBlock.appendChild(label);
+                         if (optionText) { // Ensure option exists
+                            const label = document.createElement('label');
+                            label.className = 'answer-option';
+                            const radio = document.createElement('input');
+                            radio.type = 'radio';
+                            radio.name = `q${index + 1}`;
+                            radio.value = options[optionIndex];
+                            
+                            label.appendChild(radio);
+                            label.append(` ${options[optionIndex]}. ${optionText}`);
+                            questionBlock.appendChild(label);
+                        }
                     });
                     quizForm.appendChild(questionBlock);
                 });
@@ -195,9 +198,6 @@
                     const questionBlock = document.getElementById(`q${index + 1}-block`);
                     const selectedOption = quizForm.querySelector(`input[name="q${index + 1}"]:checked`);
                     
-                    document.getElementById(`correct-icon-${index + 1}`).style.display = 'none';
-                    document.getElementById(`incorrect-icon-${index + 1}`).style.display = 'none';
-
                     const oldFeedback = questionBlock.querySelector('.feedback');
                     if(oldFeedback) oldFeedback.remove();
                     
@@ -207,10 +207,8 @@
                         const selectedLabel = selectedOption.parentElement;
                         
                         if (userAnswer === correctAnswer) {
-                            document.getElementById(`correct-icon-${index + 1}`).style.display = 'inline-block';
                              selectedLabel.classList.add('selected-correct');
                         } else {
-                            document.getElementById(`incorrect-icon-${index + 1}`).style.display = 'inline-block';
                             selectedLabel.classList.add('selected-incorrect');
                             const correctLabel = questionBlock.querySelector(`input[value="${correctAnswer}"]`).parentElement;
                             correctLabel.classList.add('actual-correct');
@@ -218,7 +216,7 @@
 
                         const feedbackDiv = document.createElement('div');
                         feedbackDiv.className = 'feedback correct-feedback';
-                        feedbackDiv.innerHTML = item.explanation;
+                        feedbackDiv.innerHTML = `<b>Giải thích:</b> ${item.explanation}`;
                         questionBlock.appendChild(feedbackDiv);
                     }
                     
