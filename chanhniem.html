@@ -58,13 +58,13 @@
             cursor: pointer;
             transition: background-color 0.2s;
         }
-        .answer-option:hover {
+        .answer-option:hover:not([disabled]) {
             background-color: #f5f5f5;
         }
         .answer-option input[type="radio"] {
             margin-right: 10px;
         }
-        .quiz-submit-btn {
+        #submit-btn, #restart-btn {
             display: block;
             width: 100%;
             padding: 15px;
@@ -78,7 +78,7 @@
             margin-top: 20px;
             transition: background-color 0.2s;
         }
-        .quiz-submit-btn:hover {
+        #submit-btn:hover, #restart-btn:hover {
             background-color: #2980b9;
         }
         .feedback {
@@ -106,128 +106,131 @@
             background-color: #cce5ff;
             border-color: #b8daff;
         }
+        .feedback-icon {
+            display: none;
+            font-size: 3rem;
+            line-height: 1;
+            margin-top: 1rem;
+        }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="quiz-container">
-        <div class="quiz-header">
-            <h3>TRẮC NGHIỆM: BẠN CÓ "CHÁNH NIỆM" TRONG ĐỜI SỐNG?</h3>
+        <div id="quiz-content">
+            <div class="quiz-header">
+                <h3>TRẮC NGHIỆM: BẠN CÓ "CHÁNH NIỆM" TRONG ĐỜI SỐNG?</h3>
+                <p id="question-counter" class="text-center text-gray-500"></p>
+            </div>
+            <div class="quiz-spirit">
+                <p><strong>Tinh thần cốt lõi:</strong></p>
+                <ul>
+                    <li><em>Tôi nhớ việc mình đang làm</em></li>
+                    <li><em>Tôi thấy rõ mình đang nghĩ, nói, hay làm gì</em></li>
+                    <li><em>Nhằm biết đúng việc – ngay trong lúc đang làm</em></li>
+                </ul>
+            </div>
+            <div id="question-area">
+                </div>
+            <button id="next-button" class="hidden">Câu tiếp theo</button>
         </div>
-        <div class="quiz-spirit">
-            <p><strong>Tinh thần cốt lõi:</strong></p>
-            <ul>
-                <li><em>Tôi nhớ việc mình đang làm</em></li>
-                <li><em>Tôi thấy rõ mình đang nghĩ, nói, hay làm gì</em></li>
-                <li><em>Nhằm biết đúng việc – ngay trong lúc đang làm</em></li>
-            </ul>
+        <div id="result-area" class="hidden text-center">
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Hoàn thành!</h2>
+            <p id="result-text" class="text-lg text-gray-600 mb-6"></p>
+            <button id="restart-btn">Làm lại từ đầu</button>
         </div>
-        <form id="chanh-niem-quiz">
-             </form>
-         <button type="button" class="quiz-submit-btn" id="submit-btn">Xem kết quả</button>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const quizData = [
-                // Question 1
-                { question: "Bạn đang rửa chén. 'Chánh niệm' trong lúc này là gì?", options: ["Vừa rửa vừa nghe một bài giảng pháp để tâm không bị lãng phí.", "Cảm nhận rõ nhiệt độ của nước, sức nặng của cái chén, chuyển động của tay.", "Cố gắng rửa thật nhanh để có thời gian làm việc khác.", "Suy nghĩ về những việc cần làm trong ngày mai."], answer: "B", explanation: "Chánh niệm là sự có mặt trọn vẹn với việc đang làm. Nghe giảng pháp hay suy nghĩ việc khác đều là biểu hiện của tâm đang không ở cùng với thân." },
-                // Question 2
-                { question: "Trong lúc đang ngồi làm việc, một cảm giác bực bội đột nhiên khởi lên trong tâm. Thực hành chánh niệm đúng đắn là:", options: ["Cố gắng gạt bỏ cảm giác đó đi và tập trung lại vào công việc.", "Thầm ghi nhận: 'À, có một cảm giác bực bội đang ở đây', và tiếp tục làm việc.", "Phân tích xem tại sao mình lại bực, có phải do người đồng nghiệp không?", "Đứng dậy đi uống nước để quên đi cảm giác khó chịu."], answer: "B", explanation: "Chánh niệm chỉ đơn thuần là 'thấy rõ' và 'ghi nhận' sự có mặt của cảm xúc mà không phán xét, không đàn áp và cũng không bị cuốn theo." },
-                // Question 3
-                { question: "Bạn đang đi bộ từ nhà ra đầu ngõ. Đâu là biểu hiện rõ nhất của việc có chánh niệm?", options: ["Vừa đi vừa nhẩm lại danh sách những thứ cần mua ở chợ.", "Cắm tai nghe để không bị tiếng ồn bên ngoài làm phiền.", "Cảm nhận rõ lòng bàn chân đang tiếp xúc với mặt đất trong từng bước đi.", "Đi thật nhanh để đến nơi sớm nhất có thể."], answer: "C", explanation: "Đây là thực hành thiền đi bộ căn bản, dùng cảm giác ở lòng bàn chân làm đối tượng để neo tâm vào thực tại, 'nhớ việc mình đang làm' là đang đi." },
-                // Question 4
-                { question: "Khi đang lắng nghe một người bạn tâm sự, chánh niệm có nghĩa là:", options: ["Lắng nghe câu chuyện của họ và suy nghĩ xem mình nên cho lời khuyên gì.", "Nghe và thầm so sánh câu chuyện của họ với trải nghiệm của chính mình.", "Chú tâm hoàn toàn vào lời nói và cảm xúc của họ, đồng thời thấy rõ các suy nghĩ của mình đang khởi lên.", "Cố gắng tỏ ra đồng cảm trong khi đầu óc đang nghĩ về việc khác."], answer: "C", explanation: "Chánh niệm trong giao tiếp là lắng nghe sâu sắc, đồng thời có một phần tâm vẫn tỉnh táo để 'thấy rõ' các phản ứng, phán xét của chính mình mà không vội vã xen vào." },
-                // Question 5 (Edited)
-                { question: "Một người đang ngồi đọc kinh rất chăm chú, tâm hoàn toàn đặt vào từng dòng chữ, không còn để ý đến xung quanh. Trạng thái này nên được hiểu là gì?", options: ["Đây chính là Chánh niệm, vì người đó rất chú tâm vào việc đang làm.", "Đây là Chánh Định (sự tập trung chuyên nhất), không hoàn toàn là Chánh niệm.", "Đây là Tâm Si, vì người đó không biết gì đang xảy ra xung quanh.", "Đây là Tâm Tham, vì người đó tham muốn công đức."], answer: "B", explanation: "Đây là một điểm khó. Sự tập trung cao độ vào một đối tượng duy nhất đến mức quên hết mọi thứ là Định (concentration). Chánh niệm (mindfulness) có phạm vi rộng hơn, nó là sự 'biết' mọi thứ đang diễn ra trong và ngoài mình một cách không chọn lựa." },
-                // Question 6
-                { question: "Mục đích chính của việc quan sát hơi thở trong thiền tập là gì?", options: ["Để làm cho tâm trí trống rỗng, không còn suy nghĩ nào.", "Để điều khiển hơi thở sao cho thật đều và 'đúng kỹ thuật'.", "Để có một 'nơi trú ẩn' cho tâm quay về mỗi khi nó chạy lang thang.", "Để đạt được một trạng thái xuất thần, phiêu du."], answer: "C", explanation: "Hơi thở là một đối tượng luôn có mặt ở hiện tại, tự nhiên và không mang tính khái niệm. Nó là 'sợi dây' để ta kéo tâm trí quay về mỗi khi nó đi lạc, giúp ta 'nhớ việc mình đang làm' là đang quan sát." },
-                // Question 7
-                { question: "Bạn đang ăn một quả cam. Chánh niệm KHÁC với việc 'thưởng thức' ở điểm nào?", options: ["Chánh niệm là chỉ biết đang ăn, không cần thấy ngon hay dở.", "Chánh niệm là phải ăn thật chậm.", "Chánh niệm là phải phân tích thành phần dinh dưỡng của quả cam.", "Không có gì khác biệt, chánh niệm chính là thưởng thức."], answer: "A", explanation: "Thưởng thức thường bao hàm sự yêu thích, sự bám víu vào cảm giác ngon (tâm Tham). Chánh niệm chỉ đơn thuần là ghi nhận các cảm giác (chua, ngọt, mềm...) và hành động ăn mà không cần dán nhãn 'ngon' hay 'dở'." },
-                // Question 8
-                { question: "Khi một suy nghĩ về quá khứ buồn bã hiện lên, người có chánh niệm sẽ:", options: ["'Xem' suy nghĩ đó như một đám mây trôi qua trên bầu trời tâm trí.", "Nhanh chóng nghĩ về một chuyện vui khác để thay thế.", "Dằn vặt bản thân tại sao lại cứ nghĩ về chuyện đã qua.", "Phân tích lại câu chuyện đó để rút kinh nghiệm cho tương lai."], answer: "A", explanation: "Đây là cốt lõi của việc hành thiền. Coi suy nghĩ như một hiện tượng vô thường, đến và đi, không phải là mình. Điều này giúp ta 'thấy rõ' suy nghĩ mà không bị nó chi phối." },
-                // Question 9 (Edited)
-                { question: "Đâu là biểu hiện của 'thất niệm' (mất chánh niệm) tinh vi nhất?", options: ["Đang làm vườn và mở một bài giảng pháp trên YouTube để nghe.", "Làm việc theo thói quen một cách máy móc, không có sự hay biết.", "La mắng người khác trong lúc nóng giận.", "Uống rượu say và không biết gì."], answer: "B", explanation: "Các lựa chọn A, C, D đều là thất niệm rõ ràng. Nhưng làm việc theo thói quen một cách tự động, hiệu quả mà không có sự 'biết' đi kèm chính là trạng thái thất niệm phổ biến và tinh vi nhất, vì ta không nhận ra mình đang thất niệm." },
-                // Question 10
-                { question: "Tại sao việc 'thấy rõ mình đang nghĩ gì' lại quan trọng?", options: ["Để có thể ngăn chặn ngay lập tức các suy nghĩ xấu.", "Để thấy rằng suy nghĩ chỉ là một hiện tượng của tâm, không phải là 'tôi' hay 'của tôi'.", "Để có thể phát triển những ý tưởng hay ho, sáng tạo hơn.", "Để có thể kể lại cho người khác nghe về những suy nghĩ của mình."], answer: "B", explanation: "Mục đích của việc quan sát suy nghĩ là để thấy được bản chất thật của chúng: chỉ là các pháp trần đến và đi. Khi thấy rõ điều này (Tuệ), sự đồng hóa mình với suy nghĩ sẽ giảm bớt, dẫn đến giải thoát." },
-                // Question 11 (Edited)
-                { question: "Bạn đang phải nghe một cuộc điện thoại với một người nói chuyện rất dài dòng và nhàm chán. Chánh niệm lúc này là:", options: ["Cố gắng tập trung vào lời người nói dù không muốn nghe.", "Lịch sự lắng nghe nhưng đầu óc đang nghĩ về việc khác.", "Quan sát cảm giác 'buồn chán' đang vận hành trong cơ thể và tâm trí mình.", "Tìm cách ngắt lời để kết thúc cuộc gọi càng sớm càng tốt."], answer: "C", explanation: "Chánh niệm không phải là cố gắng ép mình thích cái mình không thích. Nó là sự can đảm quay vào trong, đối diện và quan sát chính cảm giác khó chịu của mình mà không trốn chạy." },
-                // Question 12
-                { question: "Chánh niệm và sự thư giãn có mối quan hệ như thế nào?", options: ["Chánh niệm chính là sự thư giãn.", "Phải thư giãn thì mới có chánh niệm được.", "Chánh niệm không phải là thư giãn, nhưng nó có thể dẫn đến sự thư giãn sâu sắc.", "Chánh niệm và thư giãn không liên quan gì đến nhau."], answer: "C", explanation: "Chánh niệm là sự tỉnh táo, nhận biết. Sự tỉnh táo này có thể rất căng thẳng lúc ban đầu. Nhưng khi thực hành thuần thục, việc chấp nhận mọi thứ như nó là (không còn sự chống đối của tâm Sân) sẽ tự nhiên dẫn đến một trạng thái bình an và thư giãn sâu sắc." },
-                // Question 13
-                { question: "Khi bị đau răng, thực hành chánh niệm KHÔNG có nghĩa là:", options: ["Cảm nhận rõ ràng vị trí và cường độ của cơn đau.", "Quan sát sự bực bội, khó chịu đang khởi lên cùng với cơn đau.", "Cố gắng dùng ý chí để làm cơn đau biến mất.", "Ghi nhận 'có cảm giác đau' mà không thêm vào đó sự oán ghét."], answer: "C", explanation: "Chánh niệm là 'thấy rõ' và 'chấp nhận' thực tại, bao gồm cả cơn đau. Cố gắng làm nó biến mất là hành động của tâm Sân (sự chống đối), đối nghịch với tinh thần chánh niệm." },
-                // Question 14
-                { question: "'Biết đúng việc - ngay trong lúc đang làm' có ý nghĩa sâu sắc là gì?", options: ["Biết rằng việc mình đang làm là có ích cho xã hội.", "Biết rằng mình đang làm việc này chứ không phải việc khác, và làm với sự tỉnh táo.", "Biết rằng mình làm việc này sẽ được trả lương cao.", "Biết rằng mình làm tốt hơn người khác."], answer: "B", explanation: "'Biết đúng việc' ở mức độ căn bản nhất chính là biết thân và tâm mình đang làm gì ngay tại giây phút này. Sự tỉnh táo này là nền tảng cho những quyết định đúng đắn hơn sau này." },
-                // Question 15
-                { question: "Bạn vừa hoàn thành bài trắc nghiệm này. Ngay tại giây phút này, chánh niệm là gì?", options: ["Hài lòng với số câu trả lời đúng của mình.", "Thấy rõ các suy nghĩ, cảm xúc đang khởi lên (ví dụ: 'À, thấy vui', 'À, thấy khó hiểu').", "Lên kế hoạch sẽ thực hành chánh niệm như thế nào vào ngày mai.", "So sánh kết quả này với bài trắc nghiệm 'Tinh tấn' hôm qua."], answer: "B", explanation: "Chánh niệm luôn quay về với thực tại của giây phút này. Mọi sự phân tích, so sánh, lên kế hoạch đều là những hoạt động của tâm trí đưa ta về quá khứ hoặc tương lai, không phải là sự 'thấy rõ' những gì đang diễn ra ngay bây giờ." }
+                { question: "Bạn đang rửa chén. 'Chánh niệm' trong lúc này là gì?", options: ["Vừa rửa vừa nghe một bài giảng pháp để tâm không bị lãng phí.", "Cảm nhận rõ nhiệt độ của nước, sức nặng của cái chén, chuyển động của tay.", "Cố gắng rửa thật nhanh để có thời gian làm việc khác.", "Suy nghĩ về những việc cần làm trong ngày mai."], answer: 1, explanation: "Chánh niệm là sự có mặt trọn vẹn với việc đang làm. Nghe giảng pháp hay suy nghĩ việc khác đều là biểu hiện của tâm đang không ở cùng với thân." },
+                { question: "Trong lúc đang ngồi làm việc, một cảm giác bực bội đột nhiên khởi lên trong tâm. Thực hành chánh niệm đúng đắn là:", options: ["Cố gắng gạt bỏ cảm giác đó đi và tập trung lại vào công việc.", "Thầm ghi nhận: 'À, có một cảm giác bực bội đang ở đây', và tiếp tục làm việc.", "Phân tích xem tại sao mình lại bực, có phải do người đồng nghiệp không?", "Đứng dậy đi uống nước để quên đi cảm giác khó chịu."], answer: 1, explanation: "Chánh niệm chỉ đơn thuần là 'thấy rõ' và 'ghi nhận' sự có mặt của cảm xúc mà không phán xét, không đàn áp và cũng không bị cuốn theo." },
+                { question: "Bạn đang đi bộ từ nhà ra đầu ngõ. Đâu là biểu hiện rõ nhất của việc có chánh niệm?", options: ["Vừa đi vừa nhẩm lại danh sách những thứ cần mua ở chợ.", "Cắm tai nghe để không bị tiếng ồn bên ngoài làm phiền.", "Cảm nhận rõ lòng bàn chân đang tiếp xúc với mặt đất trong từng bước đi.", "Đi thật nhanh để đến nơi sớm nhất có thể."], answer: 2, explanation: "Đây là thực hành thiền đi bộ căn bản, dùng cảm giác ở lòng bàn chân làm đối tượng để neo tâm vào thực tại, 'nhớ việc mình đang làm' là đang đi." },
+                { question: "Khi đang lắng nghe một người bạn tâm sự, chánh niệm có nghĩa là:", options: ["Lắng nghe câu chuyện của họ và suy nghĩ xem mình nên cho lời khuyên gì.", "Nghe và thầm so sánh câu chuyện của họ với trải nghiệm của chính mình.", "Chú tâm hoàn toàn vào lời nói và cảm xúc của họ, đồng thời thấy rõ các suy nghĩ của mình đang khởi lên.", "Cố gắng tỏ ra đồng cảm trong khi đầu óc đang nghĩ về việc khác."], answer: 2, explanation: "Chánh niệm trong giao tiếp là lắng nghe sâu sắc, đồng thời có một phần tâm vẫn tỉnh táo để 'thấy rõ' các phản ứng, phán xét của chính mình mà không vội vã xen vào." },
+                { question: "Một người đang ngồi đọc kinh rất chăm chú, tâm hoàn toàn đặt vào từng dòng chữ, không còn để ý đến xung quanh. Trạng thái này nên được hiểu là gì?", options: ["Đây chính là Chánh niệm, vì người đó rất chú tâm vào việc đang làm.", "Đây là Chánh Định (sự tập trung chuyên nhất), không hoàn toàn là Chánh niệm.", "Đây là Tâm Si, vì người đó không biết gì đang xảy ra xung quanh.", "Đây là Tâm Tham, vì người đó tham muốn công đức."], answer: 1, explanation: "Đây là một điểm khó. Sự tập trung cao độ vào một đối tượng duy nhất đến mức quên hết mọi thứ là Định (concentration). Chánh niệm (mindfulness) có phạm vi rộng hơn, nó là sự 'biết' mọi thứ đang diễn ra trong và ngoài mình một cách không chọn lựa." },
+                { question: "Mục đích chính của việc quan sát hơi thở trong thiền tập là gì?", options: ["Để làm cho tâm trí trống rỗng, không còn suy nghĩ nào.", "Để điều khiển hơi thở sao cho thật đều và 'đúng kỹ thuật'.", "Để có một 'nơi trú ẩn' cho tâm quay về mỗi khi nó chạy lang thang.", "Để đạt được một trạng thái xuất thần, phiêu du."], answer: 2, explanation: "Hơi thở là một đối tượng luôn có mặt ở hiện tại, tự nhiên và không mang tính khái niệm. Nó là 'sợi dây' để ta kéo tâm trí quay về mỗi khi nó đi lạc, giúp ta 'nhớ việc mình đang làm' là đang quan sát." },
+                { question: "Bạn đang ăn một quả cam. Chánh niệm KHÁC với việc 'thưởng thức' ở điểm nào?", options: ["Chánh niệm là chỉ biết đang ăn, không cần thấy ngon hay dở.", "Chánh niệm là phải ăn thật chậm.", "Chánh niệm là phải phân tích thành phần dinh dưỡng của quả cam.", "Không có gì khác biệt, chánh niệm chính là thưởng thức."], answer: 0, explanation: "Thưởng thức thường bao hàm sự yêu thích, sự bám víu vào cảm giác ngon (tâm Tham). Chánh niệm chỉ đơn thuần là ghi nhận các cảm giác (chua, ngọt, mềm...) và hành động ăn mà không cần dán nhãn 'ngon' hay 'dở'." },
+                { question: "Khi một suy nghĩ về quá khứ buồn bã hiện lên, người có chánh niệm sẽ:", options: ["'Xem' suy nghĩ đó như một đám mây trôi qua trên bầu trời tâm trí.", "Nhanh chóng nghĩ về một chuyện vui khác để thay thế.", "Dằn vặt bản thân tại sao lại cứ nghĩ về chuyện đã qua.", "Phân tích lại câu chuyện đó để rút kinh nghiệm cho tương lai."], answer: 0, explanation: "Đây là cốt lõi của việc hành thiền. Coi suy nghĩ như một hiện tượng vô thường, đến và đi, không phải là mình. Điều này giúp ta 'thấy rõ' suy nghĩ mà không bị nó chi phối." },
+                { question: "Đâu là biểu hiện của 'thất niệm' (mất chánh niệm) tinh vi nhất?", options: ["Đang làm vườn và mở một bài giảng pháp trên YouTube để nghe.", "Làm việc theo thói quen một cách máy móc, không có sự hay biết.", "La mắng người khác trong lúc nóng giận.", "Uống rượu say và không biết gì."], answer: 1, explanation: "Các lựa chọn A, C, D đều là thất niệm rõ ràng. Nhưng làm việc theo thói quen một cách tự động, hiệu quả mà không có sự 'biết' đi kèm chính là trạng thái thất niệm phổ biến và tinh vi nhất, vì ta không nhận ra mình đang thất niệm." },
+                { question: "Tại sao việc 'thấy rõ mình đang nghĩ gì' lại quan trọng?", options: ["Để có thể ngăn chặn ngay lập tức các suy nghĩ xấu.", "Để thấy rằng suy nghĩ chỉ là một hiện tượng của tâm, không phải là 'tôi' hay 'của tôi'.", "Để có thể phát triển những ý tưởng hay ho, sáng tạo hơn.", "Để có thể kể lại cho người khác nghe về những suy nghĩ của mình."], answer: 1, explanation: "Mục đích của việc quan sát suy nghĩ là để thấy được bản chất thật của chúng: chỉ là các pháp trần đến và đi. Khi thấy rõ điều này (Tuệ), sự đồng hóa mình với suy nghĩ sẽ giảm bớt, dẫn đến giải thoát." },
+                { question: "Bạn đang phải nghe một cuộc điện thoại với một người nói chuyện rất dài dòng và nhàm chán. Chánh niệm lúc này là:", options: ["Cố gắng tập trung vào lời người nói dù không muốn nghe.", "Lịch sự lắng nghe nhưng đầu óc đang nghĩ về việc khác.", "Quan sát cảm giác 'buồn chán' đang vận hành trong cơ thể và tâm trí mình.", "Tìm cách ngắt lời để kết thúc cuộc gọi càng sớm càng tốt."], answer: 2, explanation: "Chánh niệm không phải là cố gắng ép mình thích cái mình không thích. Nó là sự can đảm quay vào trong, đối diện và quan sát chính cảm giác khó chịu của mình mà không trốn chạy." },
+                { question: "Chánh niệm và sự thư giãn có mối quan hệ như thế nào?", options: ["Chánh niệm chính là sự thư giãn.", "Phải thư giãn thì mới có chánh niệm được.", "Chánh niệm không phải là thư giãn, nhưng nó có thể dẫn đến sự thư giãn sâu sắc.", "Chánh niệm và thư giãn không liên quan gì đến nhau."], answer: 2, explanation: "Chánh niệm là sự tỉnh táo, nhận biết. Sự tỉnh táo này có thể rất căng thẳng lúc ban đầu. Nhưng khi thực hành thuần thục, việc chấp nhận mọi thứ như nó là (không còn sự chống đối của tâm Sân) sẽ tự nhiên dẫn đến một trạng thái bình an và thư giãn sâu sắc." },
+                { question: "Khi bị đau răng, thực hành chánh niệm KHÔNG có nghĩa là:", options: ["Cảm nhận rõ ràng vị trí và cường độ của cơn đau.", "Quan sát sự bực bội, khó chịu đang khởi lên cùng với cơn đau.", "Cố gắng dùng ý chí để làm cơn đau biến mất.", "Ghi nhận 'có cảm giác đau' mà không thêm vào đó sự oán ghét."], answer: 2, explanation: "Chánh niệm là 'thấy rõ' và 'chấp nhận' thực tại, bao gồm cả cơn đau. Cố gắng làm nó biến mất là hành động của tâm Sân (sự chống đối), đối nghịch với tinh thần chánh niệm." },
+                { question: "''Biết đúng việc - ngay trong lúc đang làm' có ý nghĩa sâu sắc là gì?", options: ["Biết rằng việc mình đang làm là có ích cho xã hội.", "Biết rằng mình đang làm việc này chứ không phải việc khác, và làm với sự tỉnh táo.", "Biết rằng mình làm việc này sẽ được trả lương cao.", "Biết rằng mình làm tốt hơn người khác."], answer: 1, explanation: "'Biết đúng việc' ở mức độ căn bản nhất chính là biết thân và tâm mình đang làm gì ngay tại giây phút này. Sự tỉnh táo này là nền tảng cho những quyết định đúng đắn hơn sau này." },
+                { type: 'reflection', question: "Bạn vừa hoàn thành bài trắc nghiệm này. Ngay tại giây phút này, chánh niệm là gì?", options: ["Hài lòng với số câu trả lời đúng của mình.", "Thấy rõ các suy nghĩ, cảm xúc đang khởi lên (ví dụ: 'À, thấy vui', 'À, thấy khó hiểu').", "Lên kế hoạch sẽ thực hành chánh niệm như thế nào vào ngày mai.", "So sánh kết quả này với bài trắc nghiệm 'Tinh tấn' hôm qua."], explanation: "<b>Đây là câu hỏi để chiêm nghiệm, không có đúng sai.</b><br><br>Sự hài lòng, việc lên kế hoạch, hay sự so sánh đều là những hoạt động của tâm trí. Chánh niệm chân thật chỉ đơn giản là 'thấy rõ' các hoạt động đó đang diễn ra mà không bị cuốn theo. Nó là sự trở về với thực tại trần trụi của giây phút này." }
             ];
 
-            const quizForm = document.getElementById('chanh-niem-quiz');
-            
-            function setupQuiz() {
-                quizData.forEach((item, index) => {
-                    const questionBlock = document.createElement('div');
-                    questionBlock.className = 'question-block';
-                    questionBlock.id = `q${index + 1}-block`;
+            let currentQuestionIndex = 0;
+            let score = 0;
+            const questionArea = document.getElementById('question-area');
+            const nextButton = document.getElementById('next-button');
+            const questionCounter = document.getElementById('question-counter');
+            const quizContent = document.getElementById('quiz-content');
+            const resultArea = document.getElementById('result-area');
+            const resultText = document.getElementById('result-text');
+            const restartBtn = document.getElementById('restart-btn');
 
-                    const questionText = document.createElement('p');
-                    questionText.className = 'question-text';
-                    questionText.innerHTML = `<strong>Câu ${index + 1}:</strong> ${item.question}`;
-                    questionBlock.appendChild(questionText);
-                    
-                    const options = ['A', 'B', 'C', 'D'];
-                    item.options.forEach((optionText, optionIndex) => {
-                         if (optionText) { // Ensure option exists
-                            const label = document.createElement('label');
-                            label.className = 'answer-option';
-                            const radio = document.createElement('input');
-                            radio.type = 'radio';
-                            radio.name = `q${index + 1}`;
-                            radio.value = options[optionIndex];
-                            
-                            label.appendChild(radio);
-                            label.append(` ${options[optionIndex]}. ${optionText}`);
-                            questionBlock.appendChild(label);
-                        }
-                    });
-                    quizForm.appendChild(questionBlock);
-                });
+            function startQuiz() {
+                currentQuestionIndex = 0;
+                score = 0;
+                resultArea.classList.add('hidden');
+                quizContent.classList.remove('hidden');
+                displayQuestion();
             }
 
-            document.getElementById('submit-btn').addEventListener('click', function() {
-                quizData.forEach((item, index) => {
-                    const questionBlock = document.getElementById(`q${index + 1}-block`);
-                    const selectedOption = quizForm.querySelector(`input[name="q${index + 1}"]:checked`);
-                    
-                    const oldFeedback = questionBlock.querySelector('.feedback');
-                    if(oldFeedback) oldFeedback.remove();
-                    
-                    if (selectedOption) {
-                        const userAnswer = selectedOption.value;
-                        const correctAnswer = item.answer;
-                        const selectedLabel = selectedOption.parentElement;
-                        
-                        if (userAnswer === correctAnswer) {
-                             selectedLabel.classList.add('selected-correct');
-                        } else {
-                            selectedLabel.classList.add('selected-incorrect');
-                            const correctLabel = questionBlock.querySelector(`input[value="${correctAnswer}"]`).parentElement;
-                            correctLabel.classList.add('actual-correct');
-                        }
+            function displayQuestion() {
+                questionArea.innerHTML = '';
+                const questionData = quizData[currentQuestionIndex];
+                
+                const questionBlock = document.createElement('div');
+                questionBlock.className = 'question-block';
 
-                        const feedbackDiv = document.createElement('div');
-                        feedbackDiv.className = 'feedback correct-feedback';
-                        feedbackDiv.innerHTML = `<b>Giải thích:</b> ${item.explanation}`;
-                        questionBlock.appendChild(feedbackDiv);
-                    }
-                    
-                    const radioButtons = questionBlock.querySelectorAll('input[type="radio"]');
-                    radioButtons.forEach(radio => radio.disabled = true);
+                const questionText = document.createElement('p');
+                questionText.className = 'question-text';
+                questionText.innerHTML = questionData.question;
+                questionBlock.appendChild(questionText);
+
+                const iconsDiv = document.createElement('div');
+                iconsDiv.className = 'text-center';
+                iconsDiv.innerHTML = `<span class="feedback-icon correct">😊</span><span class="feedback-icon incorrect">😟</span>`;
+                questionBlock.appendChild(iconsDiv);
+
+                const optionsDiv = document.createElement('div');
+                questionData.options.forEach((option, index) => {
+                    const label = document.createElement('label');
+                    label.className = 'answer-option';
+                    label.innerHTML = `<input type="radio" name="q${currentQuestionIndex}" value="${index}"> ${option}`;
+                    optionsDiv.appendChild(label);
                 });
-                this.style.display = 'none';
-            });
+                questionBlock.appendChild(optionsDiv);
+                
+                questionArea.appendChild(questionBlock);
+                questionCounter.textContent = `Câu ${currentQuestionIndex + 1} / ${quizData.length}`;
+                
+                nextButton.classList.add('hidden');
+
+                const radioButtons = questionArea.querySelectorAll(`input[name="q${currentQuestionIndex}"]`);
+                radioButtons.forEach(radio => {
+                    radio.addEventListener('change', handleAnswerSelection);
+                });
+            }
             
-            setupQuiz();
-        });
-    </script>
-</body>
-</html>
+            function handleAnswerSelection(event) {
+                const selectedValue = parseInt(event.target.value);
+                const questionData = quizData[currentQuestionIndex];
+                const questionBlock = questionArea.firstElementChild;
+                const options = questionBlock.querySelectorAll('.answer-option');
+
+                options.forEach(opt => opt.querySelector('input').disabled = true);
+                
+                const correctIcon = questionBlock.querySelector('.feedback-icon.correct');
+                const incorrectIcon = questionBlock.querySelector('.feedback-icon.incorrect');
+
+                if (questionData.type !== 'reflection') {
+                    if (selectedValue === questionData.answer) {
+                        score++;
+                        correctIcon.style.display = 'inline-block';
+                        options[selectedValue].classList.add
