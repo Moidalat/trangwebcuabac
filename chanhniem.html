@@ -233,4 +233,52 @@
                     if (selectedValue === questionData.answer) {
                         score++;
                         correctIcon.style.display = 'inline-block';
-                        options[selectedValue].classList.add
+                        options[selectedValue].classList.add('selected-correct');
+                    } else {
+                        incorrectIcon.style.display = 'inline-block';
+                        options[selectedValue].classList.add('selected-incorrect');
+                        options[questionData.answer].classList.add('actual-correct');
+                    }
+                } else {
+                     options[selectedValue].classList.add('actual-correct'); // Neutral highlight for reflection
+                }
+
+                // Show explanation
+                const feedbackDiv = document.createElement('div');
+                feedbackDiv.className = 'feedback correct-feedback';
+                feedbackDiv.innerHTML = `<b>Giải thích:</b> ${questionData.explanation}`;
+                questionBlock.appendChild(feedbackDiv);
+                
+                // Show next button
+                if(currentQuestionIndex < quizData.length - 1) {
+                    nextButton.textContent = "Câu tiếp theo";
+                } else {
+                    nextButton.textContent = "Xem kết quả";
+                }
+                nextButton.classList.remove('hidden');
+                nextButton.style.display = 'block';
+            }
+            
+            nextButton.addEventListener('click', () => {
+                 currentQuestionIndex++;
+                 if(currentQuestionIndex < quizData.length){
+                     displayQuestion();
+                 } else {
+                     showResult();
+                 }
+            });
+
+            function showResult() {
+                quizContent.classList.add('hidden');
+                resultArea.classList.remove('hidden');
+                const scoredQuestions = quizData.filter(q => q.type !== 'reflection').length;
+                resultText.innerHTML = `Bạn đã trả lời đúng <strong>${score} / ${scoredQuestions}</strong> câu.<br><br>Quan trọng hơn cả điểm số là sự soi chiếu lại tâm mình trong từng khoảnh khắc. Chúc bác luôn tinh tấn và an lạc!`;
+            }
+            
+            restartBtn.addEventListener('click', startQuiz);
+
+            startQuiz();
+        });
+    </script>
+</body>
+</html>
