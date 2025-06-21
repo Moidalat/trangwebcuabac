@@ -194,10 +194,46 @@
         </div>
     </div>
 
-    <audio id="correctAudio" src="https://www.soundjay.com/button/sounds/button-30.mp3" preload="auto"></audio>
-    <audio id="incorrectAudio" src="https://www.soundjay.com/button/sounds/button-1.mp3" preload="auto"></audio>
-
     <script>
+        // Khởi tạo AudioContext
+        let audioContext;
+
+        function playCorrectSound() {
+            if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator.type = 'sine'; // Sóng hình sin
+            oscillator.frequency.value = 880; // Cao độ A5
+            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.5, audioContext.currentTime + 0.01);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.3);
+
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.3);
+        }
+
+        function playIncorrectSound() {
+            if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+gainNode.connect(audioContext.destination);
+
+            oscillator.type = 'sawtooth'; // Sóng răng cưa
+            oscillator.frequency.value = 220; // Cao độ A3 (thấp hơn)
+            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.5, audioContext.currentTime + 0.01);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5);
+
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+
         const questions = [
             {
                 question: "Bạn đang nghe một vị giảng sư thuyết pháp trên YouTube với lối nói **hài hước và duyên dáng**, khiến bạn cảm thấy rất thích thú và muốn nghe mãi. Theo giáo lý về **Như Lý Tác Ý**, bạn nên làm gì lúc này?",
@@ -771,7 +807,7 @@
                 correct: 2,
                 feedbackCorrect: "Rất chính xác! **Như Lý Tác Ý** bằng cách quán chiếu về bản chất vô thường, duyên khởi, và vô ngã của thành công và lời khen giúp bạn không bám víu vào chúng, từ đó ly dục và tránh xa phiền não tự mãn.",
                 feedbackIncorrect: [
-                    "Chưa chính xác. Tận hưởng niềm vui mà không quán chiếu sẽ dễ dẫn đến chấp thủ và phiền não.",
+                    "Chưa chính xác. Tận hưởng niềm vui mà không quán chiếu có thể dẫn đến chấp thủ vào cảm giác và ngã mạn.",
                     "Chưa chính xác. Tự nhủ xứng đáng là biểu hiện của ngã mạn, chấp ngã.",
                     "Chưa chính xác. Cố gắng đạt được nhiều thành công hơn để duy trì cảm giác tự mãn sẽ làm tăng trưởng tham ái và chấp thủ."
                 ],
@@ -1000,10 +1036,18 @@
         const resultScreen = document.getElementById('result-screen');
         const scoreElement = document.getElementById('score');
         const totalQuestionsElement = document.getElementById('total-questions');
-        const correctAudio = document.getElementById('correctAudio');
-        const incorrectAudio = document.getElementById('incorrectAudio');
+
+        // Hàm để khởi tạo AudioContext khi có tương tác người dùng
+        function initializeAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
 
         function startQuiz() {
+            // Đảm bảo AudioContext được khởi tạo khi có tương tác đầu tiên
+            initializeAudioContext();
+
             startScreen.style.display = 'none';
             quizScreen.style.display = 'block';
             currentQuestionIndex = 0;
@@ -1057,7 +1101,7 @@
                 feedbackContent.textContent = q.feedbackCorrect;
                 feedbackReasonIncorrect.textContent = ''; // Clear incorrect reason
                 feedbackGuideCorrect.textContent = `(Dẫn chứng: ${q.citation})`;
-                correctAudio.play();
+                playCorrectSound();
             } else {
                 feedbackBox.classList.remove('correct');
                 feedbackBox.classList.add('incorrect');
@@ -1066,7 +1110,7 @@
                 feedbackContent.textContent = q.feedbackIncorrect[selectedIndex]; 
                 feedbackReasonIncorrect.textContent = 'Bạn hãy xem lại đáp án đúng và phần giải thích chi tiết.';
                 feedbackGuideCorrect.textContent = `(Đáp án đúng là: ${q.options[q.correct]})`;
-                incorrectAudio.play();
+                playIncorrectSound();
             }
         }
 
@@ -1087,9 +1131,11 @@
             startQuiz();
         }
 
-        // Preload audio files
-        correctAudio.load();
-        incorrectAudio.load();
+        // Initialize AudioContext on any user interaction with the document
+        // This is a common workaround for autoplay policies
+        document.addEventListener('click', initializeAudioContext, { once: true });
+        document.addEventListener('keydown', initializeAudioContext, { once: true });
+
     </script>
 </body>
 </html>
