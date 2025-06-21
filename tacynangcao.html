@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Trắc Nghiệm: Ánh Sáng Chánh Pháp Trong Đời Thường</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            font-size: 1.1em; /* Tăng kích thước chữ tổng thể */
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 1.8em; /* Kích thước tiêu đề lớn hơn */
+        }
+        .question-box {
+            background-color: #e8f5e9;
+            padding: 20px 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-left: 5px solid #4CAF50;
+        }
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #388e3c;
+            font-size: 1.3em; /* Kích thước câu hỏi lớn hơn */
+        }
+        .options-container button {
+            display: block;
+            width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            border: 1px solid #dcdcdc;
+            border-radius: 8px;
+            background-color: #f8f8f8;
+            text-align: left;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            color: #444;
+        }
+        .options-container button:hover {
+            background-color: #e0e0e0;
+            border-color: #c0c0c0;
+        }
+        .options-container button.selected {
+            background-color: #d1e7dd;
+            border-color: #28a745;
+            box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
+        }
+        .feedback-box {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            display: none; /* Hidden by default */
+            font-size: 1.1em;
+        }
+        .feedback-box.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+        .feedback-box.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+        .feedback-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        .next-btn {
+            display: block;
+            width: 100%;
+            padding: 15px 25px;
+            margin-top: 25px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease;
+        }
+        .next-btn:hover {
+            background-color: #0056b3;
+        }
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .start-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.5em;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .start-btn:hover {
+            background-color: #218838;
+        }
+        .result-box {
+            text-align: center;
+            padding: 30px;
+            background-color: #e0f7fa;
+            border-radius: 12px;
+            border: 1px solid #b2ebf2;
+            margin-top: 30px;
+        }
+        .result-box h3 {
+            color: #00796b;
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+        .result-box p {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+        .restart-btn {
+            padding: 15px 30px;
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease;
+        }
+        .restart-btn:hover {
+            background-color: #fb8c00;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h2>Bài Trắc Nghiệm: Ánh Sáng Chánh Pháp Trong Đời Thường</h2>
+        <div id="start-screen">
+            <p style="text-align: center; font-size: 1.2em; margin-bottom: 30px;">
+                Chào bạn! Mời bạn cùng ôn tập và soi chiếu Chánh pháp vào đời sống qua 30 câu trắc nghiệm này.
+                Hãy chọn câu trả lời đúng nhất theo giáo lý Kinh Nikaya.
+            </p>
+            <button class="start-btn" onclick="startQuiz()">Bắt Đầu Bài Trắc Nghiệm</button>
+        </div>
+
+        <div id="quiz-screen" style="display: none;">
+            <div class="question-box">
+                <p class="question-text" id="question"></p>
+                <div class="options-container" id="options"></div>
+            </div>
+
+            <div class="feedback-box" id="feedback">
+                <div class="feedback-title" id="feedback-title"></div>
+                <p id="feedback-content"></p>
+                <p id="feedback-reason-incorrect" style="font-weight: bold; margin-top: 10px;"></p>
+                <p id="feedback-guide-correct" style="margin-top: 10px;"></p>
+            </div>
+
+            <button class="next-btn" onclick="nextQuestion()" style="display: none;">Câu Kế Tiếp</button>
+        </div>
+
+        <div id="result-screen" style="display: none;">
+            <div class="result-box">
+                <h3>Kết Quả Của Bạn</h3>
+                <p>Bạn đã trả lời đúng <span id="score">0</span> / <span id="total-questions">30</span> câu.</p>
+                <button class="restart-btn" onclick="restartQuiz()">Làm Lại</button>
+            </div>
+        </div>
+    </div>
+
+    <audio id="correctAudio" src="https://www.soundjay.com/button/sounds/button-30.mp3" preload="auto"></audio>
+    <audio id="incorrectAudio" src="https://www.soundjay.com/button/sounds/button-1.mp3" preload="auto"></audio>
+
+    <script>
+        const questions = [
+            {
+                question: "Bạn đang nghe một vị giảng sư thuyết pháp trên YouTube với lối nói **hài hước và duyên dáng**, khiến bạn cảm thấy rất thích thú và muốn nghe mãi. Theo giáo lý về **Như Lý Tác Ý**, bạn nên làm gì lúc này?",
+                options: [
+                    "Tiếp tục nghe vì pháp thoại mang lại niềm vui và sự thoải mái.",
+                    "Chia sẻ ngay cho nhiều người khác cùng nghe để họ cũng được vui.",
+                    "Quán chiếu rằng cảm giác thích thú, vui vẻ này là vô thường, không nên bám víu vào hình thức hay giọng điệu, mà tập trung vào nội dung Chánh pháp.",
+                    "Chuyển sang nghe một bài pháp khác ít hài hước hơn để không bị phân tâm."
+                ],
+                correct: 2,
+                feedbackCorrect: "Chính xác! Đây là cách thực hành **Như Lý Tác Ý** ngay cả khi đang tiếp xúc với thiện pháp. Việc nhận diện và quán chiếu rằng cảm giác thích thú, vui vẻ do hình thức (lối nói hài hước, duyên dáng) là vô thường và không nên bám víu, giúp tâm tập trung vào cốt lõi của **Chánh pháp**, tránh rơi vào chấp thủ hình tướng, âm thanh hay cảm thọ dễ chịu.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Mặc dù pháp thoại mang lại niềm vui là điều tốt, nhưng nếu chỉ tiếp tục nghe vì 'niềm vui và thoải mái' mà không có sự quán chiếu, bạn có thể dễ dàng bị chấp thủ vào cảm thọ dễ chịu hoặc hình tướng bên ngoài (lối nói hài hước) mà quên đi mục đích chính là học hỏi Chánh pháp. Đây là một dạng **phi như lý tác ý** đối với đối tượng thiện.",
+                    "Chưa chính xác. Chia sẻ pháp là điều thiện, nhưng nếu động cơ chính là để 'họ cũng được vui' hoặc để bạn nhận được sự công nhận, mà không có sự quán chiếu về bản chất vô thường của cảm thọ và hình tướng, thì đó vẫn có thể là một dạng **phi như lý tác ý** hoặc chấp thủ vi tế vào lạc thú.",
+                    "Chưa chính xác. Việc chuyển kênh không phải là giải pháp gốc rễ. Tránh né đối tượng không phải là cách ly dục hiệu quả. **Như Lý Tác Ý** nằm ở việc quán chiếu ngay trên đối tượng đang tiếp xúc để thấy rõ bản chất vô thường, không đáng bám víu của nó, chứ không phải chạy trốn."
+                ],
+                citation: "Kinh Trung Bộ, MN 2: Tất Cả Lậu Hoặc (ý về quán chiếu cảm thọ và các pháp vô thường)."
+            },
+            {
+                question: "Bạn vừa nghe một câu chuyện thị phi về người hàng xóm mà bạn không mấy thiện cảm. Tâm bạn bắt đầu khởi lên ý nghĩ tiêu cực về họ. Đây là biểu hiện của loại tác ý nào?",
+                options: [
+                    "Như Lý Tác Ý.",
+                    "Phi Như Lý Tác Ý.",
+                    "Vô Tác Ý.",
+                    "Chánh Tác Ý."
+                ],
+                correct: 1,
+                feedbackCorrect: "Hoàn toàn đúng! Việc khởi lên ý nghĩ tiêu cực do nghe chuyện thị phi là **Phi Như Lý Tác Ý**, vì bạn đang để tâm mình bị lôi kéo bởi các đối tượng bất thiện, không quán chiếu đúng đắn về sự thật.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. **Như Lý Tác Ý** là hướng tâm đúng đắn, không phải là khởi lên ý nghĩ tiêu cực.",
+                    "Chưa chính xác. **Vô Tác Ý** là không có sự hướng tâm, còn đây là có ý nghĩ rõ ràng.",
+                    "Chưa chính xác. **Chánh Tác Ý** là một tên gọi khác của Như Lý Tác Ý. Ý nghĩ tiêu cực không phải là Chánh Tác Ý."
+                ],
+                citation: "Kinh Trung Bộ, MN 2: Tất Cả Lậu Hoặc."
+            },
+            {
+                question: "Bạn đang trải qua những **chướng ngại trong tu tập**, ví dụ như tâm dễ xao nhãng, thân mệt mỏi, hay phiền não dễ khởi. Thay vì nản lòng, bạn tự nhủ: \"Đây là cơ hội để mình nhận diện các pháp chướng ngại, tìm cách đối trị chúng, và thực hành kiên trì hơn để tâm được trưởng dưỡng.\" Hành động này thể hiện điều gì?",
+                options: [
+                    "Chấp thủ vào khó khăn.",
+                    "**Như Lý Tác Ý** chuyển hóa chướng ngại thành cơ hội tu tập.",
+                    "Trốn tránh thực tại của phiền não.",
+                    "Bi quan với con đường giải thoát."
+                ],
+                correct: 1,
+                feedbackCorrect: "Rất chính xác! Đây chính là cách chúng ta thực hành **Như Lý Tác Ý**. Thay vì để tâm bị cuốn theo sự nản lòng hay phiền não, bạn đã dùng trí tuệ để nhìn nhận chướng ngại như một phần của quá trình tu tập, biến khó khăn thành cơ hội học hỏi và phát triển tâm linh.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Chấp thủ vào khó khăn sẽ làm tăng thêm khổ, không phải là cách đối diện đúng đắn.",
+                    "Chưa chính xác. Đây không phải là trốn tránh mà là đối diện và chuyển hóa chướng ngại.",
+                    "Chưa chính xác. Việc nhìn nhận chướng ngại như cơ hội là biểu hiện của trí tuệ và sự lạc quan, không phải bi quan."
+                ],
+                citation: "Kinh Tăng Chi Bộ, AN 10.61: Tác Ý."
+            },
+            {
+                question: "Khi một người thân phê bình bạn một cách gay gắt, điều gì sau đây thể hiện **Phi Như Lý Tác Ý**?",
+                options: [
+                    "Lắng nghe cẩn thận để xem lời phê bình có đúng không.",
+                    "Nhận lỗi nếu mình sai và hứa sửa đổi.",
+                    "Cảm thấy bị xúc phạm, tức giận và tìm cách bào chữa hoặc trách ngược lại.",
+                    "Thầm cảm ơn vì người thân đã chỉ ra khuyết điểm cho mình."
+                ],
+                correct: 2,
+                feedbackCorrect: "Đúng vậy! Cảm thấy bị xúc phạm, tức giận, và tìm cách bào chữa là dấu hiệu của **Phi Như Lý Tác Ý**, vì tâm bạn đang phản ứng theo tự ái, chấp ngã, thay vì nhìn nhận sự việc một cách khách quan.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Lắng nghe và xem xét là biểu hiện của **Như Lý Tác Ý**.",
+                    "Chưa chính xác. Nhận lỗi và sửa đổi là hành động trí tuệ, phù hợp với **Như Lý Tác Ý**.",
+                    "Chưa chính xác. Cảm ơn vì lời phê bình là biểu hiện của tâm khiêm hạ, **Như Lý Tác Ý**."
+                ],
+                citation: "Kinh Trung Bộ, MN 2: Tất Cả Lậu Hoặc."
+            },
+            {
+                question: "Bạn đang đi trên đường và vô tình thấy một người ăn xin. Trong tâm bạn chợt khởi lên ý nghĩ muốn bố thí. Ý nghĩ này thuộc về loại nghiệp nào?",
+                options: [
+                    "Thân nghiệp.",
+                    "Khẩu nghiệp.",
+                    "Ý nghiệp.",
+                    "Vô nghiệp."
+                ],
+                correct: 2,
+                feedbackCorrect: "Chính xác! **Ý nghiệp** là sự chủ tâm, ý định bên trong. Ý nghĩ muốn bố thí xuất hiện trong tâm bạn trước khi bạn thực hiện hành động bố thí bằng tay (thân nghiệp) hay nói lời bố thí (khẩu nghiệp).",
+                feedbackIncorrect: [
+                    "Chưa chính xác. **Thân nghiệp** là hành động bằng thân thể (ví dụ: đưa tay ra cho tiền).",
+                    "Chưa chính xác. **Khẩu nghiệp** là hành động bằng lời nói (ví dụ: nói 'tôi biếu bạn').",
+                    "Chưa chính xác. Đây là một ý định rõ ràng, có tác ý, không phải **vô nghiệp**."
+                ],
+                citation: "Kinh Tăng Chi Bộ, AN 6.63: Tư (Cetanā)."
+            },
+            {
+                question: "Khi bạn nói dối để tránh một rắc rối nhỏ, sau đó cảm thấy hối hận. Sự hối hận này là kết quả của mối liên hệ giữa tác ý và nghiệp như thế nào?",
+                options: [
+                    "Tác ý ban đầu là thiện nên không có nghiệp xấu.",
+                    "Tác ý nói dối là bất thiện dẫn đến khẩu nghiệp xấu và cảm giác hối hận là quả của nghiệp đó.",
+                    "Tác ý chỉ ảnh hưởng đến ý nghĩ, không ảnh hưởng đến lời nói.",
+                    "Hối hận là do người khác phát hiện ra."
+                ],
+                correct: 1,
+                feedbackCorrect: "Đúng vậy! **Tác ý (suy nghĩ muốn nói dối)** là nhân của **khẩu nghiệp nói dối**, và cảm giác hối hận là **quả** của nghiệp bất thiện đó. Điều này cho thấy mối liên hệ chặt chẽ giữa tác ý và nghiệp báo.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Tác ý nói dối là bất thiện, không phải thiện.",
+                    "Chưa chính xác. Tác ý là khởi đầu của nghiệp, bao gồm cả ý, khẩu, thân nghiệp. Ý nghiệp dẫn đến khẩu nghiệp.",
+                    "Chưa chính xác. Hối hận là từ bên trong tâm mình, không phụ thuộc vào việc người khác có phát hiện hay không."
+                ],
+                citation: "Kinh Tăng Chi Bộ, AN 3.68: Tư (Cetanā)."
+            },
+            {
+                question: "Một người bạn cũ vừa qua đời. Bạn đau buồn khôn xiết và nghĩ mãi về những kỷ niệm đã qua. Để thực hành **Như Lý Tác Ý** trong tình huống này, bạn nên làm gì?",
+                options: [
+                    "Cố gắng quên đi người bạn đó để không còn đau buồn nữa.",
+                    "Nhận thức rằng sự ra đi là vô thường, không có gì là vĩnh cửu, và chấp nhận sự thật đó.",
+                    "Tránh mặt mọi người và khóc thật nhiều để giải tỏa.",
+                    "Cố gắng tìm một hoạt động khác để phân tán tư tưởng."
+                ],
+                correct: 1,
+                feedbackCorrect: "Chính xác! **Như Lý Tác Ý** trong trường hợp này là quán chiếu về bản chất vô thường của vạn pháp, bao gồm cả sự sống và cái chết, để tâm dần buông bỏ sự chấp thủ và chấp nhận thực tại.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Cố gắng quên đi là né tránh, không phải đối diện và chuyển hóa khổ.",
+                    "Chưa chính xác. Khóc để giải tỏa chỉ là giải pháp tạm thời, không phải là sự chuyển hóa sâu sắc từ **Như Lý Tác Ý**.",
+                    "Chưa chính xác. Phân tán tư tưởng cũng là một cách né tránh, không giúp đối diện với bản chất vô thường."
+                ],
+                citation: "Kinh Trung Bộ, MN 2: Tất Cả Lậu Hoặc."
+            },
+            {
+                question: "Bạn đang đi mua sắm và thấy một món đồ rất đẹp, nhưng bạn không thực sự cần nó. Ngay lập tức, một ý muốn mạnh mẽ muốn sở hữu món đồ đó khởi lên trong tâm. Thời điểm này, tác ý đang diễn ra ở giai đoạn nào?",
+                options: [
+                    "Trước khi lậu hoặc sinh khởi.",
+                    "Trong khi lậu hoặc đang sinh khởi.",
+                    "Sau khi lậu hoặc đã qua đi.",
+                    "Cả A và B."
+                ],
+                correct: 1,
+                feedbackCorrect: "Đúng vậy! \"Ý muốn mạnh mẽ\" muốn sở hữu món đồ chính là lúc **lậu hoặc (tham ái)** đang bắt đầu sinh khởi trong tâm bạn. Đây là thời điểm quan trọng để thực hành **như lý tác ý** nhằm ngăn chặn nó phát triển.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Ý muốn mạnh mẽ đã là sự khởi đầu của lậu hoặc rồi, không phải trước khi nó sinh khởi.",
+                    "Chưa chính xác. Lậu hoặc chưa qua đi, nó đang diễn ra.",
+                    "Chưa chính xác. Không phải cả hai. Lậu hoặc đang khởi lên chứ không phải chưa khởi."
+                ],
+                citation: "Kinh Trung Bộ, MN 2: Tất Cả Lậu Hoặc."
+            },
+            {
+                question: "Sau khi tranh cãi gay gắt với ai đó, bạn nhận ra mình đã nói những lời không đúng. Để sửa mình, bạn thực hành **Như Lý Tác Ý** bằng cách nào?",
+                options: [
+                    "Cố gắng biện minh cho hành động của mình.",
+                    "Quên đi mọi chuyện và không nghĩ đến nữa.",
+                    "Nhận thức rõ ràng những lời mình đã nói gây tổn thương, quán chiếu nguyên nhân cơn giận, và rút kinh nghiệm để không tái phạm.",
+                    "Đi kể lể với người khác để được đồng cảm."
+                ],
+                correct: 2,
+                feedbackCorrect: "Chính xác! Đây là cách thực hành **Như Lý Tác Ý** sau khi lậu hoặc đã sinh khởi và qua đi. Quán chiếu lại hành vi, nguyên nhân, và hậu quả để rút ra bài học là bước quan trọng để chuyển hóa và sửa đổi.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Biện minh cho lỗi lầm là **Phi Như Lý Tác Ý**, thể hiện sự chấp ngã.",
+                    "Chưa chính xác. Quên đi không giải quyết gốc rễ vấn đề, không giúp chuyển hóa tâm.",
+                    "Chưa chính xác. Kể lể để được đồng cảm không giúp bạn nhận diện và sửa lỗi của mình một cách sâu sắc."
+                ],
+                citation: "Kinh Trung Bộ, MN 2: Tất Cả Lậu Hoặc."
+            },
+            {
+                question: "Bạn đang chuẩn bị một bữa ăn thịnh soạn. Ý nghĩ về \"món ăn ngon nhất\" cứ lởn vởn trong đầu, khiến bạn dành nhiều thời gian và công sức hơn mức cần thiết. Để ly dục, bạn nên làm gì?",
+                options: [
+                    "Tiếp tục chuẩn bị theo ý muốn để thỏa mãn khẩu vị.",
+                    "Quán chiếu rằng vị ngon chỉ là tạm thời, thức ăn chỉ để nuôi thân, không nên quá bám víu vào nó.",
+                    "Chỉ ăn những món đơn giản nhất để tránh tâm khởi dục.",
+                    "Nhờ người khác chuẩn bị hộ để không phải động tâm."
+                ],
+                correct: 1,
+                feedbackCorrect: "Đúng vậy! **Như Lý Tác Ý** bằng cách quán chiếu về bản chất vô thường của vị ngon và mục đích thực sự của việc ăn uống (chỉ để nuôi thân tu tập) sẽ giúp làm giảm bớt tham ái (dục) đối với thức ăn.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Tiếp tục thỏa mãn khẩu vị sẽ làm tăng trưởng tham ái.",
+                    "Chưa chính xác. Tránh né bằng cách chỉ ăn món đơn giản không phải là cách ly dục từ gốc rễ, mà là thay đổi đối tượng.",
+                    "Chưa chính xác. Nhờ người khác làm hộ cũng không giải quyết được gốc rễ của tham ái trong tâm bạn."
+                ],
+                citation: "Kinh Trung Bộ, MN 2: Tất Cả Lậu Hoặc."
+            },
+            {
+                question: "Một người bạn khoe chiếc xe mới rất sang trọng. Trong lòng bạn chợt khởi lên sự ganh tỵ. Nếu bạn không **Như Lý Tác Ý**, điều gì có thể xảy ra tiếp theo?",
+                options: [
+                    "Bạn sẽ tìm cách hỏi mượn xe của người bạn.",
+                    "Tâm bạn sẽ bị phiền não ganh tỵ chi phối, có thể dẫn đến lời nói hay hành động tiêu cực.",
+                    "Bạn sẽ chúc mừng bạn mình một cách chân thành.",
+                    "Bạn sẽ quyết tâm làm việc chăm chỉ hơn để mua một chiếc xe tương tự."
+                ],
+                correct: 1,
+                feedbackCorrect: "Chính xác! Nếu không có **Như Lý Tác Ý** để quán chiếu và đoạn trừ sự ganh tỵ ngay từ khi nó mới khởi, phiền não đó sẽ phát triển, làm ô nhiễm tâm và có thể dẫn đến các nghiệp bất thiện bằng lời nói hoặc hành động.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Hỏi mượn xe không phải là hậu quả trực tiếp của ganh tỵ nếu không có tác ý.",
+                    "Chưa chính xác. Chúc mừng chân thành là hành động thiện, đối lập với việc không Như Lý Tác Ý khi ganh tỵ.",
+                    "Chưa chính xác. Quyết tâm làm việc chăm chỉ có thể là động lực, nhưng nếu xuất phát từ sự so sánh và ganh tỵ, đó vẫn là phiền não."
+                ],
+                citation: "Kinh Trung Bộ, MN 2: Tất Cả Lậu Hoặc."
+            },
+            {
+                question: "Khi bạn đang **học - đọc kinh sách** và tâm bị xao nhãng, nghĩ về đủ thứ chuyện quá khứ và tương lai, không tập trung vào lời kinh. Để đưa tâm về hiện tại và hiểu rõ lời Phật dạy, bạn nên thực hành điều gì?",
+                options: [
+                    "Cố gắng kìm nén mọi ý nghĩ.",
+                    "**Như Lý Tác Ý** bằng cách nhận biết các ý nghĩ đó là vô thường, không nên bám víu, rồi nhẹ nhàng đưa tâm trở lại lời kinh.",
+                    "Dừng việc học kinh sách ngay lập tức.",
+                    "Tự trách mình vì tâm xao nhãng."
+                ],
+                correct: 1,
+                feedbackCorrect: "Rất chính xác! Đây là cách **Như Lý Tác Ý** trong việc học pháp. Nhận biết và quán chiếu sự vô thường của các ý nghĩ xao nhãng giúp tâm không bị mắc kẹt vào chúng, từ đó dễ dàng trở về với lời kinh, giúp việc học pháp được sâu sắc hơn.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Cố gắng kìm nén chỉ là đối trị phần ngọn, không giải quyết gốc rễ của sự xao nhãng.",
+                    "Chưa chính xác. Dừng việc học là bỏ lỡ cơ hội tu tập và không giải quyết được vấn đề tâm xao nhãng.",
+                    "Chưa chính xác. Tự trách mình sẽ làm tăng thêm khổ tâm, không giúp tâm thanh tịnh."
+                ],
+                citation: "Kinh Trung Bộ, MN 2: Tất Cả Lậu Hoặc."
+            },
+            {
+                question: "Bạn đang ăn một món ăn rất cay. Mồ hôi vã ra, nước mắt chảy dàn dụa, nhưng bạn vẫn cố gắng ăn hết vì muốn thử thách bản thân. Hành động này cho thấy bạn đang bị chi phối bởi điều gì?",
+                options: [
+                    "Sự kiên trì đáng ngưỡng mộ.",
+                    "Tham ái (chấp thủ vào cảm giác mạnh).",
+                    "Trí tuệ trong việc chinh phục thử thách.",
+                    "Khẩu vị đặc biệt."
+                ],
+                correct: 1,
+                feedbackCorrect: "Đúng vậy! Mặc dù có vẻ là \"thử thách bản thân\", nhưng việc cố chấp ăn hết món cay dù cơ thể khó chịu cho thấy bạn đang bị **tham ái (chấp thủ vào cảm giác)** mạnh mẽ chi phối, không nhận diện được sự khó chịu mà vẫn cố duy trì.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Sự kiên trì ở đây bị điều khiển bởi tham ái, không phải trí tuệ.",
+                    "Chưa chính xác. Trí tuệ không dẫn đến việc tự làm khổ mình bởi cảm giác khó chịu.",
+                    "Chưa chính xác. Khẩu vị đặc biệt không giải thích cho việc cố gắng chịu đựng cảm giác khó chịu."
+                ],
+                citation: "Kinh Chuyển Pháp Luân, SN 56.11: Dhamma-cakka-ppavattana Sutta."
+            },
+            {
+                question: "Khi nhìn thấy một hình ảnh đẹp trên mạng xã hội, bạn lập tức muốn chia sẻ cho tất cả mọi người để nhận được lời khen. Đây là biểu hiện của loại tác ý nào?",
+                options: [
+                    "Như Lý Tác Ý.",
+                    "Phi Như Lý Tác Ý.",
+                    "Chánh Tác Ý.",
+                    "Vô Tác Ý."
+                ],
+                correct: 1,
+                feedbackCorrect: "Hoàn toàn đúng! Việc muốn chia sẻ để nhận lời khen là biểu hiện của **Phi Như Lý Tác Ý**, vì bạn đang hướng tâm vào sự chấp ngã, mong cầu sự công nhận từ bên ngoài, thay vì quán chiếu bản chất vô thường của hình ảnh và sự vô vị của lời khen.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Đây không phải **Như Lý Tác Ý**, vì có sự chấp thủ vào danh tiếng.",
+                    "Chưa chính xác. **Chánh Tác Ý** là đồng nghĩa với Như Lý Tác Ý, không liên quan đến việc cầu danh.",
+                    "Chưa chính xác. Đây là một tác ý rõ ràng, có chủ đích, không phải **Vô Tác Ý**."
+                ],
+                citation: "Kinh Trung Bộ, MN 2: Tất Cả Lậu Hoặc."
+            },
+            {
+                question: "Bạn chứng kiến một vụ tai nạn giao thông và cảm thấy rất sợ hãi. Để chuyển hóa cảm xúc này, bạn nên thực hành **Như Lý Tác Ý** bằng cách nào?",
+                options: [
+                    "Cố gắng quên đi cảnh tượng đó.",
+                    "Quán chiếu rằng sợ hãi là một cảm thọ vô thường, do duyên sinh, và không nên bám víu vào nó.",
+                    "Kể lại câu chuyện cho nhiều người để giải tỏa.",
+                    "Tự nhủ rằng mình sẽ không bao giờ ra đường nữa."
+                ],
+                correct: 1,
+                feedbackCorrect: "Chính xác! **Như Lý Tác Ý** trong tình huống này là nhận diện cảm xúc sợ hãi, quán chiếu về tính chất vô thường và duyên sinh của nó. Khi không bám víu, cảm xúc sẽ tự nhiên lắng xuống.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Cố gắng quên đi chỉ là né tránh, không phải đối diện và chuyển hóa cảm xúc.",
+                    "Chưa chính xác. Kể lể cho nhiều người có thể giải tỏa nhất thời nhưng không giải quyết được gốc rễ nỗi sợ hãi.",
+                    "Chưa chính xác. Tự nhủ không ra đường là cách trốn tránh thực tại và sợ hãi, không phải chuyển hóa."
+                ],
+                citation: "Kinh Tương Ưng Bộ, SN 22.59: Vô Ngã Tướng Sutta."
+            },
+            {
+                question: "Khi bạn đang ăn, tâm bạn bắt đầu nghĩ về công việc, về những lo toan hàng ngày. Thời điểm này, việc thực hành **Như Lý Tác Ý** có thể giúp bạn điều gì?",
+                options: [
+                    "Giúp bạn ăn nhanh hơn.",
+                    "Giúp bạn nhận ra tâm đang xao nhãng và đưa tâm trở về với việc ăn uống trong chánh niệm.",
+                    "Giúp bạn giải quyết vấn đề công việc ngay lập tức.",
+                    "Giúp bạn không cần phải tập trung vào việc ăn nữa."
+                ],
+                correct: 1,
+                feedbackCorrect: "Rất đúng! **Như Lý Tác Ý** ở đây là nhận biết sự xao nhãng của tâm (lậu hoặc đang bắt đầu khởi), và chủ động hướng tâm trở về với hành động đang diễn ra (ăn uống), giúp duy trì chánh niệm.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Như Lý Tác Ý không phải để ăn nhanh hơn, mà để ăn trong chánh niệm.",
+                    "Chưa chính xác. Việc giải quyết công việc cần thời điểm và sự tập trung riêng, không phải trong lúc ăn.",
+                    "Chưa chính xác. Không tập trung vào việc ăn là biểu hiện của tâm không chánh niệm."
+                ],
+                citation: "Kinh Tăng Chi Bộ, AN 10.60: Vô Tàm Vô Quý Sutta."
+            },
+            {
+                question: "Một **người đồng tu luôn có thời gian tu tập - rèn luyện thoải mái, không bị chi phối**, còn bạn thì không, do bận rộn với gia đình, công việc. Nếu bạn để tâm mình bị chi phối bởi **Phi Như Lý Tác Ý**, điều gì có thể xảy ra?",
+                options: [
+                    "Bạn sẽ hoan hỷ chúc mừng sự tinh tấn của người đồng tu.",
+                    "Bạn sẽ thấy mình kém cỏi, sinh tâm chán nản, hoặc đố kỵ với người đồng tu.",
+                    "Bạn sẽ tìm cách học hỏi phương pháp sắp xếp thời gian của người đồng tu.",
+                    "Bạn sẽ tập trung hơn vào việc tu tập của chính mình, tùy theo hoàn cảnh."
+                ],
+                correct: 1,
+                feedbackCorrect: "Chính xác! **Phi Như Lý Tác Ý** trong trường hợp này sẽ dẫn đến các phiền não như tự ti, chán nản, hoặc đố kỵ, vì bạn đang so sánh, chấp thủ vào \"cái tôi\" và không chấp nhận thực tại duyên khởi của mỗi người.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Hoan hỷ chúc mừng là tâm thiện, không phải Phi Như Lý Tác Ý.",
+                    "Chưa chính xác. Học hỏi là hành động trí tuệ, thể hiện **Như Lý Tác Ý**.",
+                    "Chưa chính xác. Tập trung vào việc của mình là chánh niệm, không phải hậu quả của Phi Như Lý Tác Ý."
+                ],
+                citation: "Kinh Pháp Cú, DhP 1: Song Yếu Phẩm."
+            },
+            {
+                question: "Để thực hành **ly dục** thông qua **Như Lý Tác Ý** đối với một món đồ yêu thích, bạn nên quán chiếu điều gì?",
+                options: [
+                    "Món đồ này rất có giá trị và mình phải giữ gìn nó thật kỹ.",
+                    "Món đồ này là vô thường, có thể hư hỏng bất cứ lúc nào, và mình không thể mang theo khi chết.",
+                    "Món đồ này sẽ mang lại hạnh phúc lâu dài cho mình.",
+                    "Mình nên mua thêm nhiều món đồ tương tự."
+                ],
+                correct: 1,
+                feedbackCorrect: "Hoàn toàn đúng! Quán chiếu về tính chất **vô thường** của vạn pháp, bao gồm cả tài sản vật chất, là cách hiệu quả nhất để làm suy yếu sự bám víu, chấp thủ (dục) vào chúng.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Quán chiếu giá trị và giữ gìn kỹ lưỡng là biểu hiện của chấp thủ.",
+                    "Chưa chính xác. Mong muốn hạnh phúc lâu dài từ vật chất là chấp thủ vào dục.",
+                    "Chưa chính xác. Mua thêm là tăng trưởng tham ái, không phải ly dục."
+                ],
+                citation: "Kinh Pháp Cú, DhP 277-279 (Ba Pháp Ấn)."
+            },
+            {
+                question: "Bạn đang xem **YouTube hay TikTok rất vui**, bạn biết mình đã mất nhiều thời gian nhưng vẫn muốn tiếp tục xem vì cảm thấy cuốn hút. Để thoát ra khỏi sự cuốn hút và không lãng phí thời gian, bạn có thể thực hành **Như Lý Tác Ý** vào lúc nào?",
+                options: [
+                    "Chỉ sau khi đã xem chán chê.",
+                    "Chỉ trước khi bắt đầu xem.",
+                    "Ngay khi cảm thấy tâm đang bị cuốn hút quá độ và nhận ra sự mất thời gian.",
+                    "Không cần tác ý, cứ để sự cuốn hút tự nhiên."
+                ],
+                correct: 2,
+                feedbackCorrect: "Chính xác! **Như Lý Tác Ý** có thể được thực hành **ngay trong khi** lậu hoặc (sự cuốn hút, bám víu vào lạc thú nhất thời) đang sinh khởi. Nhận diện và quán chiếu ngay lúc đó giúp giảm thiểu sự chi phối của cảm xúc và dục lạc.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Chờ đến khi chán chê là đã để lậu hoặc chi phối một thời gian dài.",
+                    "Chưa chính xác. Tác ý trước khi xem là tốt, nhưng nếu lậu hoặc đã khởi, cần tác ý ngay lập tức.",
+                    "Chưa chính xác. Không tác ý và để cảm xúc tự nhiên chi phối là để lậu hoặc tăng trưởng."
+                ],
+                citation: "Kinh Trung Bộ, MN 2: Tất Cả Lậu Hoặc."
+            },
+            {
+                question: "Khi bạn gặp một người có vẻ ngoài không ưa nhìn, tâm bạn có xu hướng muốn tránh né. Để quay lại với tánh bổn thiện, bạn nên thực hành **Như Lý Tác Ý** bằng cách nào?",
+                options: [
+                    "Cố gắng giả vờ thân thiện nhưng trong lòng vẫn có định kiến.",
+                    "Tránh xa người đó để không phải đối mặt với cảm giác khó chịu.",
+                    "Quán chiếu rằng vẻ ngoài là vô thường, không phải bản chất, và người này cũng là một chúng sinh đang chịu khổ như mình, khởi tâm từ bi.",
+                    "Tìm một lý do để phê phán người đó."
+                ],
+                correct: 2,
+                feedbackCorrect: "Rất chính xác! **Như Lý Tác Ý** ở đây là nhận diện định kiến của mình, quán chiếu về sự vô thường của hình tướng bên ngoài và phát triển **tâm từ bi** đối với người khác. Đây là cách trực tiếp để quay về với tánh bổn thiện trong tâm.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Giả vờ thân thiện không giải quyết được định kiến trong tâm.",
+                    "Chưa chính xác. Tránh xa là né tránh, không đối mặt và chuyển hóa tâm sân.",
+                    "Chưa chính xác. Tìm lý do để phê phán sẽ làm tăng trưởng tâm sân và bất thiện."
+                ],
+                citation: "Kinh Tăng Chi Bộ, AN 8.87: Tám Pháp (Phẩm Từ Bi)."
+            },
+            {
+                question: "Khi bị bệnh, bạn nghe một người đồng tu khuyên nên tác ý rằng: \"Bệnh này hãy cút xéo khỏi đây, tôi không sợ!\" Theo giáo lý của Đức Thế Tôn, lời khuyên này thể hiện điều gì?",
+                options: [
+                    "Sự mạnh mẽ, dũng cảm đối diện với bệnh tật.",
+                    "**Phi Như Lý Tác Ý**, do chấp thủ vào cái tôi và phủ nhận bản chất vô thường của thân.",
+                    "Khuyến khích sử dụng ý chí để đẩy lùi bệnh tật.",
+                    "Một phương pháp chữa bệnh hiệu quả từ tâm."
+                ],
+                correct: 1,
+                feedbackCorrect: "Chính xác! Lời khuyên này là **Phi Như Lý Tác Ý**. Nó cho thấy sự chấp thủ vào \"cái tôi\" và khả năng kiểm soát tuyệt đối thân thể, bỏ qua bản chất vô thường và duyên khởi của bệnh tật. Bệnh không phải là một thực thể độc lập có thể \"đuổi\" đi bằng ý chí.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Sự mạnh mẽ cần đi đôi với trí tuệ để không rơi vào mê lầm.",
+                    "Chưa chính xác. Ý chí đơn thuần không thể thay đổi quy luật vô thường và duyên khởi của bệnh.",
+                    "Chưa chính xác. Đây không phải là phương pháp hiệu quả theo Chánh pháp, mà là sự lầm lẫn giữa tưởng và thực tại."
+                ],
+                citation: "Kinh Tương Ưng Bộ, SN 22.1: Phẩm Uẩn (tổng hợp các ý về vô ngã của thân)."
+            },
+            {
+                question: "Khi bạn đang dùng một loại thuốc chữa bệnh, để việc thọ dụng được đúng pháp theo lời Phật dạy, bạn nên tác ý như thế nào?",
+                options: [
+                    "Uống thuốc để bệnh nhanh khỏi, mình được khỏe mạnh thỏa thích làm điều mình muốn.",
+                    "Uống thuốc chỉ là hình thức, quan trọng là ý chí của mình.",
+                    "Uống thuốc để duy trì thân mạng, có sức khỏe tu tập và phụng sự Tam Bảo.",
+                    "Uống thuốc vì sợ hãi cái chết."
+                ],
+                correct: 2,
+                feedbackCorrect: "Đúng vậy! Đây là **Như Lý Tác Ý** trong việc thọ dụng dược phẩm. Đức Phật dạy thọ dụng các yếu tố cần thiết (y phục, thức ăn, chỗ ở, dược phẩm) để duy trì thân mạng tu tập, không phải vì dục lạc hay tham đắm sự sống.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Thỏa thích làm điều mình muốn là một dạng chấp thủ vào dục lạc.",
+                    "Chưa chính xác. Ý chí là quan trọng nhưng không có nghĩa là bỏ qua phương tiện đúng pháp và duyên cần thiết.",
+                    "Chưa chính xác. Uống thuốc vì sợ hãi cái chết là một dạng chấp thủ vào sự sống, không phải thọ dụng đúng pháp."
+                ],
+                citation: "Kinh Trung Bộ, MN 2: Tất Cả Lậu Hoặc (phần Thọ Dụng)."
+            },
+            {
+                question: "Bạn đang trải qua cảm giác đau đớn dữ dội do bệnh. Thay vì than vãn, bạn nhận biết cơn đau đang hiện hữu và quán chiếu rằng: \"Cảm thọ đau này là vô thường, nó đang sinh lên và rồi sẽ diệt đi, nó không phải là tôi, không phải của tôi.\" Đây là cách thực hành nào?",
+                options: [
+                    "Chống đối với cảm thọ.",
+                    "Né tránh thực tại.",
+                    "**Như Lý Tác Ý** quán chiếu khổ thọ để giảm bớt chấp thủ.",
+                    "Đang tự lừa dối bản thân."
+                ],
+                correct: 2,
+                feedbackCorrect: "Hoàn toàn chính xác! Đây là sự thực hành **Như Lý Tác Ý** một cách sâu sắc đối với khổ thọ. Bằng cách quán chiếu về bản chất vô thường, vô ngã của cảm thọ, chúng ta sẽ không đồng hóa mình với cơn đau, từ đó giảm bớt sự chấp thủ và khổ tâm.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Đây không phải chống đối, mà là đối diện và thấu hiểu bản chất.",
+                    "Chưa chính xác. Đây là chấp nhận thực tại và chuyển hóa nó, không phải né tránh.",
+                    "Chưa chính xác. Đây là trí tuệ thấy rõ sự thật, không phải tự lừa dối."
+                ],
+                citation: "Kinh Tương Ưng Bộ, SN 22.5: Phẩm Vô Ngã Tướng."
+            },
+            {
+                question: "Một người thân bị bệnh nặng, không có dấu hiệu thuyên giảm dù đã chữa trị nhiều. Bạn cảm thấy tuyệt vọng và muốn người thân phải khỏe lại bằng mọi giá. Đây là biểu hiện của loại tác ý nào?",
+                options: [
+                    "Tâm từ bi đối với người thân.",
+                    "Mong muốn tốt đẹp.",
+                    "**Phi Như Lý Tác Ý**, do chấp thủ vào sự sống và mong cầu điều không thể trong quy luật vô thường.",
+                    "Niềm tin mạnh mẽ vào khả năng của y học."
+                ],
+                correct: 2,
+                feedbackCorrect: "Đúng vậy! Cảm giác tuyệt vọng và mong muốn một điều không thể (chống lại vô thường) là **Phi Như Lý Tác Ý**. Nó xuất phát từ sự chấp thủ vào sự sống, chấp thủ vào mong muốn của mình, và không chấp nhận quy luật vô thường, khổ, vô ngã của thân mạng.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Tâm từ bi đúng đắn đi kèm với trí tuệ, chấp nhận vô thường.",
+                    "Chưa chính xác. Mong muốn tốt đẹp nhưng không đúng với thực tại vô thường sẽ dẫn đến khổ đau.",
+                    "Chưa chính xác. Niềm tin vào y học là tốt, nhưng chấp thủ vào kết quả là không đúng."
+                ],
+                citation: "Kinh Pháp Cú, DhP 277-279."
+            },
+            {
+                question: "Khi một ý niệm về sự sợ hãi cái chết khởi lên trong tâm bạn, bạn nên thực hành **Như Lý Tác Ý** như thế nào để chuyển hóa nó?",
+                options: [
+                    "Cố gắng không nghĩ đến cái chết.",
+                    "Tưởng tượng mình sẽ sống mãi mãi.",
+                    "Quán chiếu rằng chết là quy luật tự nhiên của mọi hữu tình, là sự chấm dứt của một thân vô thường, không có gì để sợ hãi.",
+                    "Đi tìm một phương pháp để kéo dài tuổi thọ bằng mọi cách."
+                ],
+                correct: 2,
+                feedbackCorrect: "Chính xác! **Như Lý Tác Ý** về cái chết là quán chiếu nó như một quy luật phổ quát của vô thường, không phải là một sự kiện đặc biệt hay đáng sợ. Khi hiểu rõ bản chất vô ngã của thân, nỗi sợ hãi sẽ dần tan biến.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Cố gắng không nghĩ đến là né tránh, không phải chuyển hóa nỗi sợ.",
+                    "Chưa chính xác. Tưởng tượng sống mãi mãi là ảo tưởng, đi ngược lại vô thường.",
+                    "Chưa chính xác. Tìm cách kéo dài tuổi thọ bằng mọi cách là chấp thủ vào sự sống, tăng trưởng sợ hãi cái chết."
+                ],
+                citation: "Kinh Tương Ưng Bộ, SN 22.59: Vô Ngã Tướng Sutta."
+            },
+            {
+                question: "Bạn đang tập một bài tập vật lý trị liệu cho cơ thể đang đau yếu, và bạn tác ý: \"Khi co tay, mình cảm nhận sự khó chịu và giới hạn của cơ thể; khi duỗi tay, mình quán chiếu sự vận hành của các duyên trong thân.\" Cách tác ý này là gì?",
+                options: [
+                    "Vô ích, không giúp bệnh khỏi.",
+                    "**Như Lý Tác Ý** đúng đắn, phù hợp với giáo lý vô thường, khổ, vô ngã.",
+                    "Dùng ý chí để kiểm soát bệnh tật.",
+                    "Đang chấp vào cảm giác đau."
+                ],
+                correct: 1,
+                feedbackCorrect: "Rất chính xác! Đây là **Như Lý Tác Ý** đúng đắn. Thay vì cố gắng \"đuổi bệnh\" hay \"tăng sức mạnh\" bằng ý chí chủ quan, bạn đang chánh niệm nhận biết các cảm thọ, giới hạn của thân và quán chiếu về quy luật duyên khởi (vận hành của tứ đại), sự vô thường của chúng.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Đây là cách tu tập hiệu quả, không vô ích.",
+                    "Chưa chính xác. Đây là quán chiếu chứ không phải dùng ý chí để kiểm soát như mệnh lệnh.",
+                    "Chưa chính xác. Đây là nhận biết và xả ly cảm giác đau, không phải chấp vào nó."
+                ],
+                citation: "Kinh Trung Bộ, MN 10: Kinh Niệm Xứ."
+            },
+            {
+                question: "Một người tu tập nói rằng họ có thể \"tác ý\" để tâm không bao giờ khởi lên phiền não nữa. Điều này có phù hợp với lời dạy của Đức Phật về duyên khởi và lậu hoặc không?",
+                options: [
+                    "Hoàn toàn phù hợp, đó là mục tiêu của tu tập.",
+                    "Không phù hợp, vì phiền não vẫn có thể khởi lên do duyên, quan trọng là cách tác ý của mình.",
+                    "Phù hợp nếu họ đã là A La Hán.",
+                    "Không phù hợp, vì phiền não là điều không thể diệt trừ."
+                ],
+                correct: 1,
+                feedbackCorrect: "Chính xác! Việc \"tác ý\" để phiền não không bao giờ khởi lên là **phi như lý tác ý**. Phiền não khởi lên do duyên (tiếp xúc với các cảnh), và ngay cả bậc Thánh A-la-hán cũng vẫn có cảm thọ (khổ, lạc, xả) nhưng không bị tham ái, ngã mạn, tà kiến chi phối. Quan trọng là cách chúng ta **như lý tác ý** khi phiền não khởi lên để không nuôi dưỡng và để chúng lắng xuống.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Mục tiêu của tu tập là đoạn tận lậu hoặc (các gốc rễ của phiền não), không phải làm cho phiền não không bao giờ khởi lên do duyên. Chánh kiến là thấy rõ sự thật về duyên khởi.",
+                    "Chưa chính xác. Ngay cả A-la-hán cũng vẫn có các cảm thọ và phải đối diện với các duyên, nhưng tâm của vị ấy không còn bị phiền não chi phối.",
+                    "Chưa chính xác. Phiền não có thể diệt trừ được gốc rễ của nó (lậu hoặc), nhưng không phải không bao giờ khởi lên do duyên."
+                ],
+                citation: "Kinh Trung Bộ, MN 2: Tất Cả Lậu Hoặc."
+            },
+            {
+                question: "Bạn thấy một người già yếu, bệnh tật đang nằm trên giường. Trong tâm bạn chợt khởi lên suy nghĩ: \"Mình phải cố gắng tu tập thật tốt để tránh khỏi già, bệnh, chết như thế này.\" Cách tác ý này là gì?",
+                options: [
+                    "Một động lực tu tập tích cực.",
+                    "**Phi Như Lý Tác Ý**, do mong muốn chống lại quy luật vô thường và sợ hãi cái chết.",
+                    "Thể hiện sự hiểu biết về nhân quả.",
+                    "Khởi lên tâm từ bi với người già yếu."
+                ],
+                correct: 1,
+                feedbackCorrect: "Đúng vậy! Mặc dù có vẻ là động lực, nhưng việc tu tập để \"tránh khỏi\" già, bệnh, chết là **Phi Như Lý Tác Ý**. Già, bệnh, chết là quy luật không thể tránh khỏi đối với thân ngũ uẩn. Chánh pháp dạy chúng ta tu tập để **chấm dứt khổ (chấp thủ)** đối với già, bệnh, chết, chứ không phải để không bao giờ già, bệnh, chết.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Đây là động lực nhưng bị pha lẫn với chấp thủ và sợ hãi, không hoàn toàn là chánh kiến.",
+                    "Chưa chính xác. Hiểu biết nhân quả đúng đắn sẽ dẫn đến chấp nhận vô thường, chứ không phải tìm cách tránh khỏi nó.",
+                    "Chưa chính xác. Đây là lo cho bản thân, không phải là tâm từ bi hướng đến người khác."
+                ],
+                citation: "Kinh Tăng Chi Bộ, AN 5.57: Kinh Các Đề Mục Cần Quán Niệm."
+            },
+            {
+                question: "Khi bạn cảm thấy cơ thể mình đang dần lão hóa, xuất hiện nhiều nếp nhăn, tóc bạc. Để thực hành **ly dục** đối với thân này, bạn nên tác ý như thế nào?",
+                options: [
+                    "Tìm mọi cách để che giấu hoặc làm chậm quá trình lão hóa.",
+                    "Quán chiếu rằng thân này là vô thường, bất tịnh, không có gì đáng để bám víu hay tự hào.",
+                    "Thường xuyên soi gương để tự nhủ mình vẫn còn trẻ.",
+                    "So sánh với những người trẻ hơn để tự an ủi."
+                ],
+                correct: 1,
+                feedbackCorrect: "Chính xác! **Như Lý Tác Ý** bằng cách quán chiếu về bản chất vô thường và bất tịnh của thân là con đường trực tiếp để ly dục, buông bỏ chấp thủ vào hình tướng, tuổi trẻ.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Tìm cách che giấu lão hóa là biểu hiện của chấp thủ vào thân và hình tướng.",
+                    "Chưa chính xác. Tự nhủ mình còn trẻ là sống trong tưởng, không phải đối diện với thực tại vô thường.",
+                    "Chưa chính xác. So sánh với người khác không giúp ly dục mà có thể tăng trưởng chấp thủ hoặc kiêu mạn."
+                ],
+                citation: "Kinh Trung Bộ, MN 10: Kinh Niệm Xứ (về quán thân bất tịnh)."
+            },
+            {
+                question: "Bạn đang đọc một cuốn sách giáo dục và thấy một đoạn văn nói về sự ích kỷ của con người. Bạn chợt nhận ra mình cũng có những lúc cư xử ích kỷ. Thời điểm này, việc thực hành **Như Lý Tác Ý** đúng đắn nhất là gì?",
+                options: [
+                    "Tự nhủ rằng mình không ích kỷ bằng người khác.",
+                    "Cố gắng quên đi suy nghĩ đó để không cảm thấy khó chịu.",
+                    "Nhận biết sự ích kỷ là một phiền não, quán chiếu nguyên nhân của nó và phát nguyện từ bỏ nó, thực hành tâm từ.",
+                    "Cảm thấy xấu hổ và tránh gặp gỡ mọi người."
+                ],
+                correct: 2,
+                feedbackCorrect: "Rất chính xác! **Như Lý Tác Ý** là nhận diện phiền não (ích kỷ), quán chiếu về nguyên nhân (chấp ngã, tham ái), và chủ động áp dụng đối trị (phát nguyện từ bỏ, thực hành tâm từ). Đây là quá trình chuyển hóa tâm đúng đắn.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Tự nhủ không ích kỷ bằng người khác là so sánh và né tránh trách nhiệm.",
+                    "Chưa chính xác. Cố gắng quên đi sẽ không giải quyết được phiền não gốc rễ.",
+                    "Chưa chính xác. Cảm thấy xấu hổ và tránh gặp gỡ mọi người là một dạng khổ tâm và không phải là cách đối trị tích cực."
+                ],
+                citation: "Kinh Trung Bộ, MN 10: Kinh Niệm Xứ (về quán tâm)."
+            },
+            {
+                question: "Trong lúc đau bệnh, bạn tác ý rằng: \"Khi hít vào, bệnh lặn sâu xuống; khi thở ra, bệnh bay đi mất.\" Theo giáo lý của Đức Thế Tôn, tác ý này thuộc loại nào?",
+                options: [
+                    "Một phương pháp thiền quán hơi thở hiệu quả.",
+                    "**Phi Như Lý Tác Ý**, do chấp thủ vào ý niệm điều khiển bệnh và thân vô ngã.",
+                    "Giúp tăng cường sức mạnh tinh thần để vượt qua bệnh.",
+                    "Thể hiện sự không sợ hãi bệnh tật."
+                ],
+                correct: 1,
+                feedbackCorrect: "Chính xác! Đây là **Phi Như Lý Tác Ý**. Bệnh tật là do duyên khởi và vận hành trên thân vô thường, vô ngã; nó không phải là một thực thể có thể bị \"hút vào\" hay \"thổi ra\" theo ý muốn chủ quan. Cách tác ý này là sự bám víu vào tưởng và mong muốn kiểm soát những gì nằm ngoài tầm kiểm soát của \"cái tôi\".",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Thiền quán hơi thở đúng đắn là quán hơi thở như nó là, không gán ghép ý niệm điều khiển bệnh tật.",
+                    "Chưa chính xác. Sức mạnh tinh thần đúng đắn là sự chấp nhận và xả ly, không phải ảo tưởng kiểm soát.",
+                    "Chưa chính xác. Không sợ hãi cần xuất phát từ trí tuệ thấy rõ vô thường, vô ngã, chứ không phải từ sự phủ nhận thực tại bệnh tật."
+                ],
+                citation: "Kinh Tương Ưng Bộ, SN 22.59: Vô Ngã Tướng Sutta (về vô ngã của thân và thọ)."
+            },
+            {
+                question: "Khi bị người khác hiểu lầm và nói xấu, bạn cảm thấy rất ấm ức. Để thực hành **Như Lý Tác Ý**, bạn nên làm gì?",
+                options: [
+                    "Tìm cách chứng minh sự trong sạch của mình với mọi người.",
+                    "Mặc kệ và không quan tâm đến lời nói của họ.",
+                    "Quán chiếu rằng lời nói xấu là vô thường, không phải bản chất của mình, và chỉ là kết quả của duyên nghiệp, rồi thực hành tâm xả và từ bi.",
+                    "Tìm cách nói xấu lại họ để trả đũa."
+                ],
+                correct: 2,
+                feedbackCorrect: "Rất chính xác! **Như Lý Tác Ý** trong tình huống này là quán chiếu về tính chất vô thường của lời nói, không bám víu vào \"cái tôi\" bị xúc phạm, và dùng tâm xả, từ bi để hóa giải oán hận. Việc này giúp tâm không bị phiền não chi phối.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Chứng minh sự trong sạch chỉ làm tăng thêm chấp ngã và có thể gây thêm tranh cãi.",
+                    "Chưa chính xác. Mặc kệ mà không có quán chiếu đúng đắn có thể dẫn đến sự dồn nén cảm xúc hoặc thờ ơ.",
+                    "Chưa chính xác. Nói xấu lại là tạo thêm nghiệp bất thiện, làm tăng trưởng sân hận."
+                ],
+                citation: "Kinh Trung Bộ, MN 2: Tất Cả Lậu Hoặc (liên quan đến việc đoạn trừ lậu hoặc sân hận)."
+            },
+            {
+                question: "Bạn thấy một người đồng tu thường xuyên khoe khoang về những thành tựu tu tập của mình. Trong lòng bạn có chút khó chịu. Để không nuôi dưỡng phiền não, bạn nên **Như Lý Tác Ý** như thế nào?",
+                options: [
+                    "Cố gắng tránh xa người đó để không bị ảnh hưởng.",
+                    "Tự nhủ rằng họ đang kiêu mạn và sẽ không đạt được kết quả tốt.",
+                    "Quán chiếu rằng sự khoe khoang là biểu hiện của một phiền não (mạn), và bạn không nên để tâm mình bị ô nhiễm bởi lời nói của họ, mà hãy mừng cho những thiện pháp mà họ đã làm được.",
+                    "Tìm cách so sánh thành tựu của mình với họ để thấy mình tốt hơn."
+                ],
+                correct: 2,
+                feedbackCorrect: "Chính xác! **Như Lý Tác Ý** ở đây là nhận diện phiền não (khó chịu) trong tâm mình, quán chiếu về phiền não (mạn) của người khác với tâm từ bi, và giữ cho tâm mình không bị ô nhiễm. Đồng thời, hoan hỷ với thiện pháp của họ (tùy hỷ) là một pháp hành thiện.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Tránh xa chỉ là né tránh, không giải quyết được phiền não trong tâm mình.",
+                    "Chưa chính xác. Tự nhủ họ sẽ không đạt được kết quả tốt là một dạng sân hận và thiếu từ bi.",
+                    "Chưa chính xác. So sánh thành tựu sẽ làm tăng trưởng ngã mạn hoặc đố kỵ."
+                ],
+                citation: "Kinh Tăng Chi Bộ, AN 5.161: Mạn (liên quan đến việc đối trị ngã mạn)."
+            },
+            {
+                question: "Khi bạn thành công trong một việc gì đó và nhận được nhiều lời khen, tâm bạn cảm thấy rất tự mãn. Để thực hành **ly dục** và không rơi vào chấp thủ, bạn nên tác ý điều gì?",
+                options: [
+                    "Tận hưởng niềm vui từ lời khen và thành công đó.",
+                    "Tự nhủ rằng mình xứng đáng với những lời khen đó.",
+                    "Quán chiếu rằng thành công và lời khen đều là vô thường, do duyên hợp mà thành, không có bản chất cố định, không phải là \"cái tôi\" thực sự.",
+                    "Tìm cách đạt được nhiều thành công hơn nữa để duy trì cảm giác tự mãn."
+                ],
+                correct: 2,
+                feedbackCorrect: "Rất chính xác! **Như Lý Tác Ý** bằng cách quán chiếu về bản chất vô thường, duyên khởi, và vô ngã của thành công và lời khen giúp bạn không bám víu vào chúng, từ đó ly dục và tránh xa phiền não tự mãn.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Tận hưởng niềm vui mà không quán chiếu sẽ dễ dẫn đến chấp thủ và phiền não.",
+                    "Chưa chính xác. Tự nhủ xứng đáng là biểu hiện của ngã mạn, chấp ngã.",
+                    "Chưa chính xác. Cố gắng đạt được nhiều thành công hơn để duy trì cảm giác tự mãn sẽ làm tăng trưởng tham ái và chấp thủ."
+                ],
+                citation: "Kinh Tương Ưng Bộ, SN 22.59: Vô Ngã Tướng Sutta (quán chiếu các uẩn là vô ngã)."
+            },
+            {
+                question: "Bạn thấy một người đồng tu đang làm điều gì đó sai trái (không vi phạm giới luật nhưng không phù hợp với chánh hạnh). Bạn nên tác ý như thế nào để giữ tâm mình thanh tịnh và đúng Chánh pháp?",
+                options: [
+                    "Phán xét và lên án họ trong tâm, cho rằng họ không tu đúng.",
+                    "Kể cho người khác nghe về lỗi lầm của họ để mọi người cùng biết.",
+                    "Quán chiếu rằng lỗi lầm của họ là do vô minh và phiền não chi phối, khởi tâm từ bi và tìm cách (nếu có thể và hợp lý) nhắc nhở họ một cách khéo léo, hoặc giữ tâm mình không bị ô nhiễm.",
+                    "Cố gắng bắt lỗi và phê bình họ ngay lập tức."
+                ],
+                correct: 2,
+                feedbackCorrect: "Chính xác! Đây là **Như Lý Tác Ý** bằng cách quán chiếu về nguyên nhân của lỗi lầm (phiền não), khởi tâm từ bi, và chọn cách hành xử trí tuệ để không tạo thêm nghiệp bất thiện cho mình. Việc không để tâm mình bị ô nhiễm bởi lỗi lầm của người khác là rất quan trọng.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Phán xét và lên án là một dạng sân hận và chấp thủ vào ý kiến của mình.",
+                    "Chưa chính xác. Kể lể lỗi lầm của người khác là tạo khẩu nghiệp và tăng trưởng phiền não.",
+                    "Chưa chính xác. Bắt lỗi và phê bình ngay lập tức có thể không phù hợp, làm tăng sân hận cho cả hai bên."
+                ],
+                citation: "Kinh Tăng Chi Bộ, AN 4.100: Bốn Hạng Người (liên quan đến cách đối xử với người khác)."
+            },
+            {
+                question: "Bạn đang bị căng thẳng do áp lực công việc. Bạn nên thực hành **Như Lý Tác Ý** như thế nào để giảm bớt căng thẳng?",
+                options: [
+                    "Cố gắng làm việc nhiều hơn để hoàn thành mọi thứ thật nhanh.",
+                    "Than phiền với đồng nghiệp về áp lực công việc.",
+                    "Quán chiếu rằng căng thẳng là một cảm thọ do duyên sinh (áp lực công việc, chấp thủ vào kết quả), nó là vô thường và không phải là \"cái tôi\" của bạn, từ đó buông bớt chấp thủ.",
+                    "Đi tìm một thú vui để quên đi căng thẳng."
+                ],
+                correct: 2,
+                feedbackCorrect: "Rất chính xác! **Như Lý Tác Ý** là nhận diện cảm thọ căng thẳng, quán chiếu nguyên nhân duyên sinh của nó và bản chất vô thường, vô ngã, từ đó buông bớt sự bám víu vào kết quả và giảm thiểu chấp thủ. Điều này giúp tâm an định hơn.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Làm việc nhiều hơn có thể tăng thêm căng thẳng nếu không có chánh niệm.",
+                    "Chưa chính xác. Than phiền là nuôi dưỡng phiền não, không phải chuyển hóa.",
+                    "Chưa chính xác. Tìm thú vui để quên đi là né tránh, không giải quyết gốc rễ căng thẳng."
+                ],
+                citation: "Kinh Tương Ưng Bộ, SN 36.1: Kinh Vô Minh (về khổ thọ và cách quán chiếu)."
+            },
+            {
+                question: "Khi bạn gặp một hoàn cảnh bất như ý (ví dụ: bị mất tiền), tâm bạn khởi lên sự tiếc nuối và tham muốn lấy lại. Đây là thời điểm quan trọng để thực hành **Như Lý Tác Ý**. Bạn nên làm gì?",
+                options: [
+                    "Cố gắng tìm mọi cách để lấy lại số tiền đó.",
+                    "Liên tục nghĩ về sự mất mát và tiếc nuối.",
+                    "Quán chiếu rằng tiền bạc là vô thường, do duyên hợp mà có và cũng do duyên hợp mà mất, không có gì là bền vững hay thực chất, từ đó buông bỏ sự tiếc nuối.",
+                    "Trách móc bản thân hoặc người khác về sự mất mát."
+                ],
+                correct: 2,
+                feedbackCorrect: "Chính xác! **Như Lý Tác Ý** là quán chiếu về bản chất vô thường của tài sản và chấp nhận quy luật duyên khởi (có hợp có tan, có được có mất). Buông bỏ chấp thủ vào tiền bạc và không nuôi dưỡng tâm tiếc nuối sẽ giúp tâm thoát khỏi khổ.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Cố gắng lấy lại bằng mọi giá khi tâm còn chấp thủ có thể dẫn đến việc tạo nghiệp bất thiện.",
+                    "Chưa chính xác. Liên tục nghĩ về sự mất mát là nuôi dưỡng khổ tâm.",
+                    "Chưa chính xác. Trách móc bản thân hoặc người khác sẽ làm tăng thêm sân hận và khổ đau."
+                ],
+                citation: "Kinh Tương Ưng Bộ, SN 35.28: Tất Cả Vô Thường (quán chiếu các pháp là vô thường)."
+            },
+            {
+                question: "Có người nói rằng: \"Khi tâm được thanh tịnh, thì thân sẽ không bao giờ bệnh nữa.\" Nhận định này có phù hợp với giáo lý về thân và bệnh trong kinh Nikaya không?",
+                options: [
+                    "Hoàn toàn phù hợp, tâm thanh tịnh sẽ loại bỏ bệnh tật.",
+                    "Không phù hợp, vì thân này là vô thường và bệnh là quy luật tự nhiên của thân hữu vi, dù tâm có thanh tịnh đến đâu.",
+                    "Phù hợp đối với các bậc A La Hán.",
+                    "Phù hợp nếu người đó đã tu đến mức độ cao nhất."
+                ],
+                correct: 1,
+                feedbackCorrect: "Chính xác! Nhận định này là **Phi Như Lý Tác Ý**. Dù tâm thanh tịnh đến đâu, thân này vẫn là thân hữu vi, là sự tập hợp của tứ đại và phải tuân theo quy luật vô thường, lão, bệnh, tử. Các bậc Thánh A-la-hán cũng vẫn bị bệnh nếu các duyên bệnh hội đủ, nhưng tâm của họ không còn khổ đau vì bệnh.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Tâm thanh tịnh giúp không còn khổ vì bệnh, chứ không phải không còn bệnh thân.",
+                    "Chưa chính xác. Ngay cả các bậc A La Hán cũng vẫn có thân bệnh, nhưng không khổ vì bệnh. (Ví dụ: Đức Phật và Tôn giả Xá Lợi Phất cũng có lúc bị bệnh).",
+                    "Chưa chính xác. Mức độ tu tập không làm thay đổi bản chất vô thường của thân."
+                ],
+                citation: "Kinh Tăng Chi Bộ, AN 5.57: Kinh Các Đề Mục Cần Quán Niệm (về già, bệnh, chết là quy luật)."
+            },
+            {
+                question: "Bạn đang sống trong một ngôi nhà cũ kỹ, xuống cấp và luôn ước ao có một ngôi nhà mới, đẹp hơn. Để thực hành **ly dục** đối với sự bám víu vào vật chất, bạn nên tác ý như thế nào?",
+                options: [
+                    "Làm việc thật chăm chỉ để kiếm đủ tiền mua nhà mới.",
+                    "Thường xuyên xem các mẫu nhà đẹp để nuôi dưỡng ước mơ.",
+                    "Quán chiếu rằng mọi vật chất, kể cả nhà cửa, đều là vô thường, hư hoại, không có gì là sở hữu vĩnh viễn của \"tôi\", từ đó giảm bớt sự chấp thủ và mong cầu.",
+                    "Than phiền về ngôi nhà hiện tại của mình."
+                ],
+                correct: 2,
+                feedbackCorrect: "Rất chính xác! **Như Lý Tác Ý** bằng cách quán chiếu về bản chất vô thường của vật chất, sự không bền vững của tài sản, giúp bạn buông bỏ sự bám víu và dục vọng đối với việc sở hữu. Mục tiêu là an trú trong hiện tại với những gì đang có.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Làm việc để kiếm tiền là tốt, nhưng nếu động cơ chính là tham ái vật chất thì sẽ không dẫn đến ly dục.",
+                    "Chưa chính xác. Nuôi dưỡng ước mơ vật chất mà không có chánh kiến sẽ làm tăng trưởng tham ái.",
+                    "Chưa chính xác. Than phiền là nuôi dưỡng khổ tâm và không chấp nhận thực tại."
+                ],
+                citation: "Kinh Tương Ưng Bộ, SN 35.28: Tất Cả Vô Thường (quán chiếu các pháp là vô thường)."
+            },
+            {
+                question: "Khi bạn thành công trong việc giúp đỡ người khác và cảm thấy rất vui sướng, bạn nên tác ý như thế nào để niềm vui này không biến thành chấp thủ?",
+                options: [
+                    "Tận hưởng trọn vẹn niềm vui và tự hào về bản thân.",
+                    "Kể cho nhiều người khác nghe về việc mình đã làm được.",
+                    "Quán chiếu rằng niềm vui này là một cảm thọ vô thường, do duyên sinh (hành động thiện và sự giúp đỡ), không nên bám víu vào nó, và hồi hướng công đức đã tạo được.",
+                    "Nghĩ rằng mình là người tốt nhất trong việc giúp đỡ người khác."
+                ],
+                correct: 2,
+                feedbackCorrect: "Chính xác! **Như Lý Tác Ý** ở đây là nhận biết niềm vui là một cảm thọ vô thường, do duyên sinh, không bám víu vào nó. Hồi hướng công đức là cách để buông bỏ chấp thủ vào công đức và cái tôi đã tạo ra nó.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Tận hưởng mà không quán chiếu có thể dẫn đến chấp thủ vào cảm giác và ngã mạn.",
+                    "Chưa chính xác. Kể cho nhiều người nghe có thể dẫn đến mong cầu danh tiếng và ngã mạn.",
+                    "Chưa chính xác. Nghĩ mình là tốt nhất là biểu hiện rõ ràng của ngã mạn."
+                ],
+                citation: "Kinh Trung Bộ, MN 2: Tất Cả Lậu Hoặc (quán chiếu cảm thọ, không chấp thủ)."
+            },
+            {
+                question: "Bạn đang cố gắng thay đổi một thói quen xấu đã có từ lâu. Đã nhiều lần thất bại, bạn cảm thấy nản lòng. Để tiếp tục tinh tấn, bạn nên **Như Lý Tác Ý** như thế nào?",
+                options: [
+                    "Tự trách mình vì quá yếu kém.",
+                    "Cố gắng bỏ cuộc vì thấy khó quá.",
+                    "Quán chiếu rằng thói quen xấu là một hành uẩn vô thường, có thể thay đổi được, và mỗi lần thất bại là một bài học để hiểu rõ hơn về nguyên nhân và cách đối trị, từ đó kiên trì tiếp tục.",
+                    "Tìm một phương pháp mới hoàn toàn mà không cần nỗ lực."
+                ],
+                correct: 2,
+                feedbackCorrect: "Rất chính xác! **Như Lý Tác Ý** là nhận diện sự nản lòng (một dạng phiền não), quán chiếu về bản chất của thói quen xấu (là hành uẩn vô thường, có thể thay đổi), và coi thất bại là bài học. Điều này giúp duy trì tinh tấn và chánh kiến trên con đường chuyển hóa.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Tự trách mình sẽ làm tăng thêm khổ tâm và giảm động lực.",
+                    "Chưa chính xác. Bỏ cuộc là chấp nhận sự thất bại và không muốn thay đổi.",
+                    "Chưa chính xác. Không có phương pháp thay đổi mà không cần nỗ lực; sự tinh tấn là yếu tố cần thiết."
+                ],
+                citation: "Kinh Tăng Chi Bộ, AN 5.14: Ngũ Căn (tinh tấn là một trong ngũ căn)."
+            },
+            {
+                question: "Bạn đang sống trong sự thoải mái vật chất. Tâm bạn dễ dàng phát sinh sự ham muốn thêm nhiều dục lạc hơn. Để **ly dục**, bạn nên tác ý điều gì?",
+                options: [
+                    "Tìm kiếm thêm những trải nghiệm vật chất mới để thỏa mãn tâm mình.",
+                    "Tận hưởng mọi tiện nghi mà không cần suy nghĩ.",
+                    "Quán chiếu rằng mọi dục lạc vật chất đều là vô thường, không có cốt lõi, và chỉ mang lại sự thỏa mãn tạm thời rồi dẫn đến khổ não, từ đó phát sinh tâm nhàm chán và buông bỏ.",
+                    "So sánh mình với những người nghèo khổ để thấy mình may mắn."
+                ],
+                correct: 2,
+                feedbackCorrect: "Chính xác! **Như Lý Tác Ý** bằng cách quán chiếu về bản chất vô thường, không thực chất của dục lạc là con đường trực tiếp để phát sinh tâm nhàm chán (niết bàn) và ly dục. Đây là sự buông bỏ dựa trên tuệ giác.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Tìm kiếm thêm dục lạc sẽ làm tăng trưởng tham ái, không phải ly dục.",
+                    "Chưa chính xác. Tận hưởng mà không quán chiếu sẽ dẫn đến sự bám víu.",
+                    "Chưa chính xác. So sánh có thể làm tăng ngã mạn hoặc sự tự mãn, không giúp ly dục."
+                ],
+                citation: "Kinh Chuyển Pháp Luân, SN 56.11: Dhamma-cakka-ppavattana Sutta (về Khổ và Tập đế - Tham ái là nguyên nhân của khổ)."
+            },
+            {
+                question: "Khi bạn đạt được một vị trí cao trong xã hội, bạn cảm thấy tự hào và muốn người khác phải kính trọng mình. Đây là biểu hiện của loại tác ý nào?",
+                options: [
+                    "Như Lý Tác Ý.",
+                    "Phi Như Lý Tác Ý.",
+                    "Chánh Tác Ý.",
+                    "Tâm tùy hỷ."
+                ],
+                correct: 1,
+                feedbackCorrect: "Hoàn toàn đúng! Cảm giác tự hào và muốn người khác kính trọng là biểu hiện của **Phi Như Lý Tác Ý**, do chấp thủ vào cái tôi, địa vị, và danh tiếng. Nó đi ngược lại giáo lý vô ngã và vô thường.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. **Như Lý Tác Ý** là quán chiếu về bản chất vô thường, vô ngã của địa vị và danh tiếng.",
+                    "Chưa chính xác. **Chánh Tác Ý** là một tên gọi khác của Như Lý Tác Ý, không liên quan đến tự hào và cầu danh.",
+                    "Chưa chính xác. **Tâm tùy hỷ** là hoan hỷ với thành công của người khác, không phải sự tự hào về bản thân."
+                ],
+                citation: "Kinh Tăng Chi Bộ, AN 5.161: Mạn (liên quan đến ngã mạn)."
+            },
+            {
+                question: "Bạn đang ngồi thiền và cảm thấy buồn ngủ, tâm cứ chìm xuống. Để duy trì chánh niệm và tinh tấn, bạn nên **Như Lý Tác Ý** như thế nào?",
+                options: [
+                    "Cố gắng ngủ một chút để tỉnh táo hơn.",
+                    "Tự nhủ rằng mình không có duyên với thiền định.",
+                    "Quán chiếu rằng buồn ngủ là một tâm sở bất thiện, một chướng ngại, nhận biết nó và dùng ý chí tỉnh giác để xua tan, hoặc đứng dậy đi kinh hành.",
+                    "Chuyển sang làm việc khác cho đỡ buồn ngủ."
+                ],
+                correct: 2,
+                feedbackCorrect: "Rất chính xác! **Như Lý Tác Ý** ở đây là nhận diện buồn ngủ là một chướng ngại, không chấp nhận nó chi phối, và áp dụng các phương pháp đối trị như tăng cường tỉnh giác hoặc thay đổi tư thế để khôi phục tinh tấn. Đây là sự tinh tấn đúng đắn.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Ngủ trong khi thiền là để chướng ngại chi phối.",
+                    "Chưa chính xác. Tự nhủ không có duyên là một dạng tà kiến và nản lòng.",
+                    "Chưa chính xác. Chuyển sang làm việc khác là né tránh, không đối trị trực tiếp chướng ngại trong thiền."
+                ],
+                citation: "Kinh Tăng Chi Bộ, AN 5.28: Năm Pháp Làm Tăng Trưởng Trí Tuệ (một trong số đó là diệt trừ hôn trầm, thụy miên)."
+            },
+            {
+                question: "Khi đối diện với một vấn đề phức tạp, bạn cảm thấy bối rối và không biết nên quyết định thế nào. Để có được **chánh kiến** và quyết định đúng đắn, bạn nên tác ý điều gì?",
+                options: [
+                    "Nhờ người khác quyết định hộ cho mình.",
+                    "Cứ làm theo cảm tính mà không suy nghĩ nhiều.",
+                    "Quán chiếu về bản chất của vấn đề, các khía cạnh liên quan, nguyên nhân và hậu quả có thể có, đồng thời tham khảo lời Phật dạy và ý kiến của bậc trí để đưa ra lựa chọn sáng suốt.",
+                    "Trì hoãn quyết định càng lâu càng tốt."
+                ],
+                correct: 2,
+                feedbackCorrect: "Chính xác! **Như Lý Tác Ý** trong trường hợp này là áp dụng trí tuệ để phân tích vấn đề một cách khách quan, liên kết với Chánh pháp và học hỏi từ người có trí. Điều này giúp tâm định hướng đúng đắn và phát triển chánh kiến.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Nhờ người khác quyết định hoàn toàn là thiếu sự tự chủ và trách nhiệm cá nhân.",
+                    "Chưa chính xác. Làm theo cảm tính thường dẫn đến sai lầm và hối tiếc.",
+                    "Chưa chính xác. Trì hoãn không giải quyết được vấn đề mà có thể làm nó phức tạp hơn."
+                ],
+                citation: "Kinh Trung Bộ, MN 2: Tất Cả Lậu Hoặc (ý về việc tác ý để có chánh kiến và đoạn trừ tà kiến)."
+            },
+            {
+                question: "Bạn vừa bị mất một số tiền lớn do đầu tư thua lỗ. Tâm bạn chán nản và hối tiếc vô cùng. Để chuyển hóa tâm trạng này theo Chánh pháp, bạn nên **Như Lý Tác Ý** như thế nào?",
+                options: [
+                    "Cố gắng kiếm lại số tiền đã mất bằng mọi cách.",
+                    "Than vãn với bạn bè về sự thua lỗ của mình.",
+                    "Quán chiếu rằng tài sản là vô thường, không bền vững, việc mất mát là quy luật của duyên khởi, và quan trọng là giữ tâm không bị dính mắc, chấp thủ vào tiền bạc.",
+                    "Tự dằn vặt bản thân vì đã quyết định sai lầm."
+                ],
+                correct: 2,
+                feedbackCorrect: "Chính xác! **Như Lý Tác Ý** là quán chiếu về bản chất vô thường của tài sản và chấp nhận quy luật duyên khởi (có hợp có tan, có được có mất). Buông bỏ chấp thủ vào tiền bạc và không nuôi dưỡng tâm tiếc nuối sẽ giúp tâm thoát khỏi khổ.",
+                feedbackIncorrect: [
+                    "Chưa chính xác. Cố gắng kiếm lại bằng mọi giá khi tâm còn chấp thủ có thể dẫn đến việc tạo nghiệp bất thiện.",
+                    "Chưa chính xác. Than vãn chỉ làm tăng thêm sự khổ tâm và không giúp giải quyết vấn đề gốc rễ.",
+                    "Chưa chính xác. Tự dằn vặt là một dạng khổ tâm do chấp thủ vào cái tôi và kết quả."
+                ],
+                citation: "Kinh Tương Ưng Bộ, SN 35.28: Tất Cả Vô Thường."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answeredThisQuestion = false;
+
+        const questionElement = document.getElementById('question');
+        const optionsContainer = document.getElementById('options');
+        const feedbackBox = document.getElementById('feedback');
+        const feedbackTitle = document.getElementById('feedback-title');
+        const feedbackContent = document.getElementById('feedback-content');
+        const feedbackReasonIncorrect = document.getElementById('feedback-reason-incorrect');
+        const feedbackGuideCorrect = document.getElementById('feedback-guide-correct');
+        const nextButton = document.querySelector('.next-btn');
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const scoreElement = document.getElementById('score');
+        const totalQuestionsElement = document.getElementById('total-questions');
+        const correctAudio = document.getElementById('correctAudio');
+        const incorrectAudio = document.getElementById('incorrectAudio');
+
+        function startQuiz() {
+            startScreen.style.display = 'none';
+            quizScreen.style.display = 'block';
+            currentQuestionIndex = 0;
+            score = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            answeredThisQuestion = false;
+            feedbackBox.style.display = 'none';
+            nextButton.style.display = 'none';
+            optionsContainer.innerHTML = ''; // Clear previous options
+
+            if (currentQuestionIndex < questions.length) {
+                const q = questions[currentQuestionIndex];
+                questionElement.textContent = `Câu ${currentQuestionIndex + 1}: ${q.question}`;
+
+                q.options.forEach((option, index) => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.onclick = () => selectOption(index);
+                    optionsContainer.appendChild(button);
+                });
+            } else {
+                showResults();
+            }
+        }
+
+        function selectOption(selectedIndex) {
+            if (answeredThisQuestion) return; // Prevent multiple selections
+
+            answeredThisQuestion = true;
+            const q = questions[currentQuestionIndex];
+            const buttons = optionsContainer.querySelectorAll('button');
+
+            buttons.forEach((button, index) => {
+                button.disabled = true; // Disable all buttons after selection
+                if (index === selectedIndex) {
+                    button.classList.add('selected'); // Highlight selected option
+                }
+            });
+
+            feedbackBox.style.display = 'block';
+            nextButton.style.display = 'block';
+
+            if (selectedIndex === q.correct) {
+                score++;
+                feedbackBox.classList.remove('incorrect');
+                feedbackBox.classList.add('correct');
+                feedbackTitle.textContent = "Chính xác!";
+                feedbackContent.textContent = q.feedbackCorrect;
+                feedbackReasonIncorrect.textContent = ''; // Clear incorrect reason
+                feedbackGuideCorrect.textContent = `(Dẫn chứng: ${q.citation})`;
+                correctAudio.play();
+            } else {
+                feedbackBox.classList.remove('correct');
+                feedbackBox.classList.add('incorrect');
+                feedbackTitle.textContent = "Chưa chính xác.";
+                // Access feedbackIncorrect using the selectedIndex
+                feedbackContent.textContent = q.feedbackIncorrect[selectedIndex]; 
+                feedbackReasonIncorrect.textContent = 'Bạn hãy xem lại đáp án đúng và phần giải thích chi tiết.';
+                feedbackGuideCorrect.textContent = `(Đáp án đúng là: ${q.options[q.correct]})`;
+                incorrectAudio.play();
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        function showResults() {
+            quizScreen.style.display = 'none';
+            resultScreen.style.display = 'block';
+            scoreElement.textContent = score;
+            totalQuestionsElement.textContent = questions.length;
+        }
+
+        function restartQuiz() {
+            resultScreen.style.display = 'none';
+            startQuiz();
+        }
+
+        // Preload audio files
+        correctAudio.load();
+        incorrectAudio.load();
+    </script>
+</body>
+</html>
