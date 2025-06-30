@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Trắc Nghiệm Sức Khỏe & Lối Sống Lành Mạnh</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0e0e0;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+        .start-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .start-screen p {
+            font-size: 1.1em;
+            margin-bottom: 25px;
+            color: #555;
+        }
+        #startButton {
+            padding: 15px 35px;
+            font-size: 1.2em;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 600;
+        }
+        #startButton:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        .question-section {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .question-counter {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .question-text {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        .options-container label {
+            display: block;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            font-size: 1.05em;
+            position: relative;
+            padding-left: 45px; /* Space for custom radio button */
+        }
+        .options-container label:hover {
+            background-color: #f0f0f0;
+            border-color: #c0c0c0;
+        }
+        .options-container input[type="radio"] {
+            display: none; /* Hide default radio button */
+        }
+        .options-container input[type="radio"] + span::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 22px;
+            height: 22px;
+            border: 2px solid #ccc;
+            border-radius: 50%;
+            background-color: #fff;
+            transition: all 0.2s ease;
+        }
+        .options-container input[type="radio"]:checked + span::before {
+            border-color: #007bff;
+            background-color: #007bff;
+        }
+        .options-container input[type="radio"]:checked + span::after {
+            content: '';
+            position: absolute;
+            left: 21px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #fff;
+            display: block;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1em;
+            border: 1px solid transparent; /* default */
+        }
+        .feedback.correct {
+            background-color: #e6ffed;
+            color: #28a745;
+            border-color: #28a745;
+        }
+        .feedback.incorrect {
+            background-color: #ffe6e6;
+            color: #dc3545;
+            border-color: #dc3545;
+        }
+        .feedback p {
+            margin: 0;
+            padding: 5px 0;
+        }
+        .rationale {
+            font-size: 0.95em;
+            margin-top: 10px;
+            font-style: italic;
+            color: #555;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        .controls button {
+            padding: 12px 25px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            color: #fff;
+            font-weight: 600;
+        }
+        .controls button:hover {
+            transform: translateY(-2px);
+        }
+        .controls #prevBtn {
+            background-color: #6c757d;
+        }
+        .controls #prevBtn:hover {
+            background-color: #5a6268;
+        }
+        .controls #nextBtn {
+            background-color: #007bff;
+        }
+        .controls #nextBtn:hover {
+            background-color: #0056b3;
+        }
+        .controls #submitBtn {
+            background-color: #28a745;
+        }
+        .controls #submitBtn:hover {
+            background-color: #218838;
+        }
+        .result-section {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background-color: #e9ecef;
+            border-radius: 12px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+            display: none; /* Hidden by default */
+        }
+        .result-section h2 {
+            color: #007bff;
+            font-size: 2.2em;
+            margin-bottom: 15px;
+        }
+        .result-section p {
+            font-size: 1.2em;
+            color: #555;
+        }
+        .result-section #scoreDisplay {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #28a745;
+            margin: 20px 0;
+        }
+        .result-section #remark {
+            font-style: italic;
+            color: #777;
+        }
+        .result-section #restartBtnResult {
+            background-color: #007bff; /* Changed to blue for consistency */
+            padding: 12px 25px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            color: #fff;
+            font-weight: 600;
+            margin-top: 20px; /* Added margin */
+        }
+        .result-section #restartBtnResult:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Bài Trắc Nghiệm Sức Khỏe & Lối Sống Lành Mạnh</h1>
+
+        <div id="startScreen" class="start-screen">
+            <p>Bài trắc nghiệm này sẽ giúp bạn kiểm tra kiến thức về sức khỏe và lối sống. Hãy cùng khám phá những lời khuyên hữu ích để sống khỏe mỗi ngày!</p>
+            <button id="startButton">Bắt đầu làm bài</button>
+        </div>
+
+        <div id="quiz-content" style="display: none;">
+            <div class="question-section">
+                <div class="question-counter" id="questionCounter"></div>
+                <div class="question-text" id="questionText"></div>
+                <div class="options-container" id="optionsContainer"></div>
+                <div class="feedback" id="feedback"></div>
+            </div>
+
+            <div class="controls">
+                <button id="prevBtn" disabled>Quay lại</button>
+                <button id="nextBtn">Câu kế tiếp</button>
+                <button id="submitBtn" style="display: none;">Hoàn thành</button>
+            </div>
+        </div>
+
+        <div class="result-section" id="resultSection">
+            <h2>Kết Quả Bài Trắc Nghiệm</h2>
+            <p>Bạn đã hoàn thành bài trắc nghiệm!</p>
+            <p id="scoreDisplay"></p>
+            <p id="remark"></p>
+            <div class="controls" style="justify-content: center;">
+                <button id="restartBtnResult">Làm lại</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Khởi tạo AudioContext
+        let audioContext;
+
+        function initializeAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        // Play a simple correct sound (higher pitch)
+        function playCorrectSound() {
+            initializeAudioContext(); // Ensure context is active
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator.type = 'sine'; // Sóng hình sin
+            oscillator.frequency.value = 880; // Cao độ A5
+            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.5, audioContext.currentTime + 0.01);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.3); // Giảm dần nhanh
+
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.3);
+        }
+
+        // Play a simple incorrect sound (lower pitch, harsher tone)
+        function playIncorrectSound() {
+            initializeAudioContext(); // Ensure context is active
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator.type = 'sawtooth'; // Sóng răng cưa
+            oscillator.frequency.value = 220; // Cao độ A3 (thấp hơn)
+            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.5, audioContext.currentTime + 0.01);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5); // Giảm dần chậm hơn
+
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+
+        const quizData = [
+            {
+                question: "Với tình trạng thừa cân, thói quen ăn uống nào sau đây được khuyến nghị để cải thiện sức khỏe tổng thể và quản lý cân nặng một cách bền vững, theo khuyến nghị của WHO?",
+                options: [
+                    { text: "Chỉ ăn thịt và các sản phẩm từ sữa để tăng cơ giảm mỡ.", isCorrect: false },
+                    { text: "Uống nhiều nước ngọt có ga thay cho nước lọc để bù năng lượng.", isCorrect: false },
+                    { text: "Nhịn ăn gián đoạn 16/8 mỗi ngày để giảm cân nhanh.", isCorrect: false },
+                    { text: "Ăn nhiều rau xanh và trái cây, giảm đồ ngọt và thức ăn chế biến sẵn.", isCorrect: true, rationale: "Chế độ ăn giàu rau xanh và trái cây cung cấp vitamin, khoáng chất và chất xơ, giúp kiểm soát cân nặng và cải thiện sức khỏe tổng thể. Trong đó, hạn chế đồ ngọt và thực phẩm chế biến sẵn giúp giảm lượng calo rỗng và chất béo không lành mạnh." }
+                ]
+            },
+            {
+                question: "Bạn thường xuyên thức khuya. Thói quen sinh hoạt nào dưới đây có thể giúp cải thiện tình trạng sức khỏe do thức khuya và thừa cân, theo các tổ chức y tế như WHO và CDC?",
+                options: [
+                    { text: "Dùng cà phê hoặc nước tăng lực để giữ tỉnh táo khi thức khuya.", isCorrect: false },
+                    { text: "Tập thể dục cường độ cao ngay trước khi đi ngủ để đốt cháy calo.", isCorrect: false },
+                    { text: "Ăn tối muộn và xem TV đến 2-3 giờ sáng.", isCorrect: false },
+                    { text: "Ngủ đủ 7-9 tiếng mỗi đêm và ăn bữa cuối cách giờ ngủ ít nhất 2-3 tiếng.", isCorrect: true, rationale: "Thói quen ngủ đủ giấc và ăn tối sớm giúp cơ thể có đủ thời gian tiêu hóa, cải thiện chất lượng giấc ngủ và hỗ trợ quá trình trao đổi chất, góp phần kiểm soát cân nặng và duy trì sức khỏe tim mạch." }
+                ]
+            },
+            {
+                question: "Một người có cholesterol cao và thói quen ăn ngoài thường xuyên. Lựa chọn thực phẩm nào dưới đây là tốt nhất để giảm mức cholesterol, theo khuyến nghị của các tổ chức y tế uy tín?",
+                options: [
+                    { text: "Tiếp tục ăn các món chiên rán, đồ ăn nhanh vì chúng tiện lợi khi ăn ngoài.", isCorrect: false },
+                    { text: "Hạn chế thịt đỏ, ưu tiên thịt trắng, cá và chất béo không bão hòa từ thực vật như dầu ô liu, quả bơ.", isCorrect: true, rationale: "Theo Hiệp hội Tim mạch Hoa Kỳ (AHA), hạn chế chất béo bão hòa và cholesterol từ thịt đỏ, đồng thời tăng cường chất béo không bão hòa từ thực vật, giúp giảm mức cholesterol LDL (cholesterol xấu) và cải thiện sức khỏe tim mạch." },
+                    { text: "Loại bỏ hoàn toàn carbohydrate ra khỏi chế độ ăn.", isCorrect: false },
+                    { text: "Tăng cường ăn phô mai, bơ và các sản phẩm từ sữa nguyên kem.", isCorrect: false }
+                ]
+            },
+            {
+                question: "Một người có chỉ số đường huyết cận tiểu đường và thích ăn đồ mặn, nêm nhiều gia vị nhưng không ăn ngọt. Chế độ ăn nào sau đây là phù hợp nhất để kiểm soát đường huyết cho người đó, theo khuyến nghị của các tổ chức y tế như ADA và WHO?",
+                options: [
+                    { text: "Uống nhiều nước ép trái cây đóng hộp vì chúng có vitamin.", isCorrect: false },
+                    { text: "Ăn nhiều thực phẩm mặn và nêm nhiều gia vị để kích thích vị giác.", isCorrect: false },
+                    { text: "Không ăn các bữa chính mà chỉ ăn vặt liên tục trong ngày.", isCorrect: false },
+                    { text: "Giảm thiểu đồ ngọt, tinh bột trắng, tăng cường ngũ cốc nguyên hạt, rau xanh và protein nạc.", isCorrect: true, rationale: "Theo Hiệp hội Tiểu đường Hoa Kỳ (ADA) và WHO, kiểm soát lượng đường và tinh bột tinh chế, đồng thời tăng cường chất xơ từ ngũ cốc nguyên hạt và rau xanh, cùng protein nạc, là chìa khóa để ổn định đường huyết ở người tiền tiểu đường." }
+                ]
+            },
+            {
+                question: "Khi đi ăn ngoài, bạn có thể áp dụng nguyên tắc nào để duy trì chế độ ăn lành mạnh và kiểm soát cholesterol, theo khuyến nghị của các chuyên gia dinh dưỡng?",
+                options: [
+                    { text: "Ăn thoải mái các món yêu thích vì chỉ thỉnh thoảng mới đi ăn nhà hàng.", isCorrect: false },
+                    { text: "Yêu cầu nhà hàng cho thêm nhiều phô mai và sốt kem vào món ăn.", isCorrect: false },
+                    { text: "Chọn các món nướng, hấp, luộc thay vì chiên xào, ưu tiên rau xanh và hạn chế nước sốt béo.", isCorrect: true, rationale: "Các món ăn được chế biến bằng cách nướng, hấp, hoặc luộc thường ít chất béo và calo hơn. Việc ưu tiên rau xanh và hạn chế nước sốt béo giúp giảm lượng chất béo, cholesterol và calo nạp vào cơ thể, hỗ trợ quản lý cân nặng và sức khỏe tim mạch." },
+                    { text: "Chỉ ăn các món tráng miệng để thưởng thức hương vị.", isCorrect: false }
+                ]
+            },
+            {
+                question: "Một người thích ăn đồ mặn và nêm nhiều gia vị khi nấu ăn. Làm thế nào để người đó có thể giảm lượng natri trong khẩu phần ăn mà vẫn đảm bảo món ăn ngon miệng, đặc biệt khi có nguy cơ tiền tiểu đường, theo khuyến nghị của các tổ chức y tế?",
+                options: [
+                    { text: "Thêm nhiều nước mắm và các loại sốt mặn khác vào món ăn.", isCorrect: false },
+                    { text: "Chỉ mua đồ ăn chế biến sẵn vì đã được nêm nếm vừa phải.", isCorrect: false },
+                    { text: "Sử dụng thảo mộc, gia vị tự nhiên (tỏi, ớt, gừng, chanh) thay cho muối và bột nêm để tăng hương vị.", isCorrect: true, rationale: "Theo Tổ chức Y tế Canada và WHO, giảm lượng muối và các gia vị công nghiệp, thay thế bằng thảo mộc và gia vị tự nhiên, giúp giảm nguy cơ cao huyết áp và các bệnh tim mạch mà vẫn đảm bảo món ăn ngon miệng." },
+                    { text: "Hoàn toàn loại bỏ gia vị khỏi các món ăn.", isCorrect: false }
+                ]
+            },
+            {
+                question: "Một người thích ăn nhiều đồ ngọt và thường áp dụng những kiểu nhịn ăn cực đoan để giảm cân. Lời khuyên nào dưới đây là tốt nhất để người đó giảm cân một cách lành mạnh và bền vững, đồng thời cải thiện thói quen ăn uống?",
+                options: [
+                    { text: "Chỉ ăn đồ ngọt khi cảm thấy căng thẳng để giải tỏa tâm lý.", isCorrect: false },
+                    { text: "Hạn chế nghiêm ngặt đồ ngọt, thay thế bằng trái cây tươi, và tập trung vào chế độ ăn cân bằng dinh dưỡng.", isCorrect: true, rationale: "Để giảm cân và kiểm soát đường huyết một cách lành mạnh, cần hạn chế đường bổ sung và đồ ngọt chế biến, thay vào đó chọn trái cây tươi để cung cấp đường tự nhiên và chất xơ. Chế độ ăn cân bằng dinh dưỡng giúp duy trì năng lượng và tránh các rủi ro từ việc thiếu chất." },
+                    { text: "Tiếp tục các kiểu nhịn ăn cực đoan để giảm cân nhanh nhất có thể.", isCorrect: false },
+                    { text: "Loại bỏ hoàn toàn carbohydrate khỏi chế độ ăn.", isCorrect: false }
+                ]
+            },
+            {
+                question: "Bạn có thói quen thức khuya. Giấc ngủ kém chất lượng ảnh hưởng đến cân nặng như thế nào, theo quan điểm khoa học và y tế?",
+                options: [
+                    { text: "Ngủ ít giúp tiết kiệm thời gian cho việc tập thể dục.", isCorrect: false },
+                    { text: "Thức khuya giúp đốt cháy nhiều calo hơn do cơ thể hoạt động lâu hơn.", isCorrect: false },
+                    { text: "Giấc ngủ kém chất lượng làm tăng hormone đói (ghrelin) và giảm hormone no (leptin), dẫn đến thèm ăn và tăng cân.", isCorrect: true, rationale: "Theo nghiên cứu khoa học và khuyến nghị của các chuyên gia sức khỏe, thiếu ngủ làm rối loạn cân bằng hormone kiểm soát sự thèm ăn, khiến cơ thể dễ cảm thấy đói hơn và khó kiểm soát cân nặng hơn." },
+                    { text: "Giấc ngủ không ảnh hưởng đến cân nặng, chỉ ảnh hưởng đến tâm trạng.", isCorrect: false }
+                ]
+            },
+            {
+                question: "Một người thường hay lo lắng những chuyện không đâu. Mối liên hệ giữa căng thẳng và thói quen ăn uống/cân nặng được giải thích như thế nào, theo các nghiên cứu về sức khỏe?",
+                options: [
+                    { text: "Lo lắng giúp đốt cháy nhiều calo hơn do cơ thể hoạt động tinh thần tích cực.", isCorrect: false },
+                    { text: "Khi căng thẳng nên ăn nhiều để có năng lượng đối phó với áp lực.", isCorrect: false },
+                    { text: "Căng thẳng không liên quan đến thói quen ăn uống, chỉ ảnh hưởng đến tiêu hóa.", isCorrect: false },
+                    { text: "Căng thẳng làm tăng hormone cortisol, gây thèm ăn đồ ngọt và chất béo, dễ dẫn đến tăng cân.", isCorrect: true, rationale: "Cortisol, hormone căng thẳng, có thể kích thích cảm giác thèm ăn, đặc biệt là đối với các thực phẩm giàu đường và chất béo, dẫn đến việc ăn uống quá mức và tăng cân, theo nhiều nghiên cứu về tâm lý và dinh dưỡng." }
+                ]
+            },
+            {
+                question: "Để có một lối sống lành mạnh và kiểm soát cân nặng, nguyên tắc cơ bản của một chế độ ăn uống cân bằng là gì, theo khuyến nghị của các tổ chức dinh dưỡng?",
+                options: [
+                    { text: "Bỏ bữa sáng để giảm tổng lượng calo nạp vào cơ thể.", isCorrect: false },
+                    { text: "Ăn đủ 3 bữa chính mỗi ngày, đa dạng các nhóm thực phẩm (protein, carbohydrate phức hợp, chất béo lành mạnh, rau củ quả).", isCorrect: true, rationale: "Chế độ ăn cân bằng, đủ 3 bữa chính và đa dạng các nhóm thực phẩm giúp cung cấp đầy đủ dưỡng chất, duy trì năng lượng ổn định và hỗ trợ kiểm soát cân nặng, theo khuyến nghị dinh dưỡng của các tổ chức y tế." },
+                    { text: "Chỉ ăn một loại thực phẩm duy nhất trong một ngày để detox cơ thể.", isCorrect: false },
+                    { text: "Ăn kiêng nghiêm ngặt và không ăn bất kỳ món ăn nào mình thích.", isCorrect: false }
+                ]
+            },
+            {
+                question: "Để giúp một người kiểm soát chỉ số đường huyết cận tiểu đường, loại thực phẩm nào nên được ưu tiên trong chế độ ăn hàng ngày?",
+                options: [
+                    { text: "Uống nhiều nước ngọt có ga và ăn kẹo thường xuyên.", isCorrect: false },
+                    { text: "Ăn các món tráng miệng ngọt sau mỗi bữa ăn.", isCorrect: false },
+                    { text: "Chỉ ăn thịt và chất béo để tránh carbohydrate.", isCorrect: false },
+                    { text: "Tăng cường các loại ngũ cốc nguyên hạt (yến mạch, gạo lứt), rau xanh đậm và trái cây ít đường.", isCorrect: true, rationale: "Các thực phẩm này giàu chất xơ, giúp làm chậm quá trình hấp thụ đường vào máu, từ đó giữ ổn định đường huyết, đặc biệt quan trọng đối với người tiền tiểu đường." }
+                ]
+            },
+            {
+                question: "Ngoài chế độ ăn uống, hoạt động thể chất đóng vai trò như thế nào trong việc quản lý cân nặng và sức khỏe tổng thể, theo khuyến nghị của các tổ chức y tế?",
+                options: [
+                    { text: "Chỉ tập thể dục khi đi du lịch nước ngoài.", isCorrect: false },
+                    { text: "Đạp xe, bơi lội hoặc đi bộ nhanh ít nhất 30 phút mỗi ngày, hầu hết các ngày trong tuần.", isCorrect: true, rationale: "Hoạt động thể chất đều đặn giúp tăng cường quá trình trao đổi chất, đốt cháy calo, cải thiện sức khỏe tim mạch và kiểm soát cân nặng hiệu quả, theo khuyến nghị của CDC Mỹ và WHO." },
+                    { text: "Tập luyện cường độ cao 1 lần mỗi tuần và nghỉ ngơi hoàn toàn các ngày còn lại.", isCorrect: false },
+                    { text: "Tránh vận động để tiết kiệm năng lượng.", isCorrect: false }
+                ]
+            },
+            {
+                question: "Bạn đang làm việc. Để duy trì chế độ ăn uống lành mạnh trong môi trường làm việc, thói quen nào sau đây là quan trọng nhất?",
+                options: [
+                    { text: "Ăn bất cứ thứ gì có sẵn trong tủ lạnh.", isCorrect: false },
+                    { text: "Bỏ bữa để giảm lượng calo tổng thể.", isCorrect: false },
+                    { text: "Mua nhiều đồ ăn vặt đóng gói và đồ uống có đường để dự trữ.", isCorrect: false },
+                    { text: "Lên kế hoạch bữa ăn và mang theo đồ ăn nhẹ lành mạnh (hạt, trái cây) để tránh ăn vặt không kiểm soát.", isCorrect: true, rationale: "Việc chuẩn bị trước bữa ăn và đồ ăn nhẹ giúp kiểm soát khẩu phần, chọn lựa thực phẩm lành mạnh và tránh xa các món ăn không có lợi cho sức khỏe khi đói bụng hoặc không có lựa chọn khác." }
+                ]
+            },
+            {
+                question: "Bạn thích đi du lịch nước ngoài vào các kỳ nghỉ phép năm. Làm thế nào để duy trì lối sống lành mạnh và kiểm soát cân nặng khi đi du lịch?",
+                options: [
+                    { text: "Nghỉ ngơi hoàn toàn và tránh mọi hoạt động thể chất.", isCorrect: false },
+                    { text: "Chỉ ăn đồ ăn nhanh để tiết kiệm thời gian khám phá.", isCorrect: false },
+                    { text: "Ăn tất cả các món ăn địa phương mà không kiểm soát.", isCorrect: false },
+                    { text: "Chọn khách sạn có phòng tập gym hoặc hồ bơi và duy trì thói quen đi bộ, tham quan nhiều.", isCorrect: true, rationale: "Duy trì hoạt động thể chất ngay cả khi đi du lịch giúp đốt cháy calo, cải thiện tuần hoàn máu và giảm thiểu tác động tiêu cực của việc ngồi lâu hoặc ăn uống quá đà trong kỳ nghỉ." }
+                ]
+            },
+            {
+                question: "Để cải thiện chất lượng giấc ngủ, đặc biệt với thói quen thức khuya, lời khuyên nào sau đây là quan trọng nhất?",
+                options: [
+                    { text: "Dùng điện thoại hoặc máy tính bảng ngay trước khi đi ngủ.", isCorrect: false },
+                    { text: "Ngủ bù vào cuối tuần càng nhiều càng tốt.", isCorrect: false },
+                    { text: "Duy trì lịch trình ngủ đều đặn, đi ngủ và thức dậy vào cùng một giờ mỗi ngày, kể cả cuối tuần.", isCorrect: true, rationale: "Một lịch trình ngủ đều đặn giúp điều hòa nhịp sinh học của cơ thể, cải thiện chất lượng giấc ngủ và năng lượng ban ngày, theo khuyến nghị của Viện Giấc ngủ Quốc gia (NSF)." },
+                    { text: "Uống một cốc sữa ấm ngay trước khi ngủ để dễ ngủ hơn.", isCorrect: false }
+                ]
+            },
+            {
+                question: "Với các vấn đề sức khỏe như cholesterol cao và tiền tiểu đường, lời khuyên nào dưới đây là quan trọng nhất để bạn có thể cải thiện tình trạng sức khỏe một cách khoa học và an toàn?",
+                options: [
+                    { text: "Tự tìm kiếm các chế độ ăn kiêng 'thần tốc' trên mạng xã hội.", isCorrect: false },
+                    { text: "Bỏ qua các chỉ số sức khỏe như đường huyết và cholesterol vì cho rằng không nghiêm trọng.", isCorrect: false },
+                    { text: "Tham khảo ý kiến bác sĩ hoặc chuyên gia dinh dưỡng để có kế hoạch ăn uống và tập luyện cá nhân hóa.", isCorrect: true, rationale: "Việc tham khảo ý kiến chuyên gia giúp có được lời khuyên phù hợp với tình trạng sức khỏe cụ thể (tiền tiểu đường, cholesterol cao, thừa cân) và xây dựng kế hoạch bền vững, đáng tin cậy." },
+                    { text: "Chỉ nghe theo lời khuyên của bạn bè hoặc người thân không chuyên.", isCorrect: false }
+                ]
+            },
+            {
+                question: "Để kiểm soát việc ăn vặt, cách tiếp cận nào là hiệu quả nhất để duy trì chế độ ăn lành mạnh?",
+                options: [
+                    { text: "Luôn có sẵn bánh kẹo, snack trong nhà để tiện ăn vặt.", isCorrect: false },
+                    { text: "Thay thế đồ ăn vặt bằng các lựa chọn lành mạnh như trái cây, rau củ quả tươi, hạt không muối, sữa chua không đường.", isCorrect: true, rationale: "Lựa chọn đồ ăn nhẹ lành mạnh giúp cung cấp dưỡng chất, kiểm soát cảm giác đói giữa các bữa ăn mà không nạp quá nhiều calo rỗng, hỗ trợ kiểm soát cân nặng và đường huyết." },
+                    { text: "Bỏ qua hoàn toàn bữa ăn nhẹ và chỉ ăn bữa chính.", isCorrect: false },
+                    { text: "Ăn vặt bất cứ thứ gì mình muốn nếu đã tập thể dục trong ngày.", isCorrect: false }
+                ]
+            },
+            {
+                question: "Bạn sống ở vùng có khí hậu lạnh giá (nhiệt độ âm độ C). Lời khuyên dinh dưỡng nào sau đây là phù hợp nhất để duy trì sức khỏe trong điều kiện này?",
+                options: [
+                    { text: "Tăng cường ăn các món chiên xào nhiều dầu mỡ để giữ ấm cơ thể.", isCorrect: false },
+                    { text: "Hạn chế hoàn toàn các loại rau củ quả tươi vì chúng 'lạnh'.", isCorrect: false },
+                    { text: "Ưu tiên thực phẩm giàu vitamin D (cá béo, sữa tăng cường) và các món ăn ấm nóng, giàu protein và chất xơ.", isCorrect: true, rationale: "Trong khí hậu lạnh, cơ thể cần năng lượng để giữ ấm. Thực phẩm giàu protein và chất xơ giúp no lâu và cung cấp năng lượng ổn định. Vitamin D rất quan trọng vì ít tiếp xúc ánh nắng mặt trời. Hạn chế đồ ăn nhiều dầu mỡ và đường để tránh tăng cân và các vấn đề sức khỏe khác." },
+                    { text: "Uống nhiều đồ uống có đường để cung cấp năng lượng nhanh.", isCorrect: false }
+                ]
+            },
+            {
+                question: "Bạn sống ở vùng có độ ẩm cao và mưa nhiều. Thói quen sinh hoạt nào sau đây giúp bạn duy trì sức khỏe tốt nhất trong điều kiện thời tiết này?",
+                options: [
+                    { text: "Giảm lượng nước uống hàng ngày vì không cảm thấy khát nhiều.", isCorrect: false },
+                    { text: "Hạn chế ra ngoài trời để tránh ẩm ướt, ngay cả khi có thể vận động nhẹ.", isCorrect: false },
+                    { text: "Đảm bảo vệ sinh cá nhân và môi trường sống sạch sẽ, khô thoáng; duy trì vận động trong nhà hoặc tại các trung tâm thể dục.", isCorrect: true, rationale: "Môi trường ẩm ướt dễ tạo điều kiện cho vi khuẩn, nấm mốc phát triển, ảnh hưởng đến hô hấp và da. Vệ sinh sạch sẽ và giữ môi trường khô thoáng là quan trọng. Duy trì vận động giúp tăng cường sức đề kháng, ngay cả khi phải tập luyện trong nhà." },
+                    { text: "Tăng cường ăn các món ăn nhiều gia vị cay nóng để 'đẩy' ẩm ra ngoài.", isCorrect: false }
+                ]
+            },
+            {
+                question: "Để giảm lượng đường nạp vào cơ thể, thay đổi đồ uống nào dưới đây sẽ mang lại lợi ích đáng kể cho việc giảm cân và sức khỏe tổng thể?",
+                options: [
+                    { text: "Uống sữa lắc hoặc sinh tố trái cây mua sẵn mỗi ngày.", isCorrect: false },
+                    { text: "Thêm đường vào tất cả đồ uống để tăng năng lượng.", isCorrect: false },
+                    { text: "Thay thế đồ uống có đường bằng nước lọc, trà không đường hoặc nước ép rau củ tự làm.", isCorrect: true, rationale: "Nước ngọt và đồ uống có đường là nguồn calo rỗng và đường gây tăng cân, tăng nguy cơ tiểu đường. Thay thế bằng nước lọc hoặc đồ uống không đường là cách hiệu quả để giảm lượng đường nạp vào." },
+                    { text: "Uống nhiều nước ép trái cây cô đặc.", isCorrect: false }
+                ]
+            },
+            {
+                question: "Bạn đang sống trong một thành phố lớn có mức độ ô nhiễm không khí cao. Lối sống nào dưới đây có thể giúp bạn bảo vệ sức khỏe hô hấp tốt nhất?",
+                options: [
+                    { text: "Hạn chế ra ngoài trời hoàn toàn và không tập thể dục.", isCorrect: false },
+                    { text: "Uống nhiều cà phê để tăng cường miễn dịch.", isCorrect: false },
+                    { text: "Sử dụng khẩu trang khi ra ngoài, trồng cây xanh trong nhà, và thường xuyên vệ sinh nhà cửa để giảm bụi.", isCorrect: true, rationale: "Trong môi trường ô nhiễm, việc bảo vệ đường hô hấp bằng khẩu trang, cải thiện chất lượng không khí trong nhà bằng cây xanh và vệ sinh là rất quan trọng để giảm tiếp xúc với các tác nhân gây hại." },
+                    { text: "Tăng cường ăn đồ chiên rán để tạo lớp màng bảo vệ đường hô hấp.", isCorrect: false }
+                ]
+            },
+            {
+                question: "Để cải thiện sức khỏe tinh thần và giảm căng thẳng, đặc biệt khi bạn có thói quen lo lắng nhiều, phương pháp nào sau đây được khuyến nghị rộng rãi bởi các chuyên gia sức khỏe tâm thần?",
+                options: [
+                    { text: "Trốn tránh các vấn đề gây lo lắng bằng cách ngủ thật nhiều.", isCorrect: false },
+                    { text: "Tăng cường ăn các món ăn yêu thích để xoa dịu cảm xúc.", isCorrect: false },
+                    { text: "Thực hành thiền định, yoga hoặc các bài tập hít thở sâu hàng ngày để làm dịu tâm trí và giảm cortisol.", isCorrect: true, rationale: "Các phương pháp như thiền định, yoga, và tập hít thở sâu đã được khoa học chứng minh giúp giảm căng thẳng, lo âu, và cải thiện sức khỏe tinh thần bằng cách điều hòa hệ thần kinh và giảm hormone cortisol." },
+                    { text: "Uống rượu bia để quên đi lo lắng.", isCorrect: false }
+                ]
+            },
+            {
+                question: "Khi bạn cảm thấy căng thẳng và muốn ăn vặt để giải tỏa. Thay vì ăn các món không lành mạnh, bạn nên lựa chọn đồ ăn nhẹ nào để vừa giải tỏa cảm xúc vừa tốt cho sức khỏe?",
+                options: [
+                    { text: "Bánh quy ngọt và nước ngọt có ga.", isCorrect: false },
+                    { text: "Khoai tây chiên và gà rán.", isCorrect: false },
+                    { text: "Trái cây tươi, rau củ quả cắt lát (như dưa chuột, cà rốt), hoặc một nắm hạt không muối.", isCorrect: true, rationale: "Các lựa chọn này cung cấp vitamin, khoáng chất, chất xơ, giúp no lâu và cung cấp năng lượng ổn định mà không nạp quá nhiều đường, chất béo không lành mạnh, hay calo rỗng, từ đó hỗ trợ quản lý căng thẳng và cân nặng." },
+                    { text: "Kem và sô cô la sữa.", isCorrect: false }
+                ]
+            },
+            {
+                question: "Để xương chắc khỏe và phòng ngừa loãng xương khi về già, đặc biệt là với người lớn tuổi, dinh dưỡng nào sau đây là thiết yếu và nên được tăng cường?",
+                options: [
+                    { text: "Ăn nhiều đồ ăn nhanh và thực phẩm chế biến sẵn.", isCorrect: false },
+                    { text: "Tăng cường uống trà và cà phê hàng ngày.", isCorrect: false },
+                    { text: "Bổ sung đủ Canxi (từ sữa, sữa chua, rau xanh đậm) và Vitamin D (từ ánh nắng mặt trời, cá béo) trong chế độ ăn hàng ngày.", isCorrect: true, rationale: "Canxi và Vitamin D là hai dưỡng chất cực kỳ quan trọng cho sức khỏe xương. Canxi là thành phần chính của xương, còn Vitamin D giúp cơ thể hấp thụ Canxi hiệu quả, theo khuyến nghị của các tổ chức sức khỏe xương." },
+                    { text: "Loại bỏ hoàn toàn chất béo khỏi chế độ ăn.", isCorrect: false }
+                ]
+            },
+            {
+                question: "Bạn cảm thấy mắt bị mỏi khi làm việc với máy tính trong thời gian dài. Thói quen nào sau đây giúp bạn bảo vệ và duy trì sức khỏe cho đôi mắt tốt nhất?",
+                options: [
+                    { text: "Dùng thuốc nhỏ mắt liên tục mà không nghỉ ngơi.", isCorrect: false },
+                    { text: "Tắt đèn để mắt không bị chói.", isCorrect: false },
+                    { text: "Áp dụng quy tắc 20-20-20 (cứ 20 phút nhìn xa 20 feet (6 mét) trong 20 giây), điều chỉnh độ sáng màn hình phù hợp và chớp mắt thường xuyên.", isCorrect: true, rationale: "Quy tắc 20-20-20 giúp mắt thư giãn sau khi nhìn gần. Điều chỉnh độ sáng màn hình phù hợp và chớp mắt thường xuyên giúp giữ ẩm cho mắt, ngăn ngừa khô mắt và mỏi mắt." },
+                    { text: "Nhìn chằm chằm vào màn hình càng lâu càng tốt để hoàn thành công việc nhanh.", isCorrect: false }
+                ]
+            },
+            {
+                question: "Để có một hệ miễn dịch khỏe mạnh, đặc biệt quan trọng trong việc phòng ngừa bệnh tật, yếu tố nào dưới đây là cần thiết nhất?",
+                options: [
+                    { text: "Uống nhiều rượu bia để diệt vi khuẩn.", isCorrect: false },
+                    { text: "Chỉ ăn một loại thực phẩm duy nhất vì cho rằng nó 'tốt nhất'.", isCorrect: false },
+                    { text: "Chế độ ăn đa dạng, ngủ đủ giấc, vận động thường xuyên, và quản lý căng thẳng hiệu quả.", isCorrect: true, rationale: "Một hệ miễn dịch khỏe mạnh đòi hỏi sự kết hợp của nhiều yếu tố: dinh dưỡng đầy đủ, giấc ngủ chất lượng, hoạt động thể chất đều đặn, và khả năng kiểm soát căng thẳng. Thiếu hụt bất kỳ yếu tố nào cũng có thể làm suy yếu miễn dịch." },
+                    { text: "Sử dụng kháng sinh liên tục để phòng bệnh.", isCorrect: false }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answers = new Array(quizData.length).fill(null); // To store user answers
+
+        const startScreen = document.getElementById('startScreen');
+        const startButton = document.getElementById('startButton');
+        const quizContent = document.getElementById('quiz-content');
+        const questionCounter = document.getElementById('questionCounter');
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const feedbackDiv = document.getElementById('feedback');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultSection = document.getElementById('resultSection');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const remarkDisplay = document.getElementById('remark');
+        const restartBtnResult = document.getElementById('restartBtnResult');
+
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex >= quizData.length) {
+                showResults();
+                return;
+            }
+
+            const currentQuestion = quizData[currentQuestionIndex];
+            questionCounter.textContent = `Câu ${currentQuestionIndex + 1}/${quizData.length}`;
+            questionText.textContent = currentQuestion.question;
+            optionsContainer.innerHTML = '';
+            feedbackDiv.innerHTML = '';
+            feedbackDiv.className = 'feedback'; // Reset feedback class
+
+            // Shuffle options for the current question
+            const shuffledOptions = [...currentQuestion.options];
+            shuffleArray(shuffledOptions);
+
+            shuffledOptions.forEach((option, index) => {
+                const label = document.createElement('label');
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = 'answer';
+                radio.value = index;
+                
+                radio.addEventListener('change', () => {
+                    checkAnswer(option, radio, currentQuestion.options); // Pass original options for rationale retrieval
+                });
+
+                const span = document.createElement('span');
+                span.textContent = option.text;
+                label.appendChild(radio);
+                label.appendChild(span);
+                optionsContainer.appendChild(label);
+
+                // If already answered, mark the chosen one and display feedback
+                if (answers[currentQuestionIndex] !== null && answers[currentQuestionIndex].chosenValue === index) {
+                    radio.checked = true;
+                    displayFeedback(answers[currentQuestionIndex].isCorrect, answers[currentQuestionIndex].rationale);
+                    // Disable all options if already answered
+                    Array.from(optionsContainer.children).forEach(lbl => {
+                        lbl.querySelector('input[type="radio"]').disabled = true;
+                    });
+
+                    // Highlight the chosen option (and correct option if incorrect)
+                    highlightOptions(answers[currentQuestionIndex].isCorrect, radio.parentElement, currentQuestion.options);
+                } else {
+                    // Re-enable options if navigating back and forth, allowing re-selection
+                    radio.disabled = false;
+                }
+            });
+
+            updateNavigationButtons();
+        }
+
+        function highlightOptions(isCorrect, chosenLabel, originalOptions) {
+            // Reset all highlights first
+            Array.from(optionsContainer.children).forEach(label => {
+                label.style.backgroundColor = '#f9f9f9';
+                label.style.borderColor = '#ddd';
+            });
+
+            // Highlight chosen option
+            chosenLabel.style.backgroundColor = isCorrect ? '#d4edda' : '#f8d7da';
+            chosenLabel.style.borderColor = isCorrect ? '#28a745' : '#dc3545';
+
+            // If incorrect, highlight the actual correct option as well
+            if (!isCorrect) {
+                const correctOptionText = originalOptions.find(opt => opt.isCorrect).text;
+                Array.from(optionsContainer.children).forEach(label => {
+                    if (label.querySelector('span').textContent === correctOptionText) {
+                        label.style.backgroundColor = '#d4edda'; // Light green for correct
+                        label.style.borderColor = '#28a745';
+                    }
+                });
+            }
+        }
+
+        function checkAnswer(chosenOption, radioElement, originalOptions) {
+            const isCorrect = chosenOption.isCorrect;
+            const rationale = originalOptions.find(opt => opt.isCorrect).rationale;
+
+            // Store the answer
+            const prevAnswer = answers[currentQuestionIndex];
+            answers[currentQuestionIndex] = {
+                chosenValue: parseInt(radioElement.value),
+                isCorrect: isCorrect,
+                rationale: rationale
+            };
+
+            // Adjust score if answer changes
+            if (prevAnswer !== null) {
+                if (prevAnswer.isCorrect && !isCorrect) {
+                    score--;
+                } else if (!prevAnswer.isCorrect && isCorrect) {
+                    score++;
+                }
+            } else if (isCorrect) {
+                score++;
+            }
+
+
+            // Disable all options after selection
+            Array.from(optionsContainer.children).forEach(label => {
+                label.querySelector('input[type="radio"]').disabled = true;
+            });
+
+            displayFeedback(isCorrect, rationale);
+
+            // Play sound
+            if (isCorrect) {
+                playCorrectSound();
+            } else {
+                playIncorrectSound();
+            }
+
+            highlightOptions(isCorrect, radioElement.parentElement, originalOptions);
+        }
+
+        function displayFeedback(isCorrect, rationale) {
+            feedbackDiv.innerHTML = '';
+            const statusParagraph = document.createElement('p');
+            if (isCorrect) {
+                statusParagraph.textContent = '✅ Chính xác!';
+                feedbackDiv.className = 'feedback correct';
+            } else {
+                statusParagraph.textContent = '❌ Chưa chính xác.';
+                feedbackDiv.className = 'feedback incorrect';
+            }
+            feedbackDiv.appendChild(statusParagraph);
+
+            const rationaleParagraph = document.createElement('p');
+            rationaleParagraph.className = 'rationale';
+            rationaleParagraph.textContent = rationale;
+            feedbackDiv.appendChild(rationaleParagraph);
+        }
+
+        function updateNavigationButtons() {
+            prevBtn.disabled = currentQuestionIndex === 0;
+            nextBtn.style.display = 'inline-block';
+            submitBtn.style.display = 'none';
+
+            if (currentQuestionIndex === quizData.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            }
+        }
+
+        function showResults() {
+            quizContent.style.display = 'none';
+            resultSection.style.display = 'block';
+            scoreDisplay.textContent = `Bạn đã trả lời đúng ${score} / ${quizData.length} câu.`;
+
+            let remark = '';
+            const percentage = (score / quizData.length) * 100;
+            if (percentage === 100) {
+                remark = 'Xuất sắc! Bạn có kiến thức rất vững vàng về sức khỏe và lối sống lành mạnh.';
+            } else if (percentage >= 80) {
+                remark = 'Rất tốt! Bạn có hiểu biết đáng kể về các thói quen lành mạnh.';
+            } else if (percentage >= 50) {
+                remark = 'Khá tốt! Hãy tiếp tục tìm hiểu thêm để nâng cao kiến thức nhé.';
+            } else {
+                remark = 'Bạn có thể cải thiện thêm. Đừng ngại tìm hiểu thêm về sức khỏe và lối sống lành mạnh nhé.';
+            }
+            remarkDisplay.textContent = remark;
+        }
+
+        function resetQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            answers.fill(null);
+            resultSection.style.display = 'none';
+            startScreen.style.display = 'block'; // Show start screen again
+            quizContent.style.display = 'none'; // Hide quiz content
+            // Do not call loadQuestion() here, it will be called by startButton click
+        }
+
+        // Event Listener cho nút Start
+        startButton.addEventListener('click', () => {
+            // Khởi tạo AudioContext khi có tương tác người dùng
+            initializeAudioContext();
+
+            startScreen.style.display = 'none';
+            quizContent.style.display = 'block';
+            loadQuestion();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (answers[currentQuestionIndex] === null) {
+                alert('Vui lòng chọn một đáp án trước khi chuyển câu.');
+                return;
+            }
+            currentQuestionIndex++;
+            loadQuestion();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            currentQuestionIndex--;
+            loadQuestion();
+        });
+
+        submitBtn.addEventListener('click', () => {
+            if (answers[currentQuestionIndex] === null) {
+                alert('Vui lòng chọn một đáp án cho câu hỏi cuối cùng trước khi hoàn thành.');
+                return;
+            }
+            showResults();
+        });
+
+        restartBtnResult.addEventListener('click', resetQuiz);
+
+        // Global event listener for initial user interaction to activate audio context
+        document.addEventListener('click', initializeAudioContext, { once: true });
+        document.addEventListener('keydown', initializeAudioContext, { once: true });
+    </script>
+</body>
+</html>
