@@ -1,0 +1,542 @@
+<style>
+    /* CSS cho bộ trắc nghiệm 20 câu */
+    .quiz-container-20 {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+    }
+    .quiz-container-20 h2 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .question-20 {
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #eee;
+        border-radius: 5px;
+        background-color: #fff;
+    }
+    .question-20 p {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 10px;
+    }
+    .options-20 label {
+        display: block;
+        margin-bottom: 8px;
+        cursor: pointer;
+    }
+    .options-20 input[type="radio"] {
+        margin-right: 8px;
+    }
+    .submit-btn-20 {
+        display: block;
+        width: 200px;
+        padding: 12px 15px;
+        margin: 20px auto 0;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px;
+        text-align: center;
+        transition: background-color 0.3s ease;
+    }
+    .submit-btn-20:hover {
+        background-color: #0056b3;
+    }
+    .results-20 {
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid #cce5ff;
+        background-color: #e0f2ff;
+        border-radius: 8px;
+        display: none; /* Ẩn ban đầu */
+    }
+    .results-20 p {
+        font-size: 18px;
+        font-weight: bold;
+        color: #0056b3;
+        text-align: center;
+    }
+    .feedback-20 {
+        margin-top: 5px;
+        padding: 8px;
+        border-radius: 4px;
+        font-size: 14px;
+        line-height: 1.5;
+        display: none; /* Ẩn ban đầu */
+    }
+    .feedback-20.correct {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+    .feedback-20.incorrect {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+    .feedback-20 strong {
+        color: #000;
+    }
+    /* Để vô hiệu hóa lựa chọn sau khi trả lời */
+    .question-20.answered .options-20 input[type="radio"] {
+        pointer-events: none; /* Ngăn chặn click */
+        opacity: 0.6; /* Làm mờ để thể hiện đã bị vô hiệu hóa */
+    }
+    .question-20.answered .options-20 label {
+        cursor: default; /* Thay đổi con trỏ chuột */
+    }
+</style>
+
+<div class="quiz-container-20">
+    <h2>20 Câu Hỏi Trắc Nghiệm: Tác Hại Của Việc Ngồi Lâu - Ngồi Trước Máy Tính</h2>
+    <form id="quizForm20">
+        <div class="question-20" id="q-1">
+            <p>1. Ngồi lâu có thể làm tăng nguy cơ mắc bệnh nào sau đây?</p>
+            <div class="options-20">
+                <label><input type="radio" name="q1" value="a"> A. Bệnh tim mạch</label>
+                <label><input type="radio" name="q1" value="b"> B. Tiểu đường type 2</label>
+                <label><input type="radio" name="q1" value="c"> C. Một số loại ung thư</label>
+                <label><input type="radio" name="q1" value="d"> D. Tất cả các bệnh trên</label>
+            </div>
+            <div class="feedback-20" id="feedback-q1"></div>
+        </div>
+
+        <div class="question-20" id="q-2">
+            <p>2. Ngồi liên tục trong thời gian dài có thể gây ra vấn đề gì cho cột sống?</p>
+            <div class="options-20">
+                <label><input type="radio" name="q2" value="a"> A. Thoái hóa cột sống</label>
+                <label><input type="radio" name="q2" value="b"> B. Đau lưng dưới</label>
+                <label><input type="radio" name="q2" value="c"> C. Gai cột sống</label>
+                <label><input type="radio" name="q2" value="d"> D. Cả A và B</label>
+            </div>
+            <div class="feedback-20" id="feedback-q2"></div>
+        </div>
+        
+        <div class="question-20" id="q-3">
+            <p>3. Ngồi lâu làm giảm quá trình trao đổi chất, dẫn đến tích tụ chất béo ở đâu nhiều nhất?</p>
+            <div class="options-20">
+                <label><input type="radio" name="q3" value="a"> A. Tay</label>
+                <label><input type="radio" name="q3" value="b"> B. Chân</label>
+                <label><input type="radio" name="q3" value="c"> C. Vùng bụng</label>
+                <label><input type="radio" name="q3" value="d"> D. Ngực</label>
+            </div>
+            <div class="feedback-20" id="feedback-q3"></div>
+        </div>
+
+        <div class="question-20" id="q-4">
+            <p>4. Tình trạng nào sau đây có thể xảy ra ở chân do ngồi lâu?</p>
+            <div class="options-20">
+                <label><input type="radio" name="q4" value="a"> A. Giãn tĩnh mạch</label>
+                <label><input type="radio" name="q4" value="b"> B. Phù nề</label>
+                <label><input type="radio" name="q4" value="c"> C. Giảm lưu thông máu</label>
+                <label><input type="radio" name="q4" value="d"> D. Tất cả các ý trên</label>
+            </div>
+            <div class="feedback-20" id="feedback-q4"></div>
+        </div>
+
+        <div class="question-20" id="q-5">
+            <p>5. Ngồi trước máy tính quá lâu có thể gây ra hội chứng gì cho mắt?</p>
+            <div class="options-20">
+                <label><input type="radio" name="q5" value="a"> A. Khô mắt</label>
+                <label><input type="radio" name="q5" value="b"> B. Mỏi mắt</label>
+                <label><input type="radio" name="q5" value="c"> C. Nhức mắt</label>
+                <label><input type="radio" name="q5" value="d"> D. Tất cả các ý trên</label>
+            </div>
+            <div class="feedback-20" id="feedback-q5"></div>
+        </div>
+        
+        <div class="question-20" id="q-6">
+            <p>6. Để giảm tác hại của việc ngồi lâu, bạn nên làm gì mỗi 30-60 phút?</p>
+            <div class="options-20">
+                <label><input type="radio" name="q6" value="a"> A. Uống một cốc cà phê</label>
+                <label><input type="radio" name="q6" value="b"> B. Đứng dậy đi lại hoặc vươn vai</label>
+                <label><input type="radio" name="q6" value="c"> C. Kiểm tra điện thoại</label>
+                <label><input type="radio" name="q6" value="d"> D. Ăn nhẹ</label>
+            </div>
+            <div class="feedback-20" id="feedback-q6"></div>
+        </div>
+
+        <div class="question-20" id="q-7">
+            <p>7. Tư thế ngồi đúng có vai trò như thế nào trong việc phòng tránh tác hại của việc ngồi lâu?</p>
+            <div class="options-20">
+                <label><input type="radio" name="q7" value="a"> A. Giảm áp lực lên cột sống</label>
+                <label><input type="radio" name="q7" value="b"> B. Cải thiện lưu thông máu</label>
+                <label><input type="radio" name="q7" value="c"> C. Hạn chế mỏi cơ</label>
+                <label><input type="radio" name="q7" value="d"> D. Tất cả các ý trên</label>
+            </div>
+            <div class="feedback-20" id="feedback-q7"></div>
+        </div>
+
+        <div class="question-20" id="q-8">
+            <p>8. Việc ngồi lâu có thể ảnh hưởng đến sức khỏe tâm thần như thế nào?</p>
+            <div class="options-20">
+                <label><input type="radio" name="q8" value="a"> A. Tăng nguy cơ trầm cảm và lo âu</label>
+                <label><input type="radio" name="q8" value="b"> B. Cải thiện tâm trạng</label>
+                <label><input type="radio" name="q8" value="c"> C. Giúp tập trung tốt hơn</label>
+                <label><input type="radio" name="q8" value="d"> D. Không ảnh hưởng</label>
+            </div>
+            <div class="feedback-20" id="feedback-q8"></div>
+        </div>
+
+        <div class="question-20" id="q-9">
+            <p>9. Bạn nên đặt màn hình máy tính cách mắt bao nhiêu cm?</p>
+            <div class="options-20">
+                <label><input type="radio" name="q9" value="a"> A. 20-30 cm</label>
+                <label><input type="radio" name="q9" value="b"> B. 40-50 cm</label>
+                <label><input type="radio" name="q9" value="c"> C. 50-70 cm</label>
+                <label><input type="radio" name="q9" value="d"> D. 80-100 cm</label>
+            </div>
+            <div class="feedback-20" id="feedback-q9"></div>
+        </div>
+
+        <div class="question-20" id="q-10">
+            <p>10. Ngồi lâu gây áp lực lên các cơ quan nội tạng, có thể ảnh hưởng đến hệ tiêu hóa như thế nào?</p>
+            <div class="options-20">
+                <label><input type="radio" name="q10" value="a"> A. Gây táo bón</label>
+                <label><input type="radio" name="q10" value="b"> B. Rối loạn tiêu hóa</label>
+                <label><input type="radio" name="q10" value="c"> C. Tăng nguy cơ trĩ</label>
+                <label><input type="radio" name="q10" value="d"> D. Tất cả các ý trên</label>
+            </div>
+            <div class="feedback-20" id="feedback-q10"></div>
+        </div>
+
+        <div class="question-20" id="q-11">
+            <p>11. Loại ghế nào được khuyến nghị để giảm tác hại của việc ngồi lâu?</p>
+            <div class="options-20">
+                <label><input type="radio" name="q11" value="a"> A. Ghế cứng không đệm</label>
+                <label><input type="radio" name="q11" value="b"> B. Ghế xoay văn phòng có tựa lưng và hỗ trợ thắt lưng</label>
+                <label><input type="radio" name="q11" value="c"> C. Ghế sofa mềm</label>
+                <label><input type="radio" name="q11" value="d"> D. Ghế không có tựa lưng</label>
+            </div>
+            <div class="feedback-20" id="feedback-q11"></div>
+        </div>
+
+        <div class="question-20" id="q-12">
+            <p>12. Mối liên hệ giữa ngồi lâu và bệnh tiểu đường type 2 là gì?</p>
+            <div class="options-20">
+                <label><input type="radio" name="q12" value="a"> A. Giảm khả năng sản xuất insulin</label>
+                <label><input type="radio" name="q12" value="b"> B. Tăng đề kháng insulin</label>
+                <label><input type="radio" name="q12" value="c"> C. Giảm mức đường huyết</label>
+                <label><input type="radio" name="q12" value="d"> D. Cả A và B</label>
+            </div>
+            <div class="feedback-20" id="feedback-q12"></div>
+        </div>
+
+        <div class="question-20" id="q-13">
+            <p>13. Ánh sáng xanh từ màn hình máy tính có thể ảnh hưởng xấu đến giấc ngủ như thế nào?</p>
+            <div class="options-20">
+                <label><input type="radio" name="q13" value="a"> A. Kích thích sản xuất melatonin</label>
+                <label><input type="radio" name="q13" value="b"> B. Ức chế sản xuất melatonin, gây khó ngủ</label>
+                <label><input type="radio" name="q13" value="c"> C. Không ảnh hưởng</label>
+                <label><input type="radio" name="q13" value="d"> D. Giúp ngủ ngon hơn</label>
+            </div>
+            <div class="feedback-20" id="feedback-q13"></div>
+        </div>
+
+        <div class="question-20" id="q-14">
+            <p>14. Bài tập nào sau đây có thể giúp giảm đau vai gáy do ngồi lâu?</p>
+            <div class="options-20">
+                <label><input type="radio" name="q14" value="a"> A. Xoay vai, cúi gập cổ</label>
+                <label><input type="radio" name="q14" value="b"> B. Chạy bộ</label>
+                <label><input type="radio" name="q14" value="c"> C. Nâng tạ</label>
+                <label><input type="radio" name="q14" value="d"> D. Đạp xe</label>
+            </div>
+            <div class="feedback-20" id="feedback-q14"></div>
+        </div>
+
+        <div class="question-20" id="q-15">
+            <p>15. Ngồi lâu làm tăng nguy cơ hình thành cục máu đông ở chân, dẫn đến bệnh gì?</p>
+            <div class="options-20">
+                <label><input type="radio" name="q15" value="a"> A. Tăng huyết áp</label>
+                <label><input type="radio" name="q15" value="b"> B. Huyết khối tĩnh mạch sâu (DVT)</label>
+                <label><input type="radio" name="q15" value="c"> C. Thiếu máu não</label>
+                <label><input type="radio" name="q15" value="d"> D. Đột quỵ</label>
+            </div>
+            <div class="feedback-20" id="feedback-q15"></div>
+        </div>
+
+        <div class="question-20" id="q-16">
+            <p>16. Để giảm mỏi mắt khi làm việc với máy tính, bạn nên thực hiện quy tắc 20-20-20. Quy tắc này là gì?</p>
+            <div class="options-20">
+                <label><input type="radio" name="q16" value="a"> A. Cứ 20 phút nhìn vào một vật cách 20 mét trong 20 giây</label>
+                <label><input type="radio" name="q16" value="b"> B. Cứ 20 phút nhìn vào một vật cách 20 feet (khoảng 6 mét) trong 20 giây</label>
+                <label><input type="radio" name="q16" value="c"> C. Cứ 20 phút nháy mắt 20 lần</label>
+                <label><input type="radio" name="q16" value="d"> D. Nghỉ 20 phút sau mỗi 20 giờ làm việc</label>
+            </div>
+            <div class="feedback-20" id="feedback-q16"></div>
+        </div>
+
+        <div class="question-20" id="q-17">
+            <p>17. Ngồi lâu có thể gây yếu các cơ nào trên cơ thể?</p>
+            <div class="options-20">
+                <label><input type="radio" name="q17" value="a"> A. Cơ bụng và cơ mông</label>
+                <label><input type="radio" name="q17" value="b"> B. Cơ tay và cơ vai</label>
+                <label><input type="radio" name="q17" value="c"> C. Cơ chân và cơ đùi</label>
+                <label><input type="radio" name="q17" value="d"> D. Tất cả các cơ trên</label>
+            </div>
+            <div class="feedback-20" id="feedback-q17"></div>
+        </div>
+
+        <div class="question-20" id="q-18">
+            <p>18. Ngoài việc đứng dậy đi lại, bạn có thể thực hiện động tác nào để thư giãn cơ khi ngồi lâu?</p>
+            <div class="options-20">
+                <label><input type="radio" name="q18" value="a"> A. Uống nước</label>
+                <label><input type="radio" name="q18" value="b"> B. Duỗi người, vươn vai, xoay cổ</label>
+                <label><input type="radio" name="q18" value="c"> C. Ngủ gật</label>
+                <label><input type="radio" name="q18" value="d"> D. Xem phim</label>
+            </div>
+            <div class="feedback-20" id="feedback-q18"></div>
+        </div>
+
+        <div class="question-20" id="q-19">
+            <p>19. Để bảo vệ cổ tay khi gõ bàn phím, bạn nên sử dụng phụ kiện gì?</p>
+            <div class="options-20">
+                <label><input type="radio" name="q19" value="a"> A. Bàn phím không dây</label>
+                <label><input type="radio" name="q19" value="b"> B. Miếng lót chuột</label>
+                <label><input type="radio" name="q19" value="c"> C. Kê tay hoặc bàn phím công thái học</label>
+                <label><input type="radio" name="q19" value="d"> D. Không cần</label>
+            </div>
+            <div class="feedback-20" id="feedback-q19"></div>
+        </div>
+
+        <div class="question-20" id="q-20">
+            <p>20. Mục tiêu chính của việc giảm thời gian ngồi lâu là gì?</p>
+            <div class="options-20">
+                <label><input type="radio" name="q20" value="a"> A. Đốt cháy calo nhiều hơn</label>
+                <label><input type="radio" name="q20" value="b"> B. Cải thiện sức khỏe tổng thể và giảm nguy cơ bệnh tật</label>
+                <label><input type="radio" name="q20" value="c"> C. Giúp tập trung tốt hơn</label>
+                <label><input type="radio" name="q20" value="d"> D. Tăng cường giao tiếp xã hội</label>
+            </div>
+            <div class="feedback-20" id="feedback-q20"></div>
+        </div>
+        
+        <button type="submit" class="submit-btn-20">Hoàn thành bài kiểm tra</button>
+    </form>
+    <div id="results20" class="results-20">
+        <p>Bạn đã trả lời đúng <span id="score20"></span>/20 câu!</p>
+    </div>
+</div>
+
+<script>
+    // JavaScript cho bộ trắc nghiệm 20 câu
+    const questionsData = [
+        {
+            name: 'q1',
+            correct: 'd',
+            feedback: {
+                correct: 'Đúng! Các nghiên cứu và khuyến nghị từ **WHO, CDC Hoa Kỳ** đều chỉ ra rằng ngồi lâu làm tăng nguy cơ mắc bệnh tim mạch, tiểu đường type 2 và một số loại ung thư (đại tràng, vú, nội mạc tử cung).',
+                incorrect: 'Sai. Ngồi lâu làm tăng nguy cơ mắc nhiều bệnh nghiêm trọng. **WHO và CDC Hoa Kỳ** đều cảnh báo về mối liên hệ giữa lối sống ít vận động và các bệnh không lây nhiễm (NCDs) như tim mạch, tiểu đường type 2, và một số loại ung thư. Việc không hoạt động thể chất đủ là yếu tố nguy cơ chính.'
+            }
+        },
+        {
+            name: 'q2',
+            correct: 'd',
+            feedback: {
+                correct: 'Đúng! Ngồi lâu, đặc biệt là sai tư thế, gây áp lực lớn lên cột sống, dẫn đến đau lưng dưới, thoái hóa cột sống, và có thể cả thoát vị đĩa đệm. **Y tế Canada** khuyến cáo việc thay đổi tư thế và vận động thường xuyên để bảo vệ cột sống.',
+                incorrect: 'Sai. Ngồi liên tục trong thời gian dài, đặc biệt là khi không duy trì tư thế đúng, sẽ gây áp lực không đều lên cột sống và đĩa đệm, làm tăng nguy cơ thoái hóa cột sống và đau lưng dưới. Đây là những vấn đề phổ biến ở người làm việc văn phòng.'
+            }
+        },
+        {
+            name: 'q3',
+            correct: 'c',
+            feedback: {
+                correct: 'Đúng! Khi ngồi lâu, quá trình trao đổi chất của cơ thể chậm lại, dẫn đến việc đốt cháy ít calo hơn và tăng tích tụ chất béo, đặc biệt là ở vùng bụng. **CDC Hoa Kỳ** nhấn mạnh hoạt động thể chất giúp duy trì cân nặng khỏe mạnh.',
+                incorrect: 'Sai. Ngồi lâu làm chậm quá trình trao đổi chất, cơ thể đốt cháy ít calo hơn. Chất béo có xu hướng tích tụ nhiều nhất ở vùng bụng, làm tăng nguy cơ béo phì trung tâm và các vấn đề sức khỏe liên quan.'
+            }
+        },
+        {
+            name: 'q4',
+            correct: 'd',
+            feedback: {
+                correct: 'Đúng! Ngồi lâu cản trở lưu thông máu ở chân, có thể dẫn đến phù nề, tê bì, và làm tăng nguy cơ giãn tĩnh mạch cũng như hình thành cục máu đông. **Tổ chức Y tế Thế giới (WHO)** khuyến khích vận động để cải thiện lưu thông máu.',
+                incorrect: 'Sai. Ngồi lâu làm giảm lưu lượng máu đến chân, gây ra các vấn đề như phù nề (sưng), tê bì và tăng nguy cơ giãn tĩnh mạch. Trong trường hợp nghiêm trọng hơn, nó còn có thể dẫn đến hình thành cục máu đông.'
+            }
+        },
+        {
+            name: 'q5',
+            correct: 'd',
+            feedback: {
+                correct: 'Đúng! Nhìn màn hình máy tính liên tục trong thời gian dài mà không nghỉ ngơi có thể gây ra Hội chứng thị giác máy tính (Computer Vision Syndrome - CVS), với các triệu chứng như khô mắt, mỏi mắt, nhức mắt, và nhìn mờ. **Viện Mắt Quốc gia Hoa Kỳ (NEI)** khuyến cáo quy tắc 20-20-20 để giảm mỏi mắt.',
+                incorrect: 'Sai. Ngồi trước máy tính quá lâu mà không có khoảng nghỉ hợp lý gây áp lực lớn lên mắt, dẫn đến nhiều triệu chứng khó chịu như khô mắt, mỏi mắt, nhức mắt, và thậm chí là nhìn mờ.'
+            }
+        },
+        {
+            name: 'q6',
+            correct: 'b',
+            feedback: {
+                correct: 'Đúng! **CDC Hoa Kỳ và WHO** đều khuyến nghị nên đứng dậy, đi lại, hoặc thực hiện các động tác vươn vai, duỗi cơ nhẹ nhàng sau mỗi 30-60 phút ngồi làm việc để cải thiện lưu thông máu và giảm căng thẳng cơ bắp.',
+                incorrect: 'Sai. Việc đứng dậy đi lại hoặc vươn vai mỗi 30-60 phút là cách hiệu quả nhất để phá vỡ chu kỳ ngồi lâu, giúp cải thiện lưu thông máu, giảm căng cơ và mỏi mắt. Uống cà phê hay kiểm tra điện thoại không giải quyết được vấn đề ít vận động.'
+            }
+        },
+        {
+            name: 'q7',
+            correct: 'd',
+            feedback: {
+                correct: 'Đúng! Tư thế ngồi đúng là chìa khóa để phân bổ đều áp lực lên cột sống, giảm căng thẳng cho các cơ, và duy trì lưu thông máu tốt. Điều này giúp ngăn ngừa đau lưng, mỏi cổ, vai gáy và các vấn đề về xương khớp. **Cơ quan An toàn và Sức khỏe Nghề nghiệp Hoa Kỳ (OSHA)** cung cấp hướng dẫn chi tiết về tư thế làm việc ergonomic.',
+                incorrect: 'Sai. Tư thế ngồi đúng có vai trò vô cùng quan trọng. Nó giúp giảm áp lực lên cột sống, hỗ trợ lưu thông máu tốt hơn, và hạn chế tình trạng căng cứng, mỏi cơ ở cổ, vai, lưng. Không duy trì tư thế đúng sẽ làm tăng nguy cơ các vấn đề về cơ xương khớp.'
+            }
+        },
+        {
+            name: 'q8',
+            correct: 'a',
+            feedback: {
+                correct: 'Đúng! Nghiên cứu của **Y tế Canada** và nhiều tổ chức sức khỏe khác cho thấy, lối sống ít vận động và thời gian ngồi lâu có thể liên quan đến việc tăng nguy cơ mắc các vấn đề sức khỏe tâm thần như trầm cảm, lo âu, và giảm chất lượng cuộc sống.',
+                incorrect: 'Sai. Ngồi lâu và ít vận động có thể ảnh hưởng tiêu cực đến sức khỏe tâm thần. Nó có thể làm tăng nguy cơ trầm cảm và lo âu do thiếu hoạt động thể chất, giảm tương tác xã hội và ảnh hưởng đến chất lượng giấc ngủ.'
+            }
+        },
+        {
+            name: 'q9',
+            correct: 'c',
+            feedback: {
+                correct: 'Đúng! Theo khuyến nghị của **OSHA** và các chuyên gia y tế, màn hình máy tính nên được đặt cách mắt khoảng 50-70 cm (tương đương một sải tay) và đỉnh màn hình ngang hoặc hơi thấp hơn tầm mắt để tránh mỏi mắt và đau cổ.',
+                incorrect: 'Sai. Khoảng cách lý tưởng từ mắt đến màn hình máy tính là khoảng 50-70 cm (hoặc một sải tay), và đỉnh màn hình nên ngang tầm mắt hoặc hơi thấp hơn. Điều này giúp giảm căng thẳng cho mắt và cổ.'
+            }
+        },
+        {
+            name: 'q10',
+            correct: 'd',
+            feedback: {
+                correct: 'Đúng! Ngồi lâu gây áp lực lên hệ tiêu hóa, làm chậm quá trình tiêu hóa thức ăn, dẫn đến nguy cơ táo bón, khó tiêu và thậm chí là tăng nguy cơ mắc bệnh trĩ. **WHO** khuyến cáo hoạt động thể chất để cải thiện chức năng ruột.',
+                incorrect: 'Sai. Ngồi lâu làm chậm quá trình tiêu hóa và gây áp lực lên các cơ quan nội tạng. Điều này có thể dẫn đến nhiều vấn đề tiêu hóa như táo bón, khó tiêu, và tăng nguy cơ mắc bệnh trĩ do áp lực lên vùng chậu.'
+            }
+        },
+        {
+            name: 'q11',
+            correct: 'b',
+            feedback: {
+                correct: 'Đúng! Ghế xoay văn phòng có khả năng điều chỉnh độ cao, tựa lưng và hỗ trợ thắt lưng là lựa chọn tốt nhất. Ghế công thái học giúp duy trì tư thế tự nhiên của cột sống, giảm áp lực và tăng sự thoải mái. **OSHA** cung cấp các hướng dẫn về thiết kế nơi làm việc ergonomic.',
+                incorrect: 'Sai. Ghế cứng hoặc ghế không có tựa lưng không cung cấp đủ sự hỗ trợ cần thiết cho cột sống. Ghế xoay văn phòng có tựa lưng, hỗ trợ thắt lưng và khả năng điều chỉnh là lựa chọn tốt nhất để duy trì tư thế đúng và giảm áp lực.'
+            }
+        },
+        {
+            name: 'q12',
+            correct: 'd',
+            feedback: {
+                correct: 'Đúng! Ngồi lâu làm giảm hoạt động của cơ bắp, khiến cơ thể ít nhạy cảm hơn với insulin (tăng đề kháng insulin) và giảm khả năng hấp thu glucose từ máu, từ đó làm tăng nguy cơ mắc bệnh tiểu đường type 2. **CDC Hoa Kỳ** liên tục nhấn mạnh tầm quan trọng của hoạt động thể chất trong phòng ngừa tiểu đường.',
+                incorrect: 'Sai. Ngồi lâu làm giảm sự nhạy cảm của cơ thể với insulin, tức là tăng đề kháng insulin. Đồng thời, nó cũng ảnh hưởng đến khả năng sản xuất insulin, từ đó làm tăng nguy cơ mắc bệnh tiểu đường type 2.'
+            }
+        },
+        {
+            name: 'q13',
+            correct: 'b',
+            feedback: {
+                correct: 'Đúng! Ánh sáng xanh phát ra từ màn hình kỹ thuật số có thể ức chế sản xuất melatonin (hormone gây ngủ) của cơ thể, làm rối loạn nhịp sinh học và gây khó ngủ, mất ngủ, đặc biệt là khi sử dụng thiết bị vào buổi tối. **Tổ chức Y tế Thế giới (WHO)** khuyến cáo hạn chế tiếp xúc ánh sáng xanh vào ban đêm.',
+                incorrect: 'Sai. Ánh sáng xanh từ màn hình có thể ức chế sản xuất melatonin, hormone giúp cơ thể thư giãn và đi vào giấc ngủ. Điều này làm rối loạn nhịp sinh học và khiến bạn khó ngủ hơn, đặc biệt là khi sử dụng thiết bị vào buổi tối.'
+            }
+        },
+        {
+            name: 'q14',
+            correct: 'a',
+            feedback: {
+                correct: 'Đúng! Các bài tập đơn giản như xoay vai, cúi gập cổ, nghiêng đầu sang hai bên, hoặc vươn vai là những động tác hiệu quả để thư giãn cơ bắp, giảm căng thẳng ở vùng vai gáy và cổ do ngồi lâu. **Y tế Canada** thường xuyên đưa ra các bài tập đơn giản cho người làm việc văn phòng.',
+                incorrect: 'Sai. Chạy bộ, nâng tạ hay đạp xe là các bài tập toàn thân nhưng không trực tiếp giải quyết căng thẳng ở vai gáy do ngồi lâu. Các động tác nhẹ nhàng như xoay vai, cúi gập cổ là những lựa chọn phù hợp để thư giãn vùng này.'
+            }
+        },
+        {
+            name: 'q15',
+            correct: 'b',
+            feedback: {
+                correct: 'Đúng! Ngồi bất động trong thời gian dài làm chậm dòng máu ở chân, tạo điều kiện thuận lợi cho việc hình thành cục máu đông, đặc biệt là huyết khối tĩnh mạch sâu (DVT). DVT là một tình trạng nguy hiểm có thể dẫn đến tắc mạch phổi. **CDC Hoa Kỳ** khuyến cáo vận động để phòng ngừa DVT.',
+                incorrect: 'Sai. Ngồi lâu, đặc biệt là khi ít vận động, có thể làm máu ứ đọng ở chân và tăng nguy cơ hình thành cục máu đông. Tình trạng này được gọi là huyết khối tĩnh mạch sâu (DVT), một bệnh lý nguy hiểm có thể gây tắc mạch phổi.'
+            }
+        },
+        {
+            name: 'q16',
+            correct: 'b',
+            feedback: {
+                correct: 'Đúng! Quy tắc 20-20-20 được **Hiệp hội Nhãn khoa Hoa Kỳ (American Optometric Association - AOA)** khuyến nghị: cứ 20 phút làm việc, hãy nhìn vào một vật cách xa 20 feet (khoảng 6 mét) trong 20 giây. Điều này giúp mắt được thư giãn và giảm mỏi.',
+                incorrect: 'Sai. Quy tắc 20-20-20 là phương pháp hiệu quả để giảm mỏi mắt. Cụ thể, cứ sau 20 phút làm việc với màn hình, bạn nên nhìn ra xa khoảng 20 feet (tương đương 6 mét) trong 20 giây. Điều này giúp thư giãn cơ mắt và giảm khô mắt.'
+            }
+        },
+        {
+            name: 'q17',
+            correct: 'a',
+            feedback: {
+                correct: 'Đúng! Ngồi lâu khiến các cơ ít được sử dụng và trở nên yếu đi. Đặc biệt, cơ bụng và cơ mông thường bị ảnh hưởng nhất, dẫn đến tư thế kém và tăng áp lực lên cột sống. **Y tế Canada** khuyến nghị các bài tập tăng cường cơ lõi và cơ mông.',
+                incorrect: 'Sai. Ngồi nhiều làm suy yếu các cơ ít được sử dụng, đặc biệt là cơ bụng (cơ lõi) và cơ mông. Cơ yếu có thể dẫn đến đau lưng, tư thế không tốt và giảm khả năng vận động.'
+            }
+        },
+        {
+            name: 'q18',
+            correct: 'b',
+            feedback: {
+                correct: 'Đúng! Các động tác như duỗi người, vươn vai, xoay cổ, nghiêng mình sang hai bên hoặc đi bộ nhẹ nhàng là những cách hiệu quả để giảm căng thẳng cơ bắp và cải thiện lưu thông máu khi bạn phải ngồi lâu. **WHO** khuyến khích các hoạt động thể chất nhẹ nhàng trong giờ làm việc.',
+                incorrect: 'Sai. Uống nước, ngủ gật hay xem phim không giúp thư giãn cơ bắp hay cải thiện lưu thông máu. Việc duỗi người, vươn vai, xoay cổ là các động tác vật lý cần thiết để giải tỏa căng thẳng cơ bắp do ngồi lâu.'
+            }
+        },
+        {
+            name: 'q19',
+            correct: 'c',
+            feedback: {
+                correct: 'Đúng! Sử dụng kê tay (wrist rest) hoặc bàn phím công thái học (ergonomic keyboard) giúp giữ cổ tay ở tư thế tự nhiên, giảm áp lực lên cổ tay và ngăn ngừa các hội chứng ống cổ tay, viêm gân. **OSHA** khuyến nghị sử dụng các thiết bị công thái học phù hợp.',
+                incorrect: 'Sai. Để bảo vệ cổ tay khi gõ bàn phím, bạn nên sử dụng kê tay hoặc bàn phím công thái học. Những phụ kiện này giúp duy trì tư thế cổ tay thẳng, giảm áp lực và ngăn ngừa các chấn thương do căng thẳng lặp đi lặp lại.'
+            }
+        },
+        {
+            name: 'q20',
+            correct: 'b',
+            feedback: {
+                correct: 'Đúng! Mục tiêu chính của việc giảm thời gian ngồi lâu là cải thiện sức khỏe tổng thể, giảm nguy cơ mắc các bệnh mạn tính như tim mạch, tiểu đường, béo phì, và cải thiện chất lượng cuộc sống. **CDC Hoa Kỳ và WHO** đều nhấn mạnh tầm quan trọng của lối sống năng động.',
+                incorrect: 'Sai. Mặc dù các lựa chọn khác có thể là một phần nhỏ của lợi ích, nhưng mục tiêu bao quát và quan trọng nhất của việc giảm thời gian ngồi lâu là để cải thiện sức khỏe tổng thể, giảm nguy cơ mắc các bệnh nghiêm trọng và nâng cao chất lượng cuộc sống. Lối sống năng động là chìa khóa.'
+            }
+        }
+    ];
+
+    // Gắn sự kiện lắng nghe cho mỗi radio button
+    questionsData.forEach((q, index) => {
+        const questionElement = document.getElementById(`q-${index + 1}`);
+        const radioButtons = questionElement.querySelectorAll(`input[name="${q.name}"]`);
+        const feedbackElement = document.getElementById(`feedback-${q.name}`);
+
+        radioButtons.forEach(radio => {
+            radio.addEventListener('change', function() {
+                // Kiểm tra xem câu hỏi đã được trả lời chưa
+                if (questionElement.classList.contains('answered')) {
+                    return; // Nếu đã trả lời rồi thì không làm gì cả
+                }
+
+                if (this.checked) {
+                    // Hiển thị phản hồi
+                    feedbackElement.style.display = 'block';
+                    feedbackElement.classList.remove('correct', 'incorrect');
+
+                    if (this.value === q.correct) {
+                        feedbackElement.classList.add('correct');
+                        feedbackElement.innerHTML = `<strong>Đúng!</strong> ${q.feedback.correct}`;
+                    } else {
+                        feedbackElement.classList.add('incorrect');
+                        feedbackElement.innerHTML = `<strong>Sai.</strong> ${q.feedback.incorrect}`;
+                    }
+
+                    // Thêm lớp 'answered' để vô hiệu hóa các tùy chọn
+                    questionElement.classList.add('answered'); 
+                }
+            });
+        });
+    });
+
+    // Sự kiện khi bấm nút "Hoàn thành bài kiểm tra" (để tính tổng điểm)
+    document.getElementById('quizForm20').addEventListener('submit', function(event) {
+        event.preventDefault(); // Ngăn chặn gửi form mặc định
+
+        let score = 0;
+        questionsData.forEach(q => {
+            const selectedOption = document.querySelector(`input[name="${q.name}"]:checked`);
+            if (selectedOption && selectedOption.value === q.correct) {
+                score++;
+            }
+        });
+
+        document.getElementById('score20').textContent = score;
+        document.getElementById('results20').style.display = 'block';
+    });
+</script>
