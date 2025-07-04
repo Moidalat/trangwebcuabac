@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bạn có ổn không? - Khỏe Mỗi Ngày</title>
+    <style>
+        /* CSS cho giao diện */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 15px;
+            background-color: #f9f9f9;
+        }
+        h1, h2 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .intro-text {
+            background-color: #e8f5e9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 5px solid #4CAF50;
+        }
+        .intro-text p {
+            margin-bottom: 10px;
+        }
+        .quiz-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .question-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-bottom: 1px dashed #eee;
+        }
+        .question-item:last-child {
+            border-bottom: none;
+        }
+        .question-item p {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: all 0.2s ease-in-out;
+        }
+        .options label:hover {
+            background-color: #f0f0f0;
+        }
+        .options input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+            vertical-align: middle;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 30px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result-section {
+            margin-top: 30px;
+            padding: 25px;
+            background-color: #e0f7fa;
+            border-radius: 8px;
+            border-left: 5px solid #00BCD4;
+            display: none; /* Ẩn ban đầu */
+        }
+        #result-section h3 {
+            color: #00796B;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        #result-section p {
+            font-size: 1.1em;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        #next-step-teaser {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px dashed #a7d9de;
+            font-style: italic;
+            color: #00796B;
+            text-align: center;
+            line-height: 1.8;
+        }
+        .disclaimer {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 40px;
+            padding: 15px;
+            background-color: #fff3e0;
+            border-radius: 8px;
+            border-left: 5px solid #FF9800;
+        }
+        .disclaimer strong {
+            color: #E65100;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bạn Có Ổn Không?</h1>
+
+    <div class="intro-text">
+        <p>Chào bạn!</p>
+        <p>Cuộc sống của chúng ta đôi khi giống như một chuyến tàu lượn siêu tốc, có lúc lên cao vút hứng khởi, nhưng cũng có khi lao dốc chóng mặt khiến tim đập thình thịch. Trong những lúc "phiêu lưu" như thế, một vị khách không mời mà đến rất hay "ghé thăm" chúng ta, đó chính là **Stress** – anh chàng "kẻ thù giấu mặt" khá là tinh quái này thường ẩn mình dưới vỏ bọc của những deadline, hóa đơn, hay đơn giản là "tám chuyện" linh tinh trong đầu.</p>
+        <p>Nếu không để ý, hắn có thể âm thầm "nhâm nhi" sự bình yên của bạn, khiến bạn khó ngủ, hay cáu kỉnh vô cớ... và nhiều khi, chính chúng ta cũng chẳng nhận ra mình đang bị "thao túng tâm lý" bởi anh bạn này!</p>
+        <p>Nhưng đừng lo lắng quá nhé! "Khỏe Mỗi Ngày" mang đến cho bạn một "thám tử" cực kỳ thân thiện và đáng tin cậy: **Bài Trắc Nghiệm DASS-21**. Đây không phải là một bài kiểm tra khó nhằn hay buổi chẩn đoán y tế đâu ạ. Nó giống như một tấm gương nhỏ xinh, giúp bạn **tự soi chiếu "tâm trạng" của mình trong 7 ngày qua** một cách nhẹ nhàng và khách quan nhất.</p>
+        <p>Mục đích chính của bài trắc nghiệm này là giúp bạn **tự nhận diện và theo dõi sức khỏe tinh thần của mình một cách chủ động**. Từ đó, bạn sẽ có những định hướng đúng đắn và ngọt ngào để chăm sóc bản thân, giữ cho "khu vườn tâm hồn" luôn tươi tắn và tràn đầy năng lượng tích cực.</p>
+        <p>Bạn sẵn sàng chưa? Hãy hít thở sâu, thư giãn và cùng "Khỏe Mỗi Ngày" khám phá xem **"Bạn có ổn không?"** nhé! Đây là lúc tuyệt vời để lắng nghe chính mình!</p>
+    </div>
+
+    <div class="quiz-container">
+        <h2>Bài Trắc Nghiệm DASS-21 (Phần Stress)</h2>
+        <p>Hãy đọc từng câu dưới đây và chọn số điểm phù hợp nhất với cảm nhận của bạn TRONG SUỐT 7 NGÀY QUA.</p>
+
+        <form id="dass21-quiz-form">
+            <div class="question-item">
+                <p>1. Tôi thấy khó chịu khi phải chịu đựng bất cứ sự can thiệp nào vào những việc tôi đang làm.</p>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="0" required> 0 - Không áp dụng với tôi chút nào</label>
+                    <label><input type="radio" name="q1" value="1"> 1 - Áp dụng với tôi ở một mức độ nào đó, hoặc thỉnh thoảng</label>
+                    <label><input type="radio" name="q1" value="2"> 2 - Áp dụng với tôi ở một mức độ đáng kể, hoặc khá thường xuyên</label>
+                    <label><input type="radio" name="q1" value="3"> 3 - Áp dụng với tôi hầu hết thời gian hoặc luôn luôn</label>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <p>2. Tôi thấy khó mà thư giãn được.</p>
+                <div class="options">
+                    <label><input type="radio" name="q6" value="0" required> 0 - Không áp dụng với tôi chút nào</label>
+                    <label><input type="radio" name="q6" value="1"> 1 - Áp dụng với tôi ở một mức độ nào đó, hoặc thỉnh thoảng</label>
+                    <label><input type="radio" name="q6" value="2"> 2 - Áp dụng với tôi ở một mức độ đáng kể, hoặc khá thường xuyên</label>
+                    <label><input type="radio" name="q6" value="3"> 3 - Áp dụng với tôi hầu hết thời gian hoặc luôn luôn</label>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <p>3. Tôi nhận thấy mình dễ bị kích động.</p>
+                <div class="options">
+                    <label><input type="radio" name="q8" value="0" required> 0 - Không áp dụng với tôi chút nào</label>
+                    <label><input type="radio" name="q8" value="1"> 1 - Áp dụng với tôi ở một mức độ nào đó, hoặc thỉnh thoảng</label>
+                    <label><input type="radio" name="q8" value="2"> 2 - Áp dụng với tôi ở một mức độ đáng kể, hoặc khá thường xuyên</label>
+                    <label><input type="radio" name="q8" value="3"> 3 - Áp dụng với tôi hầu hết thời gian hoặc luôn luôn</label>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <p>4. Tôi thấy khó chịu đựng được những việc làm gây cản trở tôi.</p>
+                <div class="options">
+                    <label><input type="radio" name="q11" value="0" required> 0 - Không áp dụng với tôi chút nào</label>
+                    <label><input type="radio" name="q11" value="1"> 1 - Áp dụng với tôi ở một mức độ nào đó, hoặc thỉnh thoảng</label>
+                    <label><input type="radio" name="q11" value="2"> 2 - Áp dụng với tôi ở một mức độ đáng kể, hoặc khá thường xuyên</label>
+                    <label><input type="radio" name="q11" value="3"> 3 - Áp dụng với tôi hầu hết thời gian hoặc luôn luôn</label>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <p>5. Tôi cảm thấy lo lắng (ví dụ: bồn chồn) về những việc mình đang làm.</p>
+                <div class="options">
+                    <label><input type="radio" name="q12" value="0" required> 0 - Không áp dụng với tôi chút nào</label>
+                    <label><input type="radio" name="q12" value="1"> 1 - Áp dụng với tôi ở một mức độ nào đó, hoặc thỉnh thoảng</label>
+                    <label><input type="radio" name="q12" value="2"> 2 - Áp dụng với tôi ở một mức độ đáng kể, hoặc khá thường xuyên</label>
+                    <label><input type="radio" name="q12" value="3"> 3 - Áp dụng với tôi hầu hết thời gian hoặc luôn luôn</label>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <p>6. Tôi thấy khó kiên nhẫn khi mọi việc chậm trễ.</p>
+                <div class="options">
+                    <label><input type="radio" name="q14" value="0" required> 0 - Không áp dụng với tôi chút nào</label>
+                    <label><input type="radio" name="q14" value="1"> 1 - Áp dụng với tôi ở một mức độ nào đó, hoặc thỉnh thoảng</label>
+                    <label><input type="radio" name="q14" value="2"> 2 - Áp dụng với tôi ở một mức độ đáng kể, hoặc khá thường xuyên</label>
+                    <label><input type="radio" name="q14" value="3"> 3 - Áp dụng với tôi hầu hết thời gian hoặc luôn luôn</label>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <p>7. Tôi thấy khó chịu mỗi khi mọi việc đang tiến triển bị gián đoạn.</p>
+                <div class="options">
+                    <label><input type="radio" name="q18" value="0" required> 0 - Không áp dụng với tôi chút nào</label>
+                    <label><input type="radio" name="q18" value="1"> 1 - Áp dụng với tôi ở một mức độ nào đó, hoặc thỉnh thoảng</label>
+                    <label><input type="radio" name="q18" value="2"> 2 - Áp dụng với tôi ở một mức độ đáng kể, hoặc khá thường xuyên</label>
+                    <label><input type="radio" name="q18" value="3"> 3 - Áp dụng với tôi hầu hết thời gian hoặc luôn luôn</label>
+                </div>
+            </div>
+
+            <button type="submit">Xem kết quả của tôi!</button>
+        </form>
+
+        <div id="result-section">
+            <h3>Kết Quả "Bạn Có Ổn Không?" Của Bạn:</h3>
+            <p id="stress-score"></p>
+            <p id="stress-level"></p>
+            <p id="stress-advice"></p>
+            <p id="next-step-teaser">
+                ---
+                **Mà này, hành trình tự khám phá thân tâm mình chưa dừng lại ở đây đâu nhé!** Bạn còn **hai "đặc quyền" khám phá miễn phí** nữa trên "Khỏe Mỗi Ngày" đấy: đó là bài trắc nghiệm giúp bạn hiểu rõ hơn về mức độ **Lo âu** và **Trầm cảm** của mình. Hãy theo dõi để đừng bỏ lỡ cơ hội thấu hiểu bản thân trọn vẹn hơn trong những ngày tới nha! Chúng tôi sẽ sớm ra mắt thôi!
+            </p>
+        </div>
+    </div>
+
+    <div class="disclaimer">
+        <strong>Lưu ý quan trọng:</strong><br>
+        Bài trắc nghiệm DASS-21 này là một công cụ sàng lọc, không phải là công cụ chẩn đoán y tế. Kết quả chỉ mang tính chất tham khảo ban đầu để bạn tự theo dõi và nhận biết các dấu hiệu stress.
+        <br><br>
+        <strong>Nguồn tham khảo:</strong> Các câu hỏi và cách diễn giải kết quả được xây dựng dựa trên phiên bản đã được chuẩn hóa của **Thang đo Trầm cảm, Lo âu và Stress (DASS-21)**, một công cụ phổ biến được phát triển bởi Đại học New South Wales, Australia. Công cụ này được sử dụng rộng rãi trong nghiên cứu và thực hành lâm sàng để sàng lọc mức độ stress, lo âu và trầm cảm.
+        <br><br>
+        <strong>Khi có bất kỳ lo lắng nào về sức khỏe tâm thần, hãy tìm kiếm lời khuyên từ chuyên gia y tế hoặc bác sĩ.</strong>
+    </div>
+
+    <script>
+        document.getElementById('dass21-quiz-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Ngăn chặn form gửi đi theo cách truyền thống
+
+            let stressScore = 0;
+            const stressQuestions = ['q1', 'q6', 'q8', 'q11', 'q12', 'q14', 'q18']; // Names of stress questions
+
+            let allAnswered = true;
+            stressQuestions.forEach(qName => {
+                const selectedOption = document.querySelector(`input[name="${qName}"]:checked`);
+                if (selectedOption) {
+                    stressScore += parseInt(selectedOption.value);
+                } else {
+                    allAnswered = false; // Đánh dấu là chưa trả lời hết
+                }
+            });
+
+            if (!allAnswered) {
+                alert('Bạn vui lòng trả lời tất cả các câu hỏi trước khi xem kết quả nhé!');
+                return;
+            }
+
+            // DASS-21 scores are multiplied by 2 for final interpretation
+            const finalStressScore = stressScore * 2;
+
+            let level = '';
+            let advice = '';
+
+            if (finalStressScore >= 0 && finalStressScore <= 14) {
+                level = 'Bình thường';
+                advice = "Chúc mừng bạn! Xem ra **tinh thần bạn đang cực kỳ ổn định và tươi tắn đó nha!** Mức độ stress hiện tại của bạn đang nằm trong vùng 'an toàn' và rất đáng ngưỡng mộ. Hãy tiếp tục duy trì những thói quen tốt đẹp đang có, và đừng quên dành thời gian cho bản thân để 'sạc' năng lượng mỗi ngày nhé. Bạn đang làm rất tốt việc chăm sóc 'khu vườn tâm hồn' của mình đó!";
+            } else if (finalStressScore >= 15 && finalStressScore <= 18) {
+                level = 'Nhẹ';
+                advice = "Này bạn thân mến, xem ra **stress đang 'nhẹ nhàng gõ cửa' nhà bạn một chút rồi đó!** Đừng lo lắng nhé, đây là lúc tuyệt vời để bạn lắng nghe cơ thể và tâm trí mình hơn một xíu. Có thể bạn đang hơi bận rộn hoặc có vài chuyện nhỏ làm mình suy nghĩ. Hãy thử hít thở sâu vài hơi, đi dạo một vòng, hoặc nghe bản nhạc yêu thích. Một chút thay đổi nhỏ thôi cũng có thể giúp bạn 'xua tan mây đen' đấy. Nhớ rằng, quan trọng là mình nhận ra và chăm sóc nó kịp thời!";
+            } else if (finalStressScore >= 19 && finalStressScore <= 25) {
+                level = 'Trung bình';
+                advice = "À há! Xem ra **stress đang 'rủ rê' bạn nhập hội 'căng thẳng' hơi nhiều rồi đó!** Nhưng không sao cả, nhận ra được là một bước tiến lớn rồi. Có vẻ như bạn đang phải đối mặt với kha khá áp lực trong thời gian gần đây. Giờ là lúc bạn nên dành ưu tiên cho việc 'giảm tải' cho bản thân rồi. Hãy nghĩ xem có hoạt động nào giúp bạn thư giãn không? Một buổi tập yoga, đọc sách, hay đơn giản là dành thời gian cho sở thích cá nhân. Đừng ngại chia sẻ với người thân, bạn bè nếu cảm thấy cần nhé. Bạn không hề đơn độc đâu!";
+            } else if (finalStressScore >= 26 && finalStressScore <= 33) {
+                level = 'Nặng';
+                advice = "Bạn ơi, hình như **stress đang 'tấn công' bạn khá mạnh rồi đó!** Dường như bạn đang trải qua một giai đoạn không mấy dễ chịu. Có thể những gánh nặng này đang ảnh hưởng khá nhiều đến cuộc sống hàng ngày của bạn. Đã đến lúc bạn cần dừng lại một chút, hít thở thật sâu và **nghiêm túc** nhìn nhận lại tình hình rồi. Đừng cố gắng chịu đựng một mình nhé. Nếu cảm thấy quá khó khăn, việc tìm kiếm sự hỗ trợ từ một chuyên gia tâm lý hoặc bác sĩ là điều hoàn toàn bình thường và rất nên làm. Họ sẽ là người bạn đồng hành tuyệt vời giúp bạn vượt qua giai đoạn này. Hãy nhớ, sức khỏe tinh thần cũng quan trọng như sức khỏe thể chất vậy!";
+            } else { // >= 34
+                level = 'Rất nặng';
+                advice = "Bạn ơi, xem ra **stress đang 'vượt tầm kiểm soát' rồi đó ạ!** Có vẻ như bạn đang phải chịu đựng một áp lực rất lớn và điều này đang ảnh hưởng nghiêm trọng đến cuộc sống của bạn. Lúc này, điều quan trọng nhất là bạn cần được hỗ trợ kịp thời. Xin đừng ngần ngại hay do dự. Cách tốt nhất và an toàn nhất là bạn **hãy tìm đến sự giúp đỡ của một chuyên gia sức khỏe tâm thần (bác sĩ tâm lý, chuyên gia tư vấn)** càng sớm càng tốt nhé. Họ có chuyên môn và kinh nghiệm để lắng nghe, thấu hiểu và đưa ra lời khuyên, phương pháp hỗ trợ hiệu quả nhất cho bạn. Bạn xứng đáng được khỏe mạnh và hạnh phúc. Hãy yêu thương bản thân mình!";
+            }
+
+            document.getElementById('stress-score').innerHTML = `Điểm stress của bạn là: **${finalStressScore} điểm**`;
+            document.getElementById('stress-level').innerHTML = `Mức độ stress của bạn hiện tại: **${level}**`;
+            document.getElementById('stress-advice').innerHTML = advice;
+
+            document.getElementById('result-section').style.display = 'block'; // Hiển thị phần kết quả
+            document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' }); // Cuộn xuống phần kết quả
+        });
+    </script>
+</body>
+</html>
