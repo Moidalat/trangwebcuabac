@@ -1,0 +1,486 @@
+<style>
+  /* Basic styling for buttons and containers */
+  .quiz-container {
+    margin-bottom: 30px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #ffffff;
+  }
+  .quiz-container h3 {
+    color: #2a608c;
+    margin-top: 0;
+    font-size: 1.1em;
+  }
+  .options-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .option-btn {
+    text-align: left;
+    padding: 12px 15px;
+    margin: 6px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+  .option-btn:hover:not(:disabled) {
+    background-color: #eef;
+    border-color: #c0c0c0;
+  }
+  .option-btn:disabled {
+    cursor: default;
+    opacity: 0.8;
+  }
+  .feedback-div {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.9em;
+    line-height: 1.5;
+  }
+  #final-score-display {
+    text-align: center;
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #0056b3;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 2px solid #0056b3;
+    background-color: #e6f7ff;
+    border-radius: 8px;
+  }
+  #reset-button {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #fff;
+    background-color: #28a745; /* Green color */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  #reset-button:hover {
+    background-color: #218838; /* Darker green on hover */
+  }
+</style>
+
+<div class="quiz-container" id="quiz-container-1">
+  <h3>1. Việc trẻ em ngồi lâu trước màn hình có thể gây ra những vấn đề gì về thị lực?</h3>
+  <div class="options-container">
+    <button class="option-btn" onclick="checkAnswer(this, '1', '1A')" data-option-id="1A">A. Tăng nguy cơ cận thị và khô mắt.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '1', '1B')" data-option-id="1B">B. Làm cho mắt to hơn và sáng hơn.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '1', '1C')" data-option-id="1C">C. Cải thiện khả năng nhìn xa.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '1', '1D')" data-option-id="1D">D. Không ảnh hưởng đến mắt nếu xem màn hình lớn.</button>
+  </div>
+  <div class="feedback-div" id="feedback-1"></div>
+</div>
+
+<div class="quiz-container" id="quiz-container-2">
+  <h3>2. Đối với trẻ từ 5 tuổi trở lên, thời gian khuyến nghị tối đa dành cho việc sử dụng thiết bị điện tử giải trí mỗi ngày là bao nhiêu?</h3>
+  <div class="options-container">
+    <button class="option-btn" onclick="checkAnswer(this, '2', '2A')" data-option-id="2A">A. Không quá 30 phút.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '2', '2B')" data-option-id="2B">B. Không quá 1 giờ.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '2', '2C')" data-option-id="2C">C. Không quá 2 giờ.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '2', '2D')" data-option-id="2D">D. Không giới hạn nếu có sự giám sát của người lớn.</button>
+  </div>
+  <div class="feedback-div" id="feedback-2"></div>
+</div>
+
+<div class="quiz-container" id="quiz-container-3">
+  <h3>3. Ngồi lâu trước màn hình có thể ảnh hưởng đến sự phát triển não bộ của trẻ như thế nào?</h3>
+  <div class="options-container">
+    <button class="option-btn" onclick="checkAnswer(this, '3', '3A')" data-option-id="3A">A. Ảnh hưởng đến sự phát triển chất xám, làm chậm phát triển ngôn ngữ và kỹ năng tư duy.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '3', '3B')" data-option-id="3B">B. Kích thích não bộ phát triển nhanh hơn.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '3', '3C')" data-option-id="3C">C. Tăng cường trí nhớ và khả năng học hỏi.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '3', '3D')" data-option-id="3D">D. Không có tác động đáng kể đến não bộ nếu có nội dung giáo dục.</button>
+  </div>
+  <div class="feedback-div" id="feedback-3"></div>
+</div>
+
+<div class="quiz-container" id="quiz-container-4">
+  <h3>4. Tác hại vật lý phổ biến nhất khi trẻ ngồi lâu trước màn hình là gì?</h3>
+  <div class="options-container">
+    <button class="option-btn" onclick="checkAnswer(this, '4', '4A')" data-option-id="4A">A. Đau cổ, vai, lưng và ít vận động dẫn đến nguy cơ béo phì.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '4', '4B')" data-option-id="4B">B. Tăng chiều cao và phát triển cơ bắp.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '4', '4C')" data-option-id="4C">C. Cải thiện khả năng giữ thăng bằng.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '4', '4D')" data-option-id="4D">D. Không có tác hại vật lý nếu trẻ ngồi đúng tư thế.</button>
+  </div>
+  <div class="feedback-div" id="feedback-4"></div>
+</div>
+
+<div class="quiz-container" id="quiz-container-5">
+  <h3>5. Ánh sáng xanh phát ra từ màn hình ảnh hưởng đến giấc ngủ của trẻ như thế nào?</h3>
+  <div class="options-container">
+    <button class="option-btn" onclick="checkAnswer(this, '5', '5A')" data-option-id="5A">A. Ức chế sản xuất melatonin, làm rối loạn nhịp sinh học và gây khó ngủ.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '5', '5B')" data-option-id="5B">B. Giúp trẻ thư giãn và dễ dàng đi vào giấc ngủ sâu hơn.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '5', '5C')" data-option-id="5C">C. Không ảnh hưởng đến giấc ngủ nếu trẻ xem nội dung yên tĩnh.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '5', '5D')" data-option-id="5D">D. Chỉ ảnh hưởng đến giấc ngủ của người lớn, không phải trẻ em.</button>
+  </div>
+  <div class="feedback-div" id="feedback-5"></div>
+</div>
+
+<div class="quiz-container" id="quiz-container-6">
+  <h3>6. Việc trẻ em sử dụng thiết bị điện tử quá sớm và quá nhiều có thể ảnh hưởng đến mối quan hệ gia đình như thế nào?</h3>
+  <div class="options-container">
+    <button class="option-btn" onclick="checkAnswer(this, '6', '6A')" data-option-id="6A">A. Làm giảm tương tác trực tiếp giữa cha mẹ và con cái, tạo khoảng cách vô hình.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '6', '6B')" data-option-id="6B">B. Thúc đẩy giao tiếp cởi mở hơn trong gia đình.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '6', '6C')" data-option-id="6C">C. Giúp cha mẹ kiểm soát con cái dễ dàng hơn.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '6', '6D')" data-option-id="6D">D. Không có tác động nào đến mối quan hệ gia đình.</button>
+  </div>
+  <div class="feedback-div" id="feedback-6"></div>
+</div>
+
+<div class="quiz-container" id="quiz-container-7">
+  <h3>7. Theo các chuyên gia y tế, việc ngồi máy tính nhiều có thể làm giảm khả năng hoạt động của cơ quan nào trong cơ thể do thói quen thở nông?</h3>
+  <div class="options-container">
+    <button class="option-btn" onclick="checkAnswer(this, '7', '7A')" data-option-id="7A">A. Phổi.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '7', '7B')" data-option-id="7B">B. Tim.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '7', '7C')" data-option-id="7C">C. Dạ dày.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '7', '7D')" data-option-id="7D">D. Thận.</button>
+  </div>
+  <div class="feedback-div" id="feedback-7"></div>
+</div>
+
+<div class="quiz-container" id="quiz-container-8">
+  <h3>8. Ngoài các vấn đề về thị lực, ngồi lâu trước màn hình còn có thể gây ra triệu chứng khó chịu nào ở trẻ?</h3>
+  <div class="options-container">
+    <button class="option-btn" onclick="checkAnswer(this, '8', '8A')" data-option-id="8A">A. Đau đầu, đau cổ và vai, dễ cáu gắt.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '8', '8B')" data-option-id="8B">B. Tăng khả năng tập trung và kiên nhẫn.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '8', '8C')" data-option-id="8C">C. Cải thiện khả năng giao tiếp xã hội.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '8', '8D')" data-option-id="8D">D. Giúp trẻ ăn ngon miệng hơn.</button>
+  </div>
+  <div class="feedback-div" id="feedback-8"></div>
+</div>
+
+<div class="quiz-container" id="quiz-container-9">
+  <h3>9. Thói quen vừa ăn vừa xem màn hình điện thoại/ti vi ảnh hưởng đến trẻ như thế nào?</h3>
+  <div class="options-container">
+    <button class="option-btn" onclick="checkAnswer(this, '9', '9A')" data-option-id="9A">A. Giảm cảm giác ngon miệng, gây rối loạn tiêu hóa và kém hấp thu dinh dưỡng.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '9', '9B')" data-option-id="9B">B. Giúp trẻ ăn nhanh hơn và ăn được nhiều hơn.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '9', '9C')" data-option-id="9C">C. Cải thiện khả năng tập trung vào bữa ăn.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '9', '9D')" data-option-id="9D">D. Không ảnh hưởng đến hệ tiêu hóa.</button>
+  </div>
+  <div class="feedback-div" id="feedback-9"></div>
+</div>
+
+<div class="quiz-container" id="quiz-container-10">
+  <h3>10. Mối liên hệ giữa thời gian sử dụng thiết bị điện tử và chỉ số khối cơ thể (BMI) của trẻ là gì?</h3>
+  <div class="options-container">
+    <button class="option-btn" onclick="checkAnswer(this, '10', '10A')" data-option-id="10A">A. Thời gian sử dụng màn hình nhiều có liên quan đến việc tăng chỉ số BMI và nguy cơ béo phì.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '10', '10B')" data-option-id="10B">B. Không có mối liên hệ nào giữa hai yếu tố này.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '10', '10C')" data-option-id="10C">C. Thời gian sử dụng màn hình nhiều giúp trẻ duy trì cân nặng khỏe mạnh.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '10', '10D')" data-option-id="10D">D. Chỉ số BMI chỉ bị ảnh hưởng bởi chế độ ăn uống, không phải thời gian màn hình.</button>
+  </div>
+  <div class="feedback-div" id="feedback-10"></div>
+</div>
+
+<div class="quiz-container" id="quiz-container-11">
+  <h3>11. Theo khuyến cáo của các chuyên gia y tế, quy tắc '20-20-20' được áp dụng để hạn chế tác hại nào của việc ngồi máy tính lâu?</h3>
+  <div class="options-container">
+    <button class="option-btn" onclick="checkAnswer(this, '11', '11A')" data-option-id="11A">A. Hạn chế mỏi mắt và căng thẳng mắt.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '11', '11B')" data-option-id="11B">B. Giảm nguy cơ béo phì.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '11', '11C')" data-option-id="11C">C. Cải thiện khả năng tập trung của não bộ.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '11', '11D')" data-option-id="11D">D. Ngăn ngừa rối loạn giấc ngủ.</button>
+  </div>
+  <div class="feedback-div" id="feedback-11"></div>
+</div>
+
+<div class="quiz-container" id="quiz-container-12">
+  <h3>12. Việc trẻ em sử dụng thiết bị điện tử quá nhiều có thể gây tác động tiêu cực nào đến sự phát triển não bộ và kỹ năng nhận thức, theo các nghiên cứu?</h3>
+  <div class="options-container">
+    <button class="option-btn" onclick="checkAnswer(this, '12', '12A')" data-option-id="12A">A. Gây gián đoạn các quá trình phát triển não bộ bình thường và làm giảm khả năng tập trung, tư duy.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '12', '12B')" data-option-id="12B">B. Thúc đẩy sự phát triển chất xám và tăng cường trí nhớ.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '12', '12C')" data-option-id="12C">C. Không có tác động đáng kể nếu nội dung mang tính giáo dục cao.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '12', '12D')" data-option-id="12D">D. Làm tăng khả năng xử lý thông tin phức tạp.</button>
+  </div>
+  <div class="feedback-div" id="feedback-12"></div>
+</div>
+
+<div class="quiz-container" id="quiz-container-13">
+  <h3>13. Theo các hiệp hội tâm lý và nghiên cứu về hành vi trẻ em, việc tăng thời gian sử dụng màn hình có thể dẫn đến những vấn đề hành vi và cảm xúc nào?</h3>
+  <div class="options-container">
+    <button class="option-btn" onclick="checkAnswer(this, '13', '13A')" data-option-id="13A">A. Tăng các vấn đề hành vi hướng ngoại (hung hăng, tăng động) và hướng nội (lo âu, trầm cảm).</button>
+    <button class="option-btn" onclick="checkAnswer(this, '13', '13B')" data-option-id="13B">B. Cải thiện khả năng tự điều chỉnh cảm xúc và giải quyết xung đột.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '13', '13C')" data-option-id="13C">C. Thúc đẩy sự đồng cảm và lòng trắc ẩn.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '13', '13D')" data-option-id="13D">D. Không có mối liên hệ nào với các vấn đề hành vi nếu có sự giám sát của cha mẹ.</button>
+  </div>
+  <div class="feedback-div" id="feedback-13"></div>
+</div>
+
+<div class="quiz-container" id="quiz-container-14">
+  <h3>14. Tiếp xúc quá nhiều với màn hình, đặc biệt ở trẻ rất nhỏ, có thể làm tăng nguy cơ nào liên quan đến sự phát triển, theo các nghiên cứu từ các tổ chức y tế?</h3>
+  <div class="options-container">
+    <button class="option-btn" onclick="checkAnswer(this, '14', '14A')" data-option-id="14A">A. Chậm phát triển ngôn ngữ, kỹ năng giao tiếp và xã hội.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '14', '14B')" data-option-id="14B">B. Phát triển kỹ năng vận động tinh và thô vượt trội.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '14', '14C')" data-option-id="14C">C. Tăng chỉ số thông minh (IQ) ở giai đoạn mẫu giáo.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '14', '14D')" data-option-id="14D">D. Không có tác động đến sự phát triển nếu có nội dung tương tác.</button>
+  </div>
+  <div class="feedback-div" id="feedback-14"></div>
+</div>
+
+<div class="quiz-container" id="quiz-container-15">
+  <h3>15. Tại sao việc sử dụng smartphone và máy tính bảng quá sớm có thể làm thay đổi mối quan hệ giữa cha mẹ và con cái?</h3>
+  <div class="options-container">
+    <button class="option-btn" onclick="checkAnswer(this, '15', '15A')" data-option-id="15A">A. Làm giảm các tương tác trực tiếp, thiếu đi sự gắn kết tình cảm và thay đổi liên kết thần kinh của trẻ.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '15', '15B')" data-option-id="15B">B. Giúp cha mẹ hiểu con cái hơn qua các ứng dụng.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '15', '15C')" data-option-id="15C">C. Khuyến khích trẻ tự lập và ít phụ thuộc vào cha mẹ.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '15', '15D')" data-option-id="15D">D. Không ảnh hưởng đến mối quan hệ nếu cha mẹ cùng xem với con.</button>
+  </div>
+  <div class="feedback-div" id="feedback-15"></div>
+</div>
+
+<div class="quiz-container" id="quiz-container-16">
+  <h3>16. Việc trẻ em dành quá nhiều thời gian cho các ứng dụng mạng xã hội có thể dẫn đến vấn đề gì?</h3>
+  <div class="options-container">
+    <button class="option-btn" onclick="checkAnswer(this, '16', '16A')" data-option-id="16A">A. Tăng cường sự tự tin và lòng tự trọng.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '16', '16B')" data-option-id="16B">B. Tăng nguy cơ bị bắt nạt trực tuyến, so sánh bản thân với người khác và ảnh hưởng tiêu cực đến hình ảnh cơ thể.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '16', '16C')" data-option-id="16C">C. Cải thiện kỹ năng giao tiếp mặt đối mặt.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '16', '16D')" data-option-id="16D">D. Không có ảnh hưởng đáng kể đến tâm lý.</button>
+  </div>
+  <div class="feedback-div" id="feedback-16"></div>
+</div>
+
+<div class="quiz-container" id="quiz-container-17">
+  <h3>17. Để khuyến khích trẻ vận động và giảm thời gian nhìn màn hình, cha mẹ có thể làm gì?</h3>
+  <div class="options-container">
+    <button class="option-btn" onclick="checkAnswer(this, '17', '17A')" data-option-id="17A">A. Mua thêm các thiết bị điện tử mới để trẻ khám phá.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '17', '17B')" data-option-id="17B">B. Lên kế hoạch các hoạt động gia đình ngoài trời, tham gia thể thao, và tạo không gian chơi an toàn tại nhà.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '17', '17C')" data-option-id="17C">C. Cho phép trẻ tự do chơi game để giải tỏa căng thẳng.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '17', '17D')" data-option-id="17D">D. Chỉ cần đảm bảo trẻ ăn đủ chất là được.</button>
+  </div>
+  <div class="feedback-div" id="feedback-17"></div>
+</div>
+
+<div class="quiz-container" id="quiz-container-18">
+  <h3>18. Việc trẻ em tiếp xúc với quảng cáo không phù hợp trên các nền tảng trực tuyến có thể gây ra vấn đề gì?</h3>
+  <div class="options-container">
+    <button class="option-btn" onclick="checkAnswer(this, '18', '18A')" data-option-id="18A">A. Giúp trẻ nhận biết các sản phẩm mới.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '18', '18B')" data-option-id="18B">B. Dẫn đến hành vi tiêu dùng không lành mạnh, tiếp xúc với thông điệp sai lệch và áp lực từ bạn bè.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '18', '18C')" data-option-id="18C">C. Không có ảnh hưởng vì trẻ em không quan tâm đến quảng cáo.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '18', '18D')" data-option-id="18D">D. Cải thiện khả năng phân tích thông tin.</button>
+  </div>
+  <div class="feedback-div" id="feedback-18"></div>
+</div>
+
+<div class="quiz-container" id="quiz-container-19">
+  <h3>19. Thói quen nhìn chằm chằm vào màn hình liên tục có thể gây ra hiện tượng gì ở mắt, ngoài mỏi mắt và khô mắt?</h3>
+  <div class="options-container">
+    <button class="option-btn" onclick="checkAnswer(this, '19', '19A')" data-option-id="19A">A. Khó tập trung vào các vật thể ở xa ngay lập tức và mắt mất vài giờ để điều chỉnh lại.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '19', '19B')" data-option-id="19B">B. Mắt tự động điều chỉnh để nhìn rõ hơn trong bóng tối.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '19', '19C')" data-option-id="19C">C. Tăng khả năng phân biệt màu sắc.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '19', '19D')" data-option-id="19D">D. Làm cho đồng tử giãn nở vĩnh viễn.</button>
+  </div>
+  <div class="feedback-div" id="feedback-19"></div>
+</div>
+
+<div class="quiz-container" id="quiz-container-20">
+  <h3>20. Mối liên hệ hai chiều giữa thời gian sử dụng màn hình quá mức và các vấn đề cảm xúc/hành vi ở trẻ là gì, theo các nghiên cứu gần đây?</h3>
+  <div class="options-container">
+    <button class="option-btn" onclick="checkAnswer(this, '20', '20A')" data-option-id="20A">A. Tăng thời gian màn hình dẫn đến vấn đề cảm xúc/hành vi, và ngược lại, trẻ có vấn đề lại tìm đến màn hình để đối phó.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '20', '20B')" data-option-id="20B">B. Chỉ những trẻ có vấn đề tâm lý sẵn mới bị ảnh hưởng tiêu cực bởi màn hình.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '20', '20C')" data-option-id="20C">C. Màn hình giúp trẻ quản lý cảm xúc tiêu cực hiệu quả hơn.</button>
+    <button class="option-btn" onclick="checkAnswer(this, '20', '20D')" data-option-id="20D">D. Không có mối liên hệ trực tiếp giữa thời gian màn hình và vấn đề tâm lý.</button>
+  </div>
+  <div class="feedback-div" id="feedback-20"></div>
+</div>
+
+<div id="final-score-display"></div>
+<button id="reset-button" onclick="resetQuiz()">Làm lại</button>
+
+<script>
+  let score = 0;
+  const totalQuestions = 20;
+  // Use a Set to track answered questions for unique scoring
+  const answeredQuestions = new Set(); 
+
+  // Define correct answers for each question
+  const correctAnswerMapping = {
+    '1': '1A', 
+    '2': '2C', 
+    '3': '3A', 
+    '4': '4A', 
+    '5': '5A', 
+    '6': '6A', 
+    '7': '7A', 
+    '8': '8A', 
+    '9': '9A', 
+    '10': '10A', 
+    '11': '11A', 
+    '12': '12A',
+    '13': '13A', 
+    '14': '14A', 
+    '15': '15A', 
+    '16': '16B', // Correct option is B
+    '17': '17B', // Correct option is B
+    '18': '18B', // Correct option is B
+    '19': '19A', 
+    '20': '20A' 
+  };
+
+  // Define feedback content for each correct option ID
+  const feedbackContent = {
+    '1A': {
+      correct: '<b>ĐÚNG!</b> Việc nhìn màn hình liên tục khiến mắt phải điều tiết liên tục, giảm tần suất chớp mắt, dẫn đến mỏi mắt, khô mắt và tăng nguy cơ phát triển cận thị. (Nguồn: WHO, CDC Hoa Kỳ, Y tế Canada).',
+      incorrect: '<b>SAI.</b> Đáp án đúng là A. Việc nhìn màn hình kéo dài không làm thay đổi kích thước hay độ sáng tự nhiên của mắt mà ngược lại có thể gây mỏi và suy giảm thị lực. Việc tập trung vào vật thể gần có thể làm giảm khả năng nhìn xa, và kích thước màn hình không loại bỏ tác hại. (Nguồn: WHO, CDC Hoa Kỳ, Y tế Canada).'
+    },
+    '2C': {
+      correct: '<b>ĐÚNG!</b> Theo Học viện Nhi khoa Hoa Kỳ (AAP) và các tổ chức y tế khác, trẻ em từ 5 tuổi trở lên nên giới hạn thời gian giải trí trên màn hình không quá 2 giờ mỗi ngày để đảm bảo có đủ thời gian cho các hoạt động thể chất, học tập và tương tác xã hội. (Nguồn: AAP, WHO, Y tế Canada).',
+      incorrect: '<b>SAI.</b> Đáp án đúng là C. Theo Học viện Nhi khoa Hoa Kỳ (AAP) và các tổ chức y tế khác, trẻ em từ 5 tuổi trở lên nên giới hạn thời gian giải trí trên màn hình không quá 2 giờ mỗi ngày để đảm bảo có đủ thời gian cho các hoạt động thể chất, học tập và tương tác xã hội. (Nguồn: AAP, WHO, Y tế Canada).'
+    },
+    '3A': { 
+      correct: '<b>ĐÚNG!</b> Nghiên cứu cho thấy thời gian sử dụng màn hình quá mức có thể liên quan đến sự kém phát triển của chất xám trong não, ảnh hưởng đến ngôn ngữ, khả năng đọc viết và tư duy. (Nguồn: CDC Hoa Kỳ, Học viện Nhi khoa Hoa Kỳ).',
+      incorrect: '<b>SAI.</b> Đáp án đúng là A. Mặc dù màn hình có thể gây kích thích, nhưng sự kích thích quá mức và thụ động này không giúp phát triển não bộ một cách toàn diện và lành mạnh. Ngược lại, thời gian sử dụng màn hình quá nhiều có thể làm giảm khả năng tập trung, ghi nhớ và kỹ năng giải quyết vấn đề. (Nguồn: CDC Hoa Kỳ, Học viện Nhi khoa Hoa Kỳ).'
+    },
+    '4A': { 
+      correct: '<b>ĐÚNG!</b> Việc ngồi yên một tư thế trong thời gian dài gây căng thẳng cho cơ xương khớp (cổ, vai, lưng) và giảm hoạt động thể chất, làm tăng nguy cơ béo phì và các vấn đề về tư thế. (Nguồn: WHO, CDC Hoa Kỳ, Y tế Canada).',
+      incorrect: '<b>SAI.</b> Đáp án đúng là A. Ngồi lâu thụ động không giúp tăng chiều cao hay phát triển cơ bắp; thay vào đó, nó làm giảm các hoạt động thể chất cần thiết cho sự phát triển này. Các hoạt động thể chất và trò chơi vận động mới giúp cải thiện khả năng giữ thăng bằng, không phải việc ngồi trước màn hình. (Nguồn: WHO, CDC Hoa Kỳ, Y tế Canada).'
+    },
+    '5A': { 
+      correct: '<b>ĐÚNG!</b> Ánh sáng xanh, đặc biệt vào buổi tối, có thể làm giảm tiết melatonin (hormone gây ngủ) và phá vỡ chu kỳ ngủ-thức tự nhiên của cơ thể, gây khó ngủ hoặc chất lượng giấc ngủ kém. (Nguồn: Quỹ Giấc ngủ Quốc gia, CDC Hoa Kỳ).',
+      incorrect: '<b>SAI.</b> Đáp án đúng là A. Ngược lại, ánh sáng xanh từ màn hình có tác dụng kích thích não bộ và làm trẻ khó thư giãn để ngủ. Bản thân ánh sáng xanh vẫn có tác động sinh học đến việc sản xuất melatonin, bất kể nội dung đang xem. (Nguồn: Quỹ Giấc ngủ Quốc gia, CDC Hoa Kỳ).'
+    },
+    '6A': { 
+      correct: '<b>ĐÚNG!</b> Khi trẻ và cha mẹ đều tập trung vào màn hình, thời gian và chất lượng tương tác trực tiếp bị giảm sút, ảnh hưởng đến sự gắn kết tình cảm, tạo khoảng cách vô hình và làm suy yếu mối quan hệ gia đình. (Nguồn: Học viện Nhi khoa Hoa Kỳ, WHO).',
+      incorrect: '<b>SAI.</b> Đáp án đúng là A. Mặc dù công nghệ có thể hỗ trợ giao tiếp từ xa, nhưng việc lạm dụng có xu hướng thay thế các cuộc trò chuyện và hoạt động chung trong gia đình. Việc sử dụng màn hình như một công cụ để giữ trẻ im lặng có thể gây ra những xung đột về quyền sử dụng và làm suy yếu mối quan hệ tin cậy. (Nguồn: Học viện Nhi khoa Hoa Kỳ, WHO).'
+    },
+    '7A': { 
+      correct: '<b>ĐÚNG!</b> Khi ngồi lâu và ít vận động, cơ thể có xu hướng thở nông, lâu dần làm giảm khả năng trao đổi oxy của phổi và ảnh hưởng đến sức khỏe tổng thể. (Nguồn: WHO, Y tế Canada).',
+      incorrect: '<b>SAI.</b> Đáp án đúng là A. Mặc dù sức khỏe tim mạch có thể bị ảnh hưởng bởi lối sống ít vận động, nhưng thở nông trực tiếp liên quan đến chức năng của phổi. Dạ dày liên quan đến tiêu hóa, không trực tiếp bị ảnh hưởng bởi thói quen thở nông. (Nguồn: WHO, Y tế Canada).'
+    },
+    '8A': { 
+      correct: '<b>ĐÚNG!</b> Việc ngồi sai tư thế, căng thẳng mắt và thiếu vận động có thể dẫn đến đau đầu, đau cổ vai gáy và làm trẻ trở nên dễ cáu kắt, căng thẳng. (Nguồn: CDC Hoa Kỳ, Y tế Canada).',
+      incorrect: '<b>SAI.</b> Đáp án đúng là A. Ngược lại, thời gian nhìn màn hình quá nhiều có thể làm giảm khả năng tập trung và gây ra sự thiếu kiên nhẫn. Thời gian ngồi màn hình làm giảm tương tác trực tiếp, do đó có thể ảnh hưởng tiêu cực đến kỹ năng giao tiếp xã hội. (Nguồn: CDC Hoa Kỳ, Y tế Canada).'
+    },
+    '9A': { 
+      correct: '<b>ĐÚNG!</b> Khi trẻ bị phân tâm bởi màn hình trong bữa ăn, vị giác và cảm giác no bị ảnh hưởng, làm giảm hứng thú ăn uống, gây rối loạn tiêu hóa và kém hấp thu dinh dưỡng. (Nguồn: WHO, Học viện Nhi khoa Hoa Kỳ).',
+      incorrect: '<b>SAI.</b> Đáp án đúng là A. Mặc dù trẻ có thể ăn nhanh hơn vì không chú ý, nhưng thường là ăn không có ý thức, dẫn đến cảm giác không thỏa mãn và có thể ăn quá nhiều hoặc quá ít. Hoàn toàn ngược lại, màn hình làm phân tán sự tập trung của trẻ khỏi bữa ăn. (Nguồn: WHO, Học viện Nhi khoa Hoa Kỳ).'
+    },
+    '10A': { 
+      correct: '<b>ĐÚNG!</b> Các nghiên cứu chỉ ra rằng trẻ em dành nhiều thời gian trước màn hình có xu hướng ít vận động hơn, dẫn đến tăng chỉ số BMI và nguy cơ béo phì. (Nguồn: WHO, CDC Hoa Kỳ, Y tế Canada).',
+      incorrect: '<b>SAI.</b> Đáp án đúng là A. Nhiều nghiên cứu đã chứng minh mối liên hệ đáng kể giữa thời gian sử dụng màn hình và nguy cơ béo phì ở trẻ em. Thời gian nhìn màn hình làm tăng nguy cơ thừa cân/béo phì do lối sống ít vận động. (Nguồn: WHO, CDC Hoa Kỳ, Y tế Canada).'
+    },
+    '11A': { 
+      correct: '<b>ĐÚNG!</b> Quy tắc 20-20-20 (sau mỗi 20 phút nhìn màn hình, nhìn vào vật thể cách 20 feet (khoảng 6 mét) trong 20 giây) giúp mắt được thư giãn và giảm mỏi mắt, căng thẳng mắt. (Nguồn: Học viện Nhãn khoa Hoa Kỳ, CDC Hoa Kỳ).',
+      incorrect: '<b>SAI.</b> Đáp án đúng là A. Quy tắc này không trực tiếp giải quyết vấn đề béo phì hay rối loạn giấc ngủ, mà chủ yếu tập trung vào việc bảo vệ sức khỏe thị lực. (Nguồn: Học viện Nhãn khoa Hoa Kỳ, CDC Hoa Kỳ).'
+    },
+    '12A': { 
+      correct: '<b>ĐÚNG!</b> Nghiên cứu từ các tổ chức như Brain Canada và Học viện Nhi khoa Hoa Kỳ (AAP) chỉ ra rằng thời gian màn hình quá mức có thể làm gián đoạn sự kết nối não bộ và các quá trình phát triển bình thường, dẫn đến giảm khả năng tập trung, tư duy và ảnh hưởng đến sự phát triển nhận thức. (Nguồn: Brain Canada, AAP).',
+      incorrect: '<b>SAI.</b> Đáp án đúng là A. Mặc dù màn hình có thể gây kích thích, nhưng sự kích thích thụ động quá mức này thường không thúc đẩy sự phát triển toàn diện của não bộ hay tăng cường trí nhớ, mà ngược lại có thể gây gián đoạn các quá trình phát triển bình thường. (Nguồn: Brain Canada, AAP).'
+    },
+    '13A': { 
+      correct: '<b>ĐÚNG!</b> Hiệp hội Tâm lý học Hoa Kỳ (APA) và các nghiên cứu về hành vi trẻ em đã liên hệ việc tăng thời gian sử dụng màn hình với việc gia tăng các vấn đề hành vi như hung hăng, tăng động, cũng như các vấn đề cảm xúc như lo âu và trầm cảm, đồng thời làm giảm sự đồng cảm ở trẻ. (Nguồn: APA, CHILD Cohort Study).',
+      incorrect: '<b>SAI.</b> Đáp án đúng là A. Ngược lại, việc lạm dụng màn hình thường không giúp cải thiện khả năng tự điều chỉnh cảm xúc hay thúc đẩy sự đồng cảm. Mặc dù có sự giám sát, thời gian màn hình quá mức vẫn có thể là yếu tố nguy cơ độc lập đối với các vấn đề hành vi và cảm xúc. (Nguồn: APA, CHILD Cohort Study).'
+    },
+    '14A': { 
+      correct: '<b>ĐÚNG!</b> Các nghiên cứu từ Học viện Nhi khoa Hoa Kỳ (AAP) và Y tế Công cộng Canada chỉ ra rằng tiếp xúc quá nhiều với màn hình, đặc biệt ở trẻ nhỏ, có thể làm tăng nguy cơ chậm phát triển ngôn ngữ, kỹ năng giao tiếp và xã hội do thiếu tương tác trực tiếp với người khác và môi trường. (Nguồn: AAP, Y tế Canada).',
+      incorrect: '<b>SAI.</b> Đáp án đúng là A. Ngược lại, thời gian nhìn màn hình thụ động thường làm giảm cơ hội cho trẻ tham gia vào các hoạt động vận động và không chứng minh mối liên hệ tích cực với chỉ số thông minh. Dù có nội dung tương tác, việc tiếp xúc quá nhiều vẫn có thể thay thế các hoạt động phát triển thiết yếu khác. (Nguồn: AAP, Y tế Canada).'
+    },
+    '15A': { 
+      correct: '<b>ĐÚNG!</b> Việc cha mẹ hoặc con cái quá tập trung vào thiết bị có thể làm giảm các tương tác trực tiếp, thiếu đi những khoảnh khắc gắn kết tình cảm quan trọng, và thậm chí có thể làm thay đổi liên kết thần kinh của trẻ trong giai đoạn phát triển sớm, ảnh hưởng đến mối quan hệ. (Nguồn: Học viện Nhi khoa Hoa Kỳ, Hiệp hội Tâm lý học Hoa Kỳ).',
+      incorrect: '<b>SAI.</b> Đáp án đúng là A. Mặc dù công nghệ có thể mang lại những tiện ích nhất định, nhưng việc lạm dụng có xu hướng thay thế các cuộc trò chuyện và hoạt động chung trong gia đình, làm giảm sự gắn kết và thấu hiểu lẫn nhau. (Nguồn: Học viện Nhi khoa Hoa Kỳ, Hiệp hội Tâm lý học Hoa Kỳ).'
+    },
+    '16B': { 
+      correct: '<b>ĐÚNG!</b> Sử dụng mạng xã hội quá mức có thể khiến trẻ dễ bị bắt nạt trực tuyến (cyberbullying), thường xuyên so sánh bản thân với hình ảnh không thực tế của người khác, dẫn đến lo âu, trầm cảm, và ảnh hưởng tiêu cực đến lòng tự trọng và hình ảnh cơ thể. (Nguồn: Hiệp hội Tâm lý học Hoa Kỳ, Học viện Nhi khoa Hoa Kỳ).',
+      incorrect: '<b>SAI.</b> Đáp án đúng là B. Mạng xã hội, nếu không được quản lý cẩn thận, có thể làm giảm sự tự tin và lòng tự trọng của trẻ do áp lực so sánh. Nó cũng thường không cải thiện kỹ năng giao tiếp mặt đối mặt mà ngược lại có thể làm giảm các tương tác thực tế. (Nguồn: Hiệp hội Tâm lý học Hoa Kỳ, Học viện Nhi khoa Hoa Kỳ).'
+    },
+    '17B': { 
+      correct: '<b>ĐÚNG!</b> Để khuyến khích trẻ vận động, cha mẹ nên chủ động lên kế hoạch các hoạt động gia đình ngoài trời như đi bộ, đạp xe, chơi thể thao, hoặc đơn giản là tạo không gian an toàn tại nhà để trẻ có thể chạy nhảy, chơi đùa. Giảm thời gian nhìn màn hình sẽ tự nhiên tăng thời gian cho các hoạt động thể chất. (Nguồn: WHO, Học viện Nhi khoa Hoa Kỳ).',
+      incorrect: '<b>SAI.</b> Đáp án đúng là B. Mua thêm thiết bị điện tử sẽ làm tăng thời gian sử dụng màn hình. Cho phép trẻ tự do chơi game hoặc chỉ quan tâm đến dinh dưỡng mà bỏ qua vận động là không đủ để đảm bảo sức khỏe toàn diện. (Nguồn: WHO, Học viện Nhi khoa Hoa Kỳ).'
+    },
+    '18B': { 
+      correct: '<b>ĐÚNG!</b> Trẻ em dễ bị ảnh hưởng bởi quảng cáo trực tuyến, đặc biệt là những quảng cáo không phù hợp lứa tuổi hoặc khuyến khích hành vi tiêu dùng không lành mạnh (ví dụ: ăn vặt, mua sắm không cần thiết). Điều này có thể dẫn đến việc hình thành các thói quen xấu và áp lực từ bạn bè. (Nguồn: Học viện Nhi khoa Hoa Kỳ, Federal Trade Commission).',
+      incorrect: '<b>SAI.</b> Đáp án đúng là B. Quảng cáo không phù hợp có thể ảnh hưởng đến hành vi tiêu dùng và nhận thức của trẻ. Trẻ em có thể quan tâm đến quảng cáo và bị ảnh hưởng bởi chúng. (Nguồn: Học viện Nhi khoa Hoa Kỳ, Federal Trade Commission).'
+    },
+    '19A': { 
+      correct: '<b>ĐÚNG!</b> Khó tập trung vào các vật thể ở xa ngay lập tức và mắt mất vài giờ để điều chỉnh lại. Khi mắt liên tục tập trung vào hình ảnh gần trên màn hình, nó sẽ khó chuyển đổi và điều tiết để nhìn rõ các vật thể ở xa ngay lập tức. (Nguồn: Học viện Nhãn khoa Hoa Kỳ, CDC Hoa Kỳ).',
+      incorrect: '<b>SAI.</b> Đáp án đúng là A. Thời gian nhìn màn hình không cải thiện khả năng nhìn trong bóng tối hay tăng khả năng phân biệt màu sắc. Đồng tử giãn nở do điều kiện ánh sáng hoặc tác động y tế, không phải do nhìn màn hình liên tục. (Nguồn: Học viện Nhãn khoa Hoa Kỳ, CDC Hoa Kỳ).'
+    },
+    '20A': { 
+      correct: '<b>ĐÚNG!</b> Nghiên cứu của Hiệp hội Tâm lý học Hoa Kỳ (APA) chỉ ra rằng việc tăng thời gian màn hình có thể gây ra các vấn đề cảm xúc và hành vi, và ngược lại, trẻ có vấn đề lại tìm đến màn hình để đối phó, tạo ra một vòng luẩn quẩn. (Nguồn: APA, Y tế Canada).',
+      incorrect: '<b>SAI.</b> Đáp án đúng là A. Mặc dù trẻ có vấn đề sẵn có thể dễ bị ảnh hưởng hơn, nhưng nghiên cứu cho thấy thời gian màn hình quá mức có thể *gây ra* hoặc *làm trầm trọng thêm* các vấn đề cảm xúc/hành vi ngay cả ở trẻ chưa có tiền sử. (Nguồn: APA, Y tế Canada).'
+    }
+  };
+
+  // Hàm chính để kiểm tra đáp án
+  function checkAnswer(selectedButton, questionNumber, selectedOptionId) {
+    if (answeredQuestions.has(questionNumber)) {
+      // Nếu câu hỏi đã được trả lời, không làm gì cả
+      return;
+    }
+
+    const correctOptionId = correctAnswerMapping[questionNumber];
+    const feedbackDiv = document.getElementById(`feedback-${questionNumber}`);
+    const options = document.querySelectorAll(`#quiz-container-${questionNumber} .option-btn`);
+
+    // Vô hiệu hóa tất cả các nút của câu hỏi này
+    options.forEach(btn => {
+      btn.disabled = true;
+      btn.style.cursor = 'default';
+    });
+
+    // Thêm câu hỏi vào danh sách đã trả lời để đảm bảo chỉ được tính điểm một lần
+    answeredQuestions.add(questionNumber);
+
+    if (selectedOptionId === correctOptionId) {
+      feedbackDiv.style.backgroundColor = '#d4edda'; /* Light green */
+      feedbackDiv.style.color = '#155724'; /* Dark green text */
+      feedbackDiv.innerHTML = feedbackContent[correctOptionId].correct;
+      selectedButton.style.backgroundColor = '#a7e8b9'; /* Greener */
+      score++; // Tăng điểm nếu đúng
+    } else {
+      feedbackDiv.style.backgroundColor = '#f8d7da'; /* Light red */
+      feedbackDiv.style.color = '#721c24'; /* Dark red text */
+      feedbackDiv.innerHTML = feedbackContent[correctOptionId].incorrect; // Sử dụng phản hồi cho đáp án sai
+      selectedButton.style.backgroundColor = '#f1b0b7'; /* Redder */
+      
+      // Highlight the correct answer
+      options.forEach(btn => {
+        if (btn.dataset.optionId === correctOptionId) {
+          btn.style.backgroundColor = '#a7e8b9'; /* Greener */
+        }
+      });
+    }
+    updateFinalScoreDisplay(); // Cập nhật hiển thị điểm cuối cùng
+  }
+
+  // Cập nhật hiển thị điểm cuối cùng
+  function updateFinalScoreDisplay() {
+    document.getElementById('final-score-display').innerText = `Bạn đã trả lời đúng: ${score} / ${totalQuestions} câu.`;
+  }
+
+  // Hàm đặt lại toàn bộ quiz
+  function resetQuiz() {
+    score = 0; // Đặt lại điểm
+    answeredQuestions.clear(); // Xóa danh sách câu đã trả lời
+
+    // Đặt lại trạng thái cho từng câu hỏi
+    for (let i = 1; i <= totalQuestions; i++) {
+      const feedbackDiv = document.getElementById(`feedback-${i}`);
+      const options = document.querySelectorAll(`#quiz-container-${i} .option-btn`);
+
+      feedbackDiv.innerHTML = ''; // Xóa phản hồi
+      feedbackDiv.style.backgroundColor = 'transparent'; // Đặt lại màu nền phản hồi
+
+      options.forEach(btn => {
+        btn.disabled = false; // Bật lại nút
+        btn.style.cursor = 'pointer';
+        btn.style.backgroundColor = '#f9f9f9'; // Đặt lại màu nền nút
+      });
+    }
+    updateFinalScoreDisplay(); // Cập nhật hiển thị điểm ban đầu
+  }
+
+  // Khởi tạo hiển thị điểm và gán data-option-id khi DOM đã tải xong
+  document.addEventListener('DOMContentLoaded', () => {
+    updateFinalScoreDisplay(); // Hiển thị điểm ban đầu là 0/20
+  });
+</script>
